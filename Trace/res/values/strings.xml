@@ -7,7 +7,14 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
 
-    <string name="title_current_section">Current</string>
-    <string name="title_used_section">Used</string>
-    <string name="title_all_section">All plans</string>
+    <string name="title_current_section">Current plan</string>
+    <string name="title_latest_plans_section">Latest plans</string>
+    <string name="title_all_plans_section">All plans</string>
+    
+    
+    <!-- Start dummy plan names -->
+    <string name="fragment_current_plan_name">Current plan</string>
+    <string name="fragment_latest_plans_name">Latest plans</string>
+    <string name="fragment_all_plans_name">All plans</string>
+    <!-- End dummy plan names -->
 </resources>
