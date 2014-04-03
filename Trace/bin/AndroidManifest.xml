@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="no.hiof.trace.activity.PlanDetailActivity"
+            android:label="@string/title_activity_plan_detail" >
+            <intent-filter>
+                <action android:name="no.hiof.action.PLAN_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="no.hiof.trace.activity.TaskDetailActivity"
+            android:label="@string/title_activity_task_detail" >
+            <intent-filter>
+                <action android:name="no.hiof.action.TASK_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
