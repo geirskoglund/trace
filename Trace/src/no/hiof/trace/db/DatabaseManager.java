@@ -80,7 +80,46 @@ public class DatabaseManager extends SQLiteOpenHelper
 	
 	public Plan getPlan(int id)
 	{
+		String query = "SELECT * FROM "+T.PLAN+" WHERE "+C.ID+" = "+id;
 		
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		
+		Plan plan = null;
+		if(cursor.moveToFirst())
+		{
+			/*int id = cursor.getColumnIndex(C.ID);
+			int name = cursor.getColumnIndex(C.NAME);
+			int description = cursor.getColumnIndex(C.DESCRIPTION);
+			int ssid = cursor.getColumnIndex(C.SSID);
+			int nfc = cursor.getColumnIndex(C.NFC);
+			int lon = cursor.getColumnIndex(C.LONG);
+			int lat = cursor.getColumnIndex(C.LAT);
+			int autoRegister = cursor.getColumnIndex(C.AUTO_REG);
+			int status = cursor.getColumnIndex(C.STATUS);
+			*/
+			
+			plan = new Plan();
+			plan.setId(cursor.getInt(0));
+			if(!cursor.isNull(1))
+				plan.setName(cursor.getString(1));
+			if(!cursor.isNull(2))
+				plan.setDescription(cursor.getString(2));
+			if(!cursor.isNull(3))
+				plan.setSsid(cursor.getString(3));
+			if(!cursor.isNull(4))
+				plan.setNfc(cursor.getString(4));
+			if(!cursor.isNull(5))
+				plan.setLon(cursor.getDouble(5));
+			if(!cursor.isNull(6))
+				plan.setLat(cursor.getDouble(6));
+			if(!cursor.isNull(7))
+				plan.setAutoRegister(Boolean.getBoolean(cursor.getString(7)));
+			if(!cursor.isNull(8))
+				plan.setSsid(cursor.getString(8));
+			
+			return plan;
+		}
 		
 		return null;
 	}
@@ -384,5 +423,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 		}
 		
 		return cursor.getCount();
+	}
+	
+	public String toString()
+	{
+		return "DatabaseManager";
 	}
 }

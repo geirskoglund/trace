@@ -1,20 +1,20 @@
 package no.hiof.trace.activity;
 
 import java.util.Locale;
-
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.fragment.AllPlansFragment;
 import no.hiof.trace.fragment.CurrentPlanFragment;
 import no.hiof.trace.fragment.LatestPlansFragment;
 import android.content.Intent;
-//import android.app.Fragment;
-//import android.app.FragmentManager;
+import no.hiof.trace.fragment.AllPlansFragment;
+import no.hiof.trace.fragment.CurrentPlanFragment;
+import no.hiof.trace.fragment.LatestPlansFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,7 +32,8 @@ public class MainActivity extends FragmentActivity
 	DatabaseManager dm;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 

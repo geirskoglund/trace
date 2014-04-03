@@ -3,6 +3,7 @@
 
     <string name="app_name">Trace</string>
     <string name="action_settings">Settings</string>
+    
     <string name="title_current_section">Current plan</string>
     <string name="title_latest_section">Latest plans</string>
     <string name="title_all_section">All plans</string>
@@ -25,15 +26,8 @@
     <string name="label_time_slots">Time slots</string>
     
     
-    
-    
-    
-    
-    
     <string name="DUMMY_TEXT">DUMMY</string>
     <string name="DUMMY_TASK_BUTTON">To task</string>
     <string name="DUMMY_PLAN_BUTTON">To plan</string>
     <string name="DUMMY_TIME_SLOT">To plan</string>
-    
-    
 </resources>
