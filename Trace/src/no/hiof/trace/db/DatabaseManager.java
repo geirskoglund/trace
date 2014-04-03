@@ -304,6 +304,11 @@ public class DatabaseManager extends SQLiteOpenHelper
 	}
 	
 	
+	private Plan parsePlanFromCursor(Cursor cursor)
+	{
+		return null;
+	}
+	
 	
 	public void createTables(String... createTableQuery)
 	{
@@ -368,7 +373,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	
 	
 	//Prints all tables in the database
-	public void getTables()
+	public int getTables()
 	{
 		SQLiteDatabase db = getWritableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'",null);
@@ -377,5 +382,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		{
 			System.out.println(cursor.getString(cursor.getColumnIndex("name"))+"\n");
 		}
+		
+		return cursor.getCount();
 	}
 }

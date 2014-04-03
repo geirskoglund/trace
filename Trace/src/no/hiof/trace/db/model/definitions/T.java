@@ -14,6 +14,8 @@ public class T
 	public static final String[] TASK_STATUS_COLUMNS = {C.STATUS};
 	public static final String[] PLAN_STATUS_COLUMNS = {C.STATUS};
 	
+	
+	//Rewrite to use C-def?
 	public static String CREATE_TABLE_PLAN = 
 			"CREATE TABLE plan ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"

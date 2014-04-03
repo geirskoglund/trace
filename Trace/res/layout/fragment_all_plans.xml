@@ -8,9 +8,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$DummySectionFragment" >
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- DUMMY BUTTON FOR NAV TESTING. LISTVIEW WILL BE POSITIONED HERE INSTEAD -->
+    <Button 
+        android:id="@+id/toPlanButton"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:text="@string/DUMMY_PLAN_BUTTON"
+        android:onClick="viewPlanDetails"/>
 
 </RelativeLayout>
