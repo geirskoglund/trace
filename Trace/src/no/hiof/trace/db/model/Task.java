@@ -7,19 +7,19 @@ public class Task
 	private int id;
 	private String name;
 	private String description;
-	private TaskStatus status;
+	private String status;
 	private ArrayList<Interval> intervals;
 	
 	public Task(){}
 	
-	public Task(String name, String description, TaskStatus status)
+	public Task(String name, String description, String status)
 	{
 		this.name = name;
 		this.description = description;
 		this.status = status;
 	}
 	
-	public Task(String name, String description, TaskStatus status, ArrayList<Interval> intervals)
+	public Task(String name, String description, String status, ArrayList<Interval> intervals)
 	{
 		this.name = name;
 		this.description = description;
@@ -47,11 +47,11 @@ public class Task
 		this.description = description;
 	}
 
-	public TaskStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(TaskStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

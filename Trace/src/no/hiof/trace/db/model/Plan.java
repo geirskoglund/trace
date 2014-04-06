@@ -12,7 +12,7 @@ public class Plan
 	private double lat = 0;
 	private double lon = 0;
 	private boolean autoRegister = false;
-	private TaskStatus status;
+	private String status;
 	private Task primaryTask;
 	private ArrayList<Task> tasks;
 	
@@ -36,7 +36,7 @@ public class Plan
 	
 	public Plan(int id, String name, String description, String ssid,
 			String nfc, double lat, double lon, boolean autoRegister,
-			TaskStatus status, Task primaryTask, ArrayList<Task> tasks){
+			String status, Task primaryTask, ArrayList<Task> tasks){
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -118,11 +118,11 @@ public class Plan
 		this.autoRegister = autoRegister;
 	}
 
-	public TaskStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(TaskStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

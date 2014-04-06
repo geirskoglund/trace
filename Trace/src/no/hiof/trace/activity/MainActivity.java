@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity
 {
-
 	SectionsPagerAdapter sectionsPagerAdapter;
 	ViewPager viewPager;
 	DatabaseManager dm;
@@ -43,47 +42,7 @@ public class MainActivity extends FragmentActivity
 		viewPager.setAdapter(sectionsPagerAdapter);
 		
 		dm = new DatabaseManager(this);
-//		
-//		///////////TESTING//////////////////
-		dm.getTables();
-//		dm.getAllPlanStatus();
-//		dm.getAllTaskStatus();
-		addPlans();
-//		dm.getAllPlans();
-		//////////END TESTING///////////////
 	}
-	
-	
-	//////////////START TESTING////////////////////////
-	private void addPlans()
-	{
-		dm.addPlan(new Plan("Jobb","Plan for jobb",true));
-		dm.addPlan(new Plan("Fotball","Plan for trenerjobb",false));
-		
-	}
-	
-	private void addStatuses()
-	{
-		//dm.addPlanStatus("Plan Closed");
-		//dm.addPlanStatus("Plan Archived");
-		//dm.addPlanStatus("Plan Open");
-		//dm.addPlanStatus("Plan Pending");
-		//dm.addPlanStatus("Plan Paused");
-		/*
-		dm.addTaskStatus("Task Closed");
-		dm.addTaskStatus("Task Archived");
-		dm.addTaskStatus("Task Open");
-		dm.addTaskStatus("Task Pending");
-		dm.addTaskStatus("Task Paused");*/
-	}
-	
-	private void deleteStatus()
-	{
-		//dm.deletePlanStatus("Plan Paused", "Plan Archived");
-		//dm.deletePlanStatus("Plan Archived");
-	}
-	
-	/////////////////END TESTING////////////////////////////
 	
 	
 	@Override

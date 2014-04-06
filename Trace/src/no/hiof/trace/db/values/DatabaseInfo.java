@@ -1,6 +1,6 @@
-package no.hiof.trace.db.model.definitions;
+package no.hiof.trace.db.values;
 
-public class G
+public class DatabaseInfo
 {
 	public static final int DATABASE_VERSION = 1;
 	public static final String DATABASE_NAME= "TraceDB";

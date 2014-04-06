@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.hiof.trace.db.model.Plan;
-import no.hiof.trace.db.model.PlanStatus;
-import no.hiof.trace.db.model.TaskStatus;
-import no.hiof.trace.db.model.definitions.C;
-import no.hiof.trace.db.model.definitions.G;
-import no.hiof.trace.db.model.definitions.T;
+import no.hiof.trace.db.model.definitions.CreateTableStatement;
+import no.hiof.trace.db.values.ColumnName;
+import no.hiof.trace.db.values.DatabaseInfo;
+import no.hiof.trace.db.values.TableName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +20,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 {	
 	public DatabaseManager(Context context)
 	{
-		super(context,G.DATABASE_NAME,null,G.DATABASE_VERSION);
+		super(context,DatabaseInfo.DATABASE_NAME,null,DatabaseInfo.DATABASE_VERSION);
 		Log.d("DM","Opprettet");
 	}
 	
@@ -48,26 +47,26 @@ public class DatabaseManager extends SQLiteOpenHelper
 		ContentValues values = new ContentValues();
 		
 		if(plan.getName()!=null)
-			values.put(C.NAME, plan.getName());
+			values.put(ColumnName.NAME, plan.getName());
 		
 		if(plan.getDescription()!=null)
-			values.put(C.DESCRIPTION, plan.getDescription());
+			values.put(ColumnName.DESCRIPTION, plan.getDescription());
 		
 		if(plan.getAutoRegister()== true)
-			values.put(C.AUTO_REG, "1");
+			values.put(ColumnName.AUTO_REG, "1");
 		else
-			values.put(C.AUTO_REG, "0");
+			values.put(ColumnName.AUTO_REG, "0");
 		
 		if(plan.getNfc()!=null)
-			values.put(C.NFC, plan.getNfc());
+			values.put(ColumnName.NFC, plan.getNfc());
 		
 		if(plan.getSsid()!=null)
-			values.put(C.SSID, plan.getSsid());
+			values.put(ColumnName.SSID, plan.getSsid());
 		
 		db.beginTransaction();
 		try
 		{
-			db.insert(T.PLAN, null, values);
+			db.insert(TableName.PLAN, null, values);
 			db.setTransactionSuccessful();
 		}
 		finally
@@ -80,7 +79,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	
 	public Plan getPlan(int id)
 	{
-		String query = "SELECT * FROM "+T.PLAN+" WHERE "+C.ID+" = "+id;
+		String query = "SELECT * FROM "+TableName.PLAN+" WHERE "+ColumnName.ID+" = "+id;
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -127,7 +126,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	public ArrayList<Plan> getAllPlans()
 	{
 		ArrayList<Plan> plans = new ArrayList<Plan>();
-		String query = "SELECT * FROM "+T.PLAN;
+		String query = "SELECT * FROM "+TableName.PLAN;
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -135,15 +134,15 @@ public class DatabaseManager extends SQLiteOpenHelper
 		Plan plan = null;
 		if(cursor.moveToFirst())
 		{
-			int id = cursor.getColumnIndex(C.ID);
-			int name = cursor.getColumnIndex(C.NAME);
-			int description = cursor.getColumnIndex(C.DESCRIPTION);
-			int ssid = cursor.getColumnIndex(C.SSID);
-			int nfc = cursor.getColumnIndex(C.NFC);
-			int lon = cursor.getColumnIndex(C.LONG);
-			int lat = cursor.getColumnIndex(C.LAT);
-			int autoRegister = cursor.getColumnIndex(C.AUTO_REG);
-			int status = cursor.getColumnIndex(C.STATUS);
+			int id = cursor.getColumnIndex(ColumnName.ID);
+			int name = cursor.getColumnIndex(ColumnName.NAME);
+			int description = cursor.getColumnIndex(ColumnName.DESCRIPTION);
+			int ssid = cursor.getColumnIndex(ColumnName.SSID);
+			int nfc = cursor.getColumnIndex(ColumnName.NFC);
+			int lon = cursor.getColumnIndex(ColumnName.LONG);
+			int lat = cursor.getColumnIndex(ColumnName.LAT);
+			int autoRegister = cursor.getColumnIndex(ColumnName.AUTO_REG);
+			int status = cursor.getColumnIndex(ColumnName.STATUS);
 			
 			do
 			{
@@ -176,130 +175,130 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
-	public void addPlanStatus(String statusName)
-	{
-		if(statusName == null || statusName.isEmpty())
-			throw new IllegalArgumentException();
-		
-		SQLiteDatabase db = getWritableDatabase();
-		
-		ContentValues values = new ContentValues();
-		values.put(C.STATUS, statusName);
-		
-		db.beginTransaction(); //Begin a transaction
-		try
-		{
-			db.insert(T.PLAN_STATUS, null, values);
-			db.setTransactionSuccessful(); // Check if the transaction is successful. Don't do anything DB related after this. Throws exception if transaction fails.
-		}
-		finally
-		{
-			db.endTransaction();
-			db.close();
-		}
-		
-	}
+//	public void addPlanStatus(String statusName)
+//	{
+//		if(statusName == null || statusName.isEmpty())
+//			throw new IllegalArgumentException();
+//		
+//		SQLiteDatabase db = getWritableDatabase();
+//		
+//		ContentValues values = new ContentValues();
+//		values.put(C.STATUS, statusName);
+//		
+//		db.beginTransaction(); //Begin a transaction
+//		try
+//		{
+//			db.insert(T.PLAN_STATUS, null, values);
+//			db.setTransactionSuccessful(); // Check if the transaction is successful. Don't do anything DB related after this. Throws exception if transaction fails.
+//		}
+//		finally
+//		{
+//			db.endTransaction();
+//			db.close();
+//		}
+//		
+//	}
+	
+	
+//	
+//	
+//	public ArrayList<PlanStatus> getAllPlanStatus()
+//	{
+//		ArrayList<PlanStatus> statuses = new ArrayList<PlanStatus>();
+//		String query = "Select * FROM "+T.PLAN_STATUS;
+//		
+//		SQLiteDatabase db = this.getWritableDatabase();
+//		Cursor cursor = db.rawQuery(query, null);
+//		
+//		PlanStatus status = null;
+//		if(cursor.moveToFirst())
+//		{
+//			do
+//			{
+//				status = new PlanStatus();
+//				status.setStatus(cursor.getString(0));
+//				Log.d("PlanStatus",status.getStatus());
+//				statuses.add(status);
+//			}
+//			while(cursor.moveToNext());
+//		}
+//		
+//		//Log.d("getAllPlanStatuses", statuses.toString());
+//		return statuses;
+//	}
 	
 	
 	
 	
-	public ArrayList<PlanStatus> getAllPlanStatus()
-	{
-		ArrayList<PlanStatus> statuses = new ArrayList<PlanStatus>();
-		String query = "Select * FROM "+T.PLAN_STATUS;
-		
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(query, null);
-		
-		PlanStatus status = null;
-		if(cursor.moveToFirst())
-		{
-			do
-			{
-				status = new PlanStatus();
-				status.setStatus(cursor.getString(0));
-				Log.d("PlanStatus",status.getStatus());
-				statuses.add(status);
-			}
-			while(cursor.moveToNext());
-		}
-		
-		//Log.d("getAllPlanStatuses", statuses.toString());
-		return statuses;
-	}
+//	public void deletePlanStatus(String... limiter)
+//	{
+//		SQLiteDatabase db = this.getWritableDatabase();
+//		db.beginTransaction();
+//		try
+//		{
+//			db.delete(T.PLAN_STATUS, C.STATUS+" = ?", limiter);
+//			db.setTransactionSuccessful();
+//		}
+//		finally
+//		{
+//			db.endTransaction();
+//			db.close();
+//		}
+//		Log.d("deletePlanStatus", limiter.toString());
+//	}
 	
 	
 	
 	
-	public void deletePlanStatus(String... limiter)
-	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.beginTransaction();
-		try
-		{
-			db.delete(T.PLAN_STATUS, C.STATUS+" = ?", limiter);
-			db.setTransactionSuccessful();
-		}
-		finally
-		{
-			db.endTransaction();
-			db.close();
-		}
-		Log.d("deletePlanStatus", limiter.toString());
-	}
+//	public void addTaskStatus(String statusName)
+//	{
+//		if(statusName == null || statusName.isEmpty())
+//			throw new IllegalArgumentException();
+//		
+//		SQLiteDatabase db = getWritableDatabase();
+//		
+//		ContentValues values = new ContentValues();
+//		values.put(C.STATUS, statusName);
+//		
+//		db.beginTransaction(); //Begin a transaction
+//		try
+//		{
+//			db.insert(T.TASK_STATUS, null, values);
+//			db.setTransactionSuccessful(); // Check if the transaction is successful. Don't do anything DB related after this. Throws exception if transaction fails.
+//		}
+//		catch(Exception e) { System.out.println(e.getMessage()); }
+//		finally{ db.endTransaction(); }
+//		
+//		//return false;
+//	}
 	
 	
 	
 	
-	public void addTaskStatus(String statusName)
-	{
-		if(statusName == null || statusName.isEmpty())
-			throw new IllegalArgumentException();
-		
-		SQLiteDatabase db = getWritableDatabase();
-		
-		ContentValues values = new ContentValues();
-		values.put(C.STATUS, statusName);
-		
-		db.beginTransaction(); //Begin a transaction
-		try
-		{
-			db.insert(T.TASK_STATUS, null, values);
-			db.setTransactionSuccessful(); // Check if the transaction is successful. Don't do anything DB related after this. Throws exception if transaction fails.
-		}
-		catch(Exception e) { System.out.println(e.getMessage()); }
-		finally{ db.endTransaction(); }
-		
-		//return false;
-	}
-	
-	
-	
-	
-	public ArrayList<TaskStatus> getAllTaskStatus()
-	{
-		ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
-		String query = "Select * FROM "+T.TASK_STATUS;
-		
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.rawQuery(query, null);
-		
-		TaskStatus status = null;
-		if(cursor.moveToFirst())
-		{
-			do
-			{
-				status = new TaskStatus();
-				status.setStatus(cursor.getString(0));
-				Log.d("TaskStatus",status.getStatus());
-				statuses.add(status);
-			}
-			while(cursor.moveToNext());
-		}
-		
-		Log.d("getAllTaskStatuses", statuses.toString());
-		return statuses;
-	}
+//	public ArrayList<TaskStatus> getAllTaskStatus()
+//	{
+//		ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
+//		String query = "Select * FROM "+T.TASK_STATUS;
+//		
+//		SQLiteDatabase db = this.getWritableDatabase();
+//		Cursor cursor = db.rawQuery(query, null);
+//		
+//		TaskStatus status = null;
+//		if(cursor.moveToFirst())
+//		{
+//			do
+//			{
+//				status = new TaskStatus();
+//				status.setStatus(cursor.getString(0));
+//				Log.d("TaskStatus",status.getStatus());
+//				statuses.add(status);
+//			}
+//			while(cursor.moveToNext());
+//		}
+//		
+//		Log.d("getAllTaskStatuses", statuses.toString());
+//		return statuses;
+//	}
 	
 	
 	
@@ -383,9 +382,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 			System.out.println("Pair:"+p.first.toString()+" : "+p.second.toString());
 		}
 	}
-	
-	
-	
 	
 	public void dropTables(String... tables)
 	{

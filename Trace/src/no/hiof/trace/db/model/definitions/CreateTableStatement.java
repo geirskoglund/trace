@@ -1,21 +1,10 @@
 package no.hiof.trace.db.model.definitions;
 
-public class T
+import no.hiof.trace.db.values.ColumnName;
+
+public class CreateTableStatement
 {
-	public static final String PLAN = "plan";
-	public static final String TASK = "task";
-	public static final String INTERVAL = "interval";
-	public static final String TASK_STATUS = "task_status";
-	public static final String PLAN_STATUS = "plan_status";
-	
-	public static final String[] PLAN_COLUMNS = {C.ID, C.NAME, C.DESCRIPTION, C.SSID, C.NFC, C.LONG, C.LAT, C.AUTO_REG, C.STATUS, C.PRIMARY_TASK};
-	public static final String[] TASK_COLUMNS = {C.ID, C.NAME, C.DESCRIPTION, C.PLAN_ID, C.STATUS};
-	public static final String[] INTERVAL_COLUMNS = {C.ID, C.START_TIME, C.END_TIME, C.TASK_ID};
-	public static final String[] TASK_STATUS_COLUMNS = {C.STATUS};
-	public static final String[] PLAN_STATUS_COLUMNS = {C.STATUS};
-	
-	
-	//Rewrite to use C-def?
+	//Rewrite to use Column-definitions?
 	public static String CREATE_TABLE_PLAN = 
 			"CREATE TABLE plan ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
