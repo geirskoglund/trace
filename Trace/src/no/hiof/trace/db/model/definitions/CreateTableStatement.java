@@ -5,7 +5,7 @@ import no.hiof.trace.db.values.ColumnName;
 public class CreateTableStatement
 {
 	//Rewrite to use Column-definitions?
-	public static String CREATE_TABLE_PLAN = 
+	public static String PLAN = 
 			"CREATE TABLE plan ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"name TEXT NOT NULL,"
@@ -21,7 +21,7 @@ public class CreateTableStatement
 			+"FOREIGN KEY(primary_task) REFERENCES task(id)"
 			+")";
 	
-	public static String CREATE_TABLE_TASK = 
+	public static String TASK = 
 			"CREATE TABLE task ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"name TEXT NOT NULL,"
@@ -32,7 +32,7 @@ public class CreateTableStatement
 			+"FOREIGN KEY(plan_id) REFERENCES plan(id)"
 			+")";
 	
-	public static String CREATE_TABLE_INTERVAL = 
+	public static String INTERVAL = 
 			"CREATE TABLE interval ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"start_time DATETIME NOT NULL,"
@@ -41,12 +41,12 @@ public class CreateTableStatement
 			+"FOREIGN KEY(task_id) REFERENCES task(id)"
 			+")";
 	
-	public static String CREATE_TABLE_PLAN_STATUS = 
+	public static String PLAN_STATUS = 
 			"CREATE TABLE plan_status ( "
 			+"status TEXT PRIMARY KEY"
 			+")";
 	
-	public static String CREATE_TABLE_TASK_STATUS = 
+	public static String TASK_STATUS = 
 			"CREATE TABLE task_status ( "
 			+"status TEXT PRIMARY KEY"
 			+")";

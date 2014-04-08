@@ -26,8 +26,8 @@ public class PlanDetailActivity extends Activity
 	
 	public void viewTaskDetails(View view)
 	{
-		Intent intent = new Intent("no.hiof.action.TASK_DETAIL");
-		startActivity(intent);
+		Intent taskDetail = new Intent("no.hiof.action.TASK_DETAIL");
+		startActivity(taskDetail);
 	}
 
 }

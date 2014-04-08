@@ -122,19 +122,19 @@
     
     <!-- DUMMY BUTTON FOR NAV TESTING. LISTVIEW WILL BE POSITIONED HERE INSTEAD -->
     <View 
-        android:id="@+id/timeView"
+        android:id="@+id/intervals"
         android:layout_height="200dip"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:text="@string/DUMMY_TIME_SLOT"
         android:background="@android:color/darker_gray"
-        android:onClick="changeColor"/>
+        android:onClick="changeBackgroundColor"/>
     
     <TextView 
 		android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:padding="5dip"
-	    android:layout_above="@id/timeView"
+	    android:layout_above="@id/intervals"
 	    android:text="@string/label_time_slots"/>
     <!-- ListView ></ListView-->
 

@@ -22,19 +22,27 @@ public class DatabaseManager extends SQLiteOpenHelper
 	{
 		super(context,DatabaseInfo.DATABASE_NAME,null,DatabaseInfo.DATABASE_VERSION);
 		Log.d("DM","Opprettet");
+		getDatabases();
 	}
 	
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		//createTables(T.CREATE_TABLE_PLAN_STATUS, T.CREATE_TABLE_TASK_STATUS, T.CREATE_TABLE_INTERVAL, T.CREATE_TABLE_TASK, T.CREATE_TABLE_PLAN );
+		createTables(
+			CreateTableStatement.PLAN_STATUS, 
+			CreateTableStatement.TASK_STATUS, 
+			CreateTableStatement.INTERVAL, 
+			CreateTableStatement.TASK, 
+			CreateTableStatement.PLAN );
+		
+		getTables();
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 		//Drops all tables at this point. Should fetch all data, parse and write to new database.
-		//dropTables(T.PLAN, T.TASK, T.INTERVAL, T.PLAN_STATUS, T.TASK_STATUS);
+		//dropTables(TableName.PLAN, TableName.TASK, TableName.INTERVAL, TableName.PLAN_STATUS, TableName.TASK_STATUS);
 		//this.onCreate(db);
 	}
 	
@@ -412,7 +420,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 	{
 		SQLiteDatabase db = getWritableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM sqlite_master WHERE type='table'",null);
-		
+		System.out.println("getTables kjører");
 		while(cursor.moveToNext())
 		{
 			System.out.println(cursor.getString(cursor.getColumnIndex("name"))+"\n");

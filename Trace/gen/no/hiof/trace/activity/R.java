@@ -30,6 +30,7 @@ public final class R {
         public static final int fourthRow=0x7f080007;
         public static final int fragmentTable=0x7f080002;
         public static final int fragment_current=0x7f08000e;
+        public static final int intervals=0x7f08000c;
         public static final int name=0x7f080004;
         public static final int pager=0x7f080000;
         public static final int pager_title_strip=0x7f080001;
@@ -37,7 +38,6 @@ public final class R {
         public static final int seventhRow=0x7f08000a;
         public static final int sixthRow=0x7f080009;
         public static final int thirdRow=0x7f080006;
-        public static final int timeView=0x7f08000c;
         public static final int toPlanButton=0x7f08000d;
         public static final int toTaskButton=0x7f08000b;
     }
