@@ -35,7 +35,7 @@ public class PlanParser
 		plan.setNfc(cursor.getString(nfc));
 		plan.setLon(cursor.getDouble(lon));
 		plan.setLat(cursor.getDouble(lat));
-		plan.setAutoRegister(Boolean.getBoolean(cursor.getString(autoRegister)));
+		plan.setAutoRegister(cursor.getInt(autoRegister)>0);
 		plan.setStatus(cursor.getString(status));
 		plan.setLastActivatedTimestamp(Timestamp.valueOf(cursor.getString(lastActivated)));
 		
