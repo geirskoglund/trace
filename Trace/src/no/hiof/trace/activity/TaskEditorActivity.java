@@ -7,6 +7,7 @@ import no.hiof.trace.db.model.Task;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -53,9 +54,8 @@ public class TaskEditorActivity extends Activity
 
 	private void createTask() 
 	{
-		long taskId = getIntent().getLongExtra("taskId", 0);
-		this.task = database.getTask(taskId);
 		long planId = getIntent().getLongExtra("planId",0);
+		long taskId = getIntent().getLongExtra("taskId", 0);
 		this.task = database.getTask(taskId);
 		if(task.getPlanId()==0)
 			task.setPlanId(planId);

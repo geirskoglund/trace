@@ -63,7 +63,7 @@ public class Task
 	}
 	public void setPlanId(long planId)
 	{
-		this.planId = id;
+		this.planId = planId;
 	}
 	
 	public String getName() 
