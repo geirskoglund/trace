@@ -1,61 +1,99 @@
 package no.hiof.trace.db.model;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import no.hiof.trace.activity.R;
+import no.hiof.trace.application.TraceApp;
 
 public class Task
 {
-	private int id;
-	private String name;
-	private String description;
+	private long id=0;
+	private Long planId;
+	private String name="";
+	private String description="";
 	private String status;
-	private ArrayList<Interval> intervals;
+	private List<Interval> intervals = new ArrayList<Interval>();
 	
-	public Task(){}
-	
-	public Task(String name, String description, String status)
+	public Task()
 	{
-		this.name = name;
-		this.description = description;
+		setDefaults();
+	}
+	
+	public Task(long planId)
+	{
+		this.planId = planId;
+		setDefaults();
+	}
+	
+	private void setDefaults()
+	{
+		String status = TraceApp.getAppContext().getString(R.string.status_open);
 		this.status = status;
 	}
 	
-	public Task(String name, String description, String status, ArrayList<Interval> intervals)
-	{
-		this.name = name;
-		this.description = description;
-		this.status = status;
-		this.intervals = intervals;
-	}
+//	public Task(String name, String description, String status)
+//	{
+//		this.name = name;
+//		this.description = description;
+//		this.status = status;
+//	}
+//	
+//	public Task(String name, String description, String status, ArrayList<Interval> intervals)
+//	{
+//		this.name = name;
+//		this.description = description;
+//		this.status = status;
+//		this.intervals = intervals;
+//	}
 
-	public int getId() {
+	public long getId() 
+	{
 		return id;
 	}
+	public void setId(long id)
+	{
+		this.id = id;
+	}
 	
-	public String getName() {
+	public long getPlanId() 
+	{
+		return planId;
+	}
+	public void setPlanId(long planId)
+	{
+		this.planId = id;
+	}
+	
+	public String getName() 
+	{
 		return name;
 	}
-
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 
-	public String getDescription() {
+	public String getDescription() 
+	{
 		return description;
 	}
-
-	public void setDescription(String description) {
+	public void setDescription(String description) 
+	{
 		this.description = description;
 	}
 
-	public String getStatus() {
+	public String getStatus() 
+	{
 		return status;
 	}
-
-	public void setStatus(String status) {
+	public void setStatus(String status) 
+	{
 		this.status = status;
 	}
 
-	public ArrayList<Interval> getIntervals() {
+	public List<Interval> getIntervals() 
+	{
 		return intervals;
 	}
 

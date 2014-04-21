@@ -58,15 +58,9 @@ public class PlanParser
 		values.put(ColumnName.LONG, plan.getLon());
 		values.put(ColumnName.AUTO_REG, plan.getAutoRegister());
 		values.put(ColumnName.STATUS, plan.getStatus());
-		values.put(ColumnName.LAST_ACTIVATED, getDateTime(plan.getLastActivatedTimestamp()));
 		values.put(ColumnName.AUTO_TRIGGER, plan.getAutoTrigger());
+		values.put(ColumnName.LAST_ACTIVATED, DateHelper.getDateTime(plan.getLastActivatedTimestamp()));
 		
 		return values;
-	}
-	
-	private static String getDateTime(Date date) 
-	{
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        return dateFormat.format(date);
 	}
 }

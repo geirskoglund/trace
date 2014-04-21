@@ -6,12 +6,15 @@ import java.util.List;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.db.model.Task;
 import no.hiof.trace.db.model.definitions.CreateTableStatement;
 import no.hiof.trace.db.values.ColumnName;
 import no.hiof.trace.db.values.Columns;
 import no.hiof.trace.db.values.DatabaseInfo;
 import no.hiof.trace.db.values.TableName;
 import no.hiof.trace.utils.PlanParser;
+import no.hiof.trace.utils.TaskParser;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -184,11 +187,35 @@ public class DatabaseManager extends SQLiteOpenHelper
 			throw new IllegalArgumentException();
 		
 		if(plan.getId()==0)
-			return addPlan2(plan);
+			return addPlan(plan);
 		else if(planExists(plan))
 			return updatePlan(plan);
 		else
-			return addPlan2(plan);
+			return addPlan(plan);
+	}
+	
+	public long writeToDatabase(Task task)
+	{
+		if(task == null)
+			throw new IllegalArgumentException();
+		
+		if(task.getId()==0)
+			return addTask(task);
+		else if(taskExists(task))
+			return updateTask(task);
+		else
+			return addTask(task);
+	}
+	
+	public long updateTask(Task task)
+	{
+		ContentValues values = TaskParser.getContentValues(task);
+		String whereClause = ColumnName.ID + " = ?";
+		String[] whereArgs = {"" + task.getId()};
+		
+		updateRow(TableName.TASK, values, whereClause, whereArgs);
+		
+		return task.getId();
 	}
 	
 	public long updatePlan(Plan plan) 
@@ -256,85 +283,63 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return rowId;
 	}
 	
+	private boolean taskExists(Task task)
+	{
+		return rowExists(TableName.TASK, ColumnName.ID, task.getId());
+	}
+	
 	private boolean planExists(Plan plan)
+	{	
+		return rowExists(TableName.PLAN, ColumnName.ID, plan.getId());
+	}
+	
+	@SuppressLint("DefaultLocale")
+	private boolean rowExists(String tableName, String idColumnName, long rowId)
 	{
 		SQLiteDatabase theDatabase = getReadableDatabase();
-		boolean planCheck = false;
+		boolean rowCheck = false;
 		
-		String query = String.format("SELECT * FROM plan WHERE %s = %d", ColumnName.ID, plan.getId());
+		String query = String.format("SELECT * FROM %s WHERE %s = %d", tableName, idColumnName, rowId);
 		Cursor cursor = theDatabase.rawQuery(query, null);
 		
-		planCheck = cursor.moveToFirst();
-		
+		rowCheck = cursor.moveToFirst();
 		theDatabase.close();
 		
-		return planCheck;
+		return rowCheck;
 	}
 
-
-	private long addPlan2(Plan plan)
+	private long addTask(Task task)
 	{
-		log("Starter addPlan2");
-		
-		ContentValues values = PlanParser.getContentValues(plan);
-		
-		return insertRow(TableName.PLAN, values);
-		
+		ContentValues values = TaskParser.getContentValues(task);
+		return insertRow(TableName.TASK, values);
 	}
 	
 	private long addPlan(Plan plan)
 	{
-		log("Starter addPlan");
-		if(plan == null)
-			throw new IllegalArgumentException();
-		
-		long rowId = 0;
-		
-		SQLiteDatabase theDatabase = getWritableDatabase();
-		ContentValues values = new ContentValues();
-		
-		//if(plan.getName()!=null)
-			values.put(ColumnName.NAME, plan.getName());
-		
-		//if(plan.getDescription()!=null)
-			values.put(ColumnName.DESCRIPTION, plan.getDescription());
-		
-		if(plan.getAutoRegister()== true)
-			values.put(ColumnName.AUTO_REG, "1");
-		else
-			values.put(ColumnName.AUTO_REG, "0");
-		
-		//if(plan.getNfc()!=null)
-			values.put(ColumnName.NFC, plan.getNfc());
-		
-		//if(plan.getSsid()!=null)
-			values.put(ColumnName.SSID, plan.getSsid());
-		
-		log("Har samlet verdier");
-			
-		theDatabase.beginTransaction();
-		try
-		{
-			log("Før insert");
-			rowId = theDatabase.insert(TableName.PLAN, null, values);
-			log("Etter");
-			theDatabase.setTransactionSuccessful();
-			log("Etter transaction");
-		}
-		catch(Exception e)
-		{
-			log("Error: " + e.getMessage());
-		}
-		finally
-		{
-			theDatabase.endTransaction();
-			theDatabase.close();
-		}
-		
-		return rowId;
-		
+		ContentValues values = PlanParser.getContentValues(plan);	
+		return insertRow(TableName.PLAN, values);
 	}
 	
+	@SuppressLint("DefaultLocale")
+	public Task getTask(long taskId)
+	{
+		SQLiteDatabase theDatabase = getReadableDatabase();
+		Task task = new Task();
+		
+		if(taskId == 0) return task;
+		
+		String query = String.format("SELECT * FROM %s WHERE %s = %d", TableName.TASK, ColumnName.ID, taskId);
+		Cursor cursor = theDatabase.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+		{
+			task = TaskParser.parse(cursor);
+		}
+		
+		return task;
+	}
+	
+	@SuppressLint("DefaultLocale")
 	public Plan getPlan(long planId)
 	{
 		SQLiteDatabase theDatabase = getReadableDatabase();
@@ -379,7 +384,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return plans.get(0);
 	}
 	
-	public List<Plan> getAllPlans(String orderByField, boolean ascending)
+	private List<Plan> getAllPlans(String orderByField, boolean ascending)
 	{
 		String direction = (ascending ? "" : " DESC"); 
 		String sorting = " ORDER BY " + orderByField + direction;
