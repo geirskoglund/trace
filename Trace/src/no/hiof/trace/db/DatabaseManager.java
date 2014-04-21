@@ -406,6 +406,25 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
+	public List<Task> getTasks(long planId)
+	{
+		List<Task> tasks = new ArrayList<Task>();
+		SQLiteDatabase theDatabase = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM "+ TableName.TASK;
+		Cursor cursor = theDatabase.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+		{
+			do
+				tasks.add(TaskParser.parse(cursor));
+			while(cursor.moveToNext());
+		}
+		
+		return tasks;
+	}
+
+
 	public void deletePlan(long planId)
 	{
 		deleteRowBasedOnId(TableName.PLAN, ColumnName.PLAN_ID, planId);

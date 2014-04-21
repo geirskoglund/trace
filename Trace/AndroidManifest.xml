@@ -59,7 +59,8 @@
 
         <activity
             android:name="no.hiof.trace.activity.TaskEditorActivity"
-            android:label="@string/title_activity_task_editor" >
+            android:label="@string/title_activity_task_editor" 
+            android:noHistory="true">
         </activity>
     </application>
 

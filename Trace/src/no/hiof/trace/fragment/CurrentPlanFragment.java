@@ -1,11 +1,15 @@
 package no.hiof.trace.fragment;
 
+import java.util.List;
+
 import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
+import no.hiof.trace.adapter.TaskListAdapter;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.db.model.Task;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +20,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class CurrentPlanFragment extends Fragment
 {
+	private ListView tasksListView;
+	private TaskListAdapter taskListAdapter;
+	
+	private List<Task> tasks;
+	
 	private Plan currentPlan;
 	private DatabaseManager database;
 	private View rootView;
@@ -61,7 +71,14 @@ public class CurrentPlanFragment extends Fragment
 		database = new DatabaseManager(this.getActivity());
 		currentPlan = database.getActivePlan();
 		setFieldValues(rootView);
+		
+		taskListAdapter = new TaskListAdapter(this.getActivity());
+		tasksListView = (ListView) this.getView().findViewById(R.id.planTasksList);
+		tasksListView.setAdapter(taskListAdapter);
 	    
+		tasks = database.getTasks(currentPlan.getId());
+		taskListAdapter.updateTasks(tasks);
+		taskListAdapter.notifyDataSetChanged();
      }
 	
 	@Override

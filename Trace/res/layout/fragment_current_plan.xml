@@ -34,12 +34,12 @@
 	    android:layout_below="@id/current_plan_description"
 	    android:text="@string/label_tasks" />
     
-<!--     <ListView -->
-<!--         android:id="@+id/planTasksList" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_below="@id/taskHeader" -->
-<!--         android:layout_marginTop="5dp" > -->
-<!--     </ListView> -->
+    <ListView
+        android:id="@+id/planTasksList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskHeader"
+        android:layout_marginTop="5dp" >
+     </ListView> 
             
 </RelativeLayout>
