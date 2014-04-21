@@ -38,10 +38,8 @@ public class PlanDetailActivity extends Activity
 		setContentView(R.layout.activity_plan_detail);
 		
 		database = new DatabaseManager(this);
-		
 		setFieldVariables();
 		makeStatusReadOnly();
-		
 		fetchPlan();
 		displayPlan();
 		displayAutoSelect();
@@ -115,8 +113,8 @@ public class PlanDetailActivity extends Activity
 	
 	private void displayAutoSelect()
 	{
-		invisibleizeAutoSelect();
-		
+		invisibleizeAutoSelect();	
+	
 		if(plan.getAutoTrigger().equals("(NONE)"))
 		{
 		}

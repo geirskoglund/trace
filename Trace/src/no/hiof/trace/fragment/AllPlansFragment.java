@@ -50,8 +50,6 @@ public class AllPlansFragment extends Fragment
 		
 		database = new DatabaseManager(this.getActivity());
 		
-		//TraceApp trace = (TraceApp)getActivity().getApplication();
-				
 		planListAdapter = new PlanListAdapter(this.getActivity());
 		
 		allPlansListView = (ListView)v.findViewById(R.id.allPlansList);
@@ -71,7 +69,6 @@ public class AllPlansFragment extends Fragment
 			{
 				Plan selectedPlan = planListAdapter.getPlan(index);
 				navigateToPlanDetails(selectedPlan.getId());
-				//navigateToPlanDetails(index);
 			}
 		});
 		

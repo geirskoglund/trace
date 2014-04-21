@@ -32,7 +32,15 @@
 	    android:layout_height="wrap_content"
 	    android:padding="5dip"
 	    android:layout_below="@id/current_plan_description"
+	    android:textSize="18sp"
+	    android:textStyle="bold"
 	    android:text="@string/label_tasks" />
+    
+    <View
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:layout_below="@id/taskHeader"
+	    android:background="@android:color/darker_gray"/>
     
     <ListView
         android:id="@+id/planTasksList"

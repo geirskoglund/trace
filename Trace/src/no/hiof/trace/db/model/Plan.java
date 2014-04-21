@@ -83,15 +83,23 @@ public class Plan implements Comparable<Plan>
 		this.name = name;
 	}
 
-	public String getDescription() {
+	public String getDescription() 
+	{
+		if(description==null)
+			return "";
+		
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(String description) 
+	{
 		this.description = description;
 	}
 
-	public String getSsid() {
+	public String getSsid() 
+	{
+		if(ssid==null)
+			return "";
 		return ssid;
 	}
 
@@ -100,6 +108,8 @@ public class Plan implements Comparable<Plan>
 	}
 
 	public String getNfc() {
+		if(nfc==null)
+			return "";
 		return nfc;
 	}
 
@@ -132,6 +142,8 @@ public class Plan implements Comparable<Plan>
 	}
 
 	public String getStatus() {
+		if(status==null)
+			return "";
 		return status;
 	}
 
@@ -154,6 +166,8 @@ public class Plan implements Comparable<Plan>
 	
 	public String getAutoTrigger()
 	{
+		if(autoTrigger==null)
+			return "";
 		return autoTrigger;
 	}
 	

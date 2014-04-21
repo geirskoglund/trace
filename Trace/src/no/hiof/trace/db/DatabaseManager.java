@@ -411,7 +411,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		List<Task> tasks = new ArrayList<Task>();
 		SQLiteDatabase theDatabase = this.getReadableDatabase();
 		
-		String query = "SELECT * FROM "+ TableName.TASK;
+		String query = "SELECT * FROM "+ TableName.TASK + " WHERE " + ColumnName.PLAN_ID + " = " + planId;
 		Cursor cursor = theDatabase.rawQuery(query, null);
 		
 		if(cursor.moveToFirst())
