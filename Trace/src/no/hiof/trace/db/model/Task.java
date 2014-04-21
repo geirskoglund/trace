@@ -58,11 +58,11 @@ public class Task
 	
 	public long getPlanId() 
 	{
-		return id;
+		return planId;
 	}
-	public void setPlanId(long id)
+	public void setPlanId(long planId)
 	{
-		this.id = id;
+		this.planId = id;
 	}
 	
 	public String getName() 
