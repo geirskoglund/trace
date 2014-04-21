@@ -1,0 +1,167 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".PlanEditorActivity" >
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <!-- First row. Contains plan name label -->
+
+        <TableRow android:layout_width="match_parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_name" />
+
+            <EditText
+                android:id="@+id/edit_plan_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip">
+
+        		<requestFocus />
+    		</EditText>
+            
+        </TableRow>
+
+        <!-- Second row. Contains plan description -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_description" />
+
+            <EditText
+                android:id="@+id/edit_plan_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip" />
+
+        	
+
+        </TableRow>
+
+        <!-- Third row. Contains plan location -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_location" />
+
+            <EditText
+                android:id="@+id/edit_plan_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip" />
+        </TableRow>
+
+        <!-- Fourth row. Contains plan SSID -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_ssid" />
+
+            <EditText
+                android:id="@+id/edit_plan_ssid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip" />
+        </TableRow>
+
+        <!-- Fifth row. Contains plan NFC -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_nfc" />
+
+            <EditText
+                android:id="@+id/edit_plan_nfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip" />
+        </TableRow>
+
+        <!-- Sixth row. Contains plan status -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_status" />
+            
+            <Spinner
+		        android:id="@+id/edit_plan_status_spinner"
+    		    android:layout_width="match_parent"
+        		android:layout_height="wrap_content"
+        		android:prompt="@string/select_status" />
+        </TableRow>
+
+        <!-- Seventh row. Contains plan auto setting -->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+
+            
+
+			<CheckBox
+		        android:id="@+id/edit_plan_auto"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="16dp"
+		        android:text="@string/label_auto_register" />
+		</TableRow>
+		
+         <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dip" >
+			
+            <Button
+        		android:id="@+id/button1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignLeft="@+id/tableLayout1"
+		        android:layout_below="@+id/checkBox1"
+		        android:text="@string/save" />
+        </TableRow>
+    </TableLayout>
+
+
+
+</RelativeLayout>

@@ -8,6 +8,9 @@
 package no.hiof.trace.activity;
 
 public final class R {
+    public static final class array {
+        public static final int status_array=0x7f060000;
+    }
     public static final class attr {
     }
     public static final class dimen {
@@ -24,35 +27,69 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
-        public static final int fifthRow=0x7f080008;
-        public static final int firstRow=0x7f080003;
-        public static final int fourthRow=0x7f080007;
-        public static final int fragmentTable=0x7f080002;
-        public static final int fragment_current=0x7f08000e;
-        public static final int intervals=0x7f08000c;
-        public static final int name=0x7f080004;
-        public static final int pager=0x7f080000;
-        public static final int pager_title_strip=0x7f080001;
-        public static final int secondRow=0x7f080005;
-        public static final int seventhRow=0x7f08000a;
-        public static final int sixthRow=0x7f080009;
-        public static final int thirdRow=0x7f080006;
-        public static final int toPlanButton=0x7f08000d;
-        public static final int toTaskButton=0x7f08000b;
+        public static final int action_settings=0x7f090027;
+        public static final int add_button=0x7f09002a;
+        public static final int allPlansList=0x7f09001f;
+        public static final int button1=0x7f09001b;
+        public static final int checkBox1=0x7f09001c;
+        public static final int current_plan_description=0x7f090023;
+        public static final int current_plan_name=0x7f090022;
+        public static final int detail_button=0x7f090028;
+        public static final int edit_button=0x7f090029;
+        public static final int edit_plan_auto=0x7f09001a;
+        public static final int edit_plan_description=0x7f090015;
+        public static final int edit_plan_location=0x7f090016;
+        public static final int edit_plan_name=0x7f090014;
+        public static final int edit_plan_nfc=0x7f090018;
+        public static final int edit_plan_ssid=0x7f090017;
+        public static final int edit_plan_status_spinner=0x7f090019;
+        public static final int fifthRow=0x7f09000c;
+        public static final int firstRow=0x7f090003;
+        public static final int fourthRow=0x7f09000a;
+        public static final int fragmentTable=0x7f090002;
+        public static final int fragment_current=0x7f090021;
+        public static final int intervals=0x7f09001e;
+        public static final int latestPlansList=0x7f090024;
+        public static final int listitem_plan_desc=0x7f090026;
+        public static final int listitem_plan_name=0x7f090025;
+        public static final int name=0x7f09001d;
+        public static final int pager=0x7f090000;
+        public static final int pager_title_strip=0x7f090001;
+        public static final int plan_detail_auto=0x7f090011;
+        public static final int plan_detail_description=0x7f090006;
+        public static final int plan_detail_lat=0x7f090008;
+        public static final int plan_detail_lon=0x7f090009;
+        public static final int plan_detail_name=0x7f090004;
+        public static final int plan_detail_nfc=0x7f09000d;
+        public static final int plan_detail_ssid=0x7f09000b;
+        public static final int plan_detail_status=0x7f09000f;
+        public static final int save_button=0x7f09002b;
+        public static final int secondRow=0x7f090005;
+        public static final int seventhRow=0x7f090010;
+        public static final int sixthRow=0x7f09000e;
+        public static final int tableLayout1=0x7f090013;
+        public static final int thirdRow=0x7f090007;
+        public static final int toPlanButton=0x7f090020;
+        public static final int toTaskButton=0x7f090012;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_plan_detail=0x7f030001;
-        public static final int activity_task_detail=0x7f030002;
-        public static final int fragment_all_plans=0x7f030003;
-        public static final int fragment_current_plan=0x7f030004;
-        public static final int fragment_latest_plans=0x7f030005;
+        public static final int activity_plan_editor=0x7f030002;
+        public static final int activity_task_detail=0x7f030003;
+        public static final int fragment_all_plans=0x7f030004;
+        public static final int fragment_current_plan=0x7f030005;
+        public static final int fragment_latest_plans=0x7f030006;
+        public static final int listitem_plan=0x7f030007;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
-        public static final int plan_detail=0x7f070001;
-        public static final int task_detail=0x7f070002;
+        public static final int main=0x7f080000;
+        public static final int plan_detail=0x7f080001;
+        public static final int plan_editor=0x7f080002;
+        public static final int swipe_current=0x7f080003;
+        public static final int swipe_listings=0x7f080004;
+        public static final int task_detail=0x7f080005;
+        public static final int task_editor=0x7f080006;
     }
     public static final class string {
         public static final int DUMMY_PLAN_BUTTON=0x7f050015;
@@ -60,7 +97,10 @@ public final class R {
         public static final int DUMMY_TEXT=0x7f050013;
         public static final int DUMMY_TIME_SLOT=0x7f050016;
         public static final int action_settings=0x7f050001;
+        public static final int add=0x7f050017;
         public static final int app_name=0x7f050000;
+        public static final int details=0x7f05001c;
+        public static final int edit_plan=0x7f05001a;
         public static final int hello_world=0x7f050006;
         public static final int label_accumulated_time=0x7f050011;
         public static final int label_auto_register=0x7f050010;
@@ -75,11 +115,21 @@ public final class R {
          */
         public static final int label_tasks=0x7f050008;
         public static final int label_time_slots=0x7f050012;
+        public static final int latitude=0x7f05001e;
+        public static final int longitude=0x7f05001d;
+        public static final int plan_was_activated=0x7f05001f;
+        public static final int save=0x7f05001b;
+        public static final int select_status=0x7f050022;
+        public static final int status_closed=0x7f050021;
+        public static final int status_open=0x7f050020;
         public static final int title_activity_plan_detail=0x7f050005;
+        public static final int title_activity_plan_editor=0x7f050019;
         public static final int title_activity_task_detail=0x7f050007;
+        public static final int title_activity_task_editor=0x7f050018;
         public static final int title_all_section=0x7f050004;
         public static final int title_current_section=0x7f050002;
         public static final int title_latest_section=0x7f050003;
+        public static final int trace_wifi_reciever=0x7f050023;
     }
     public static final class style {
         /** 
@@ -103,10 +153,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }

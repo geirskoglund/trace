@@ -26,7 +26,7 @@
         	/>
     		
     		<TextView
-    		    android:id="@+id/name"
+    		    android:id="@+id/plan_detail_name"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -49,6 +49,7 @@
         	/>
             
             <TextView 
+                android:id="@+id/plan_detail_description"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -66,9 +67,30 @@
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
-	        	android:text="@string/label_location"
+	        	android:text="@string/latitude"
         	/>
             <TextView 
+                android:id="@+id/plan_detail_lat"
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:padding="5dip"
+	        	android:text="@string/DUMMY_TEXT"
+	        />
+            
+            
+        </TableRow>
+        
+        <TableRow 
+            android:layout_width="match_parent"
+            android:layout_height="0dip">
+            <TextView 
+	        	android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:padding="5dip"
+	        	android:text="@string/longitude"
+        	/>
+            <TextView 
+                android:id="@+id/plan_detail_lon"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -90,6 +112,7 @@
 	        	android:text="@string/label_ssid"
         	/>
             <TextView 
+                android:id="@+id/plan_detail_ssid"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -110,6 +133,7 @@
 	        	android:text="@string/label_nfc"
         	/>
             <TextView 
+                android:id="@+id/plan_detail_nfc"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -129,6 +153,7 @@
 	        	android:text="@string/label_status"
         	/>
             <TextView 
+                android:id="@+id/plan_detail_status"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
@@ -141,18 +166,12 @@
             android:id="@+id/seventhRow"
             android:layout_width="match_parent"
             android:layout_height="0dip">
-        <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/label_auto_register"
-        	/>
-            <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
+        	<CheckBox
+		        android:id="@+id/plan_detail_auto"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="16dp"
+		        android:text="@string/label_auto_register" />
         </TableRow>
         
     </TableLayout>

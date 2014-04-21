@@ -15,4 +15,5 @@ public class ColumnName {
 	public static final String START_TIME = "start_time";
 	public static final String END_TIME = "end_time";
 	public static final String TASK_ID = "task_id";
+	public static final String LAST_ACTIVATED = "last_activated";
 }

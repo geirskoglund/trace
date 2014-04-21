@@ -1,18 +1,23 @@
 package no.hiof.trace.db.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class Plan
+import no.hiof.trace.activity.R;
+import no.hiof.trace.application.TraceApp;
+
+public class Plan implements Comparable<Plan> 
 {
-	private int id;
-	private String name;
-	private String description;
-	private String ssid;
-	private String nfc;
+	private long id;
+	private String name="";
+	private String description="";
+	private String ssid="";
+	private String nfc="";
 	private double lat = 0;
 	private double lon = 0;
 	private boolean autoRegister = false;
-	private String status;
+	private String status="";
+	private Date lastActivated;
 	private Task primaryTask;
 	private ArrayList<Task> tasks;
 	
@@ -24,6 +29,9 @@ public class Plan
 		this.description = description;
 		this.autoRegister = autoRegister;
 		
+		String status = TraceApp.getAppContext().getString(R.string.status_open);
+		this.status = status;
+		
 	}
 	
 	public Plan(String name, String description, boolean autoRegister, ArrayList<Task> tasks)
@@ -34,7 +42,7 @@ public class Plan
 		this.tasks = tasks;
 	}
 	
-	public Plan(int id, String name, String description, String ssid,
+	public Plan(long id, String name, String description, String ssid,
 			String nfc, double lat, double lon, boolean autoRegister,
 			String status, Task primaryTask, ArrayList<Task> tasks){
 		this.id = id;
@@ -50,12 +58,12 @@ public class Plan
 		this.tasks = tasks;
 	}
 
-	public int getId()
+	public long getId()
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(long id)
 	{
 		this.id = id;
 	}
@@ -125,6 +133,19 @@ public class Plan
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public Date getLastActivatedTimestamp()
+	{
+		if(lastActivated!=null)
+			return lastActivated;
+		else
+			return new Date();
+	}
+	
+	public void setLastActivatedTimestamp(Date timestamp)
+	{
+		lastActivated = timestamp;
+	}
 
 	public Task getPrimaryTask() {
 		return primaryTask;
@@ -151,7 +172,12 @@ public class Plan
 	//Should only be used for debugging
 	public String toString()
 	{
-		return String.format("Id:%s  Name:%s", id, name);
+		return String.format("%s: %s", name, description);
 	}
-	
+
+	@Override
+	public int compareTo(Plan other) 
+	{
+		return this.getLastActivatedTimestamp().compareTo(other.getLastActivatedTimestamp());
+	}
 }

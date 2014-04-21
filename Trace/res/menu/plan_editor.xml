@@ -7,10 +7,10 @@
         android:title="@string/action_settings"/>
     
     <item 
-        android:id="@+id/edit_button"
-      	android:icon="@android:drawable/ic_menu_edit"
+        android:id="@+id/save_button"
+      	android:icon="@android:drawable/ic_menu_save"
         android:showAsAction="ifRoom"
-        android:title="@string/edit_plan"
+        android:title="@string/save"
         />
 
 </menu>

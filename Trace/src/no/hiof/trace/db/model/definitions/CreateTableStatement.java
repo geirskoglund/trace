@@ -1,6 +1,5 @@
 package no.hiof.trace.db.model.definitions;
 
-import no.hiof.trace.db.values.ColumnName;
 
 public class CreateTableStatement
 {
@@ -12,11 +11,12 @@ public class CreateTableStatement
 			+"description TEXT NOT NULL,"
 			+"ssid TEXT,"
 			+"nfc TEXT,"
-			+"long DOUBLE,"
+			+"lon DOUBLE,"
 			+"lat DOUBLE,"
 			+"auto_register BOOLEAN NOT NULL,"
 			+"status TEXT,"
 			+"primary_task INTEGER,"
+			+"last_activated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+"FOREIGN KEY(status) REFERENCES plan_status(status),"
 			+"FOREIGN KEY(primary_task) REFERENCES task(id)"
 			+")";
