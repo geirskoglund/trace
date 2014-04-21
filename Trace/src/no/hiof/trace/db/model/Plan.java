@@ -22,7 +22,11 @@ public class Plan implements Comparable<Plan>
 	private ArrayList<Task> tasks;
 	private String autoTrigger = "";
 	
-	public Plan(){}
+	public Plan()
+	{
+		String status = TraceApp.getAppContext().getString(R.string.status_open);
+		this.status = status;
+	}
 	
 	public Plan(String name, String description, boolean autoRegister)
 	{

@@ -4,11 +4,9 @@ import java.util.List;
 
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
-import no.hiof.trace.sensor.WifiReciever;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,8 +67,6 @@ public class PlanEditorActivity extends Activity
 	{
 		long planId = getIntent().getLongExtra("planId", 0);
 		this.plan = database.getPlan(planId);
-		//this.plan = new Plan();
-		Log.d("TRACE-PEA", "The plan id was set to " + planId);	
 	}
 
 	private void populatePlanDataFields() 
@@ -81,7 +77,6 @@ public class PlanEditorActivity extends Activity
 		planNFC.setText(plan.getNfc());
 		planAuto.setChecked(plan.getAutoRegister());
 		
-		//ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) planStatusSpinner.getAdapter();
 		int spinnerPosition = statusAdapter.getPosition(plan.getStatus());
 		planStatusSpinner.setSelection(spinnerPosition);
 	}
