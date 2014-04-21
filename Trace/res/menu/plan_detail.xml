@@ -12,5 +12,11 @@
         android:showAsAction="ifRoom"
         android:title="@string/edit_plan"
         />
+    <item 
+        android:id="@+id/task_editor_button"
+      	android:icon="@drawable/ic_action_new_label"
+        android:showAsAction="ifRoom"
+        android:title="@string/save"
+        />
 
 </menu>

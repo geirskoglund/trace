@@ -27,7 +27,7 @@
     <string name="DUMMY_PLAN_BUTTON">To plan</string>
     <string name="DUMMY_TIME_SLOT">To plan</string>
     <string name="add">Add</string>
-    <string name="title_activity_task_editor">TaskEditorActivity</string>
+    <string name="title_activity_task_editor">Edit Task</string>
     <string name="title_activity_plan_editor">PlanEditorActivity</string>
     <string name="edit_plan">Edit Plan</string>
     <string name="save">Save</string>

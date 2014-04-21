@@ -8,14 +8,14 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="14" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
+        android:name="no.hiof.trace.application.TraceApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" 
-        android:name="no.hiof.trace.application.TraceApp" > 
+        android:theme="@style/AppTheme" >
         <activity
             android:name="no.hiof.trace.activity.MainActivity"
             android:label="@string/app_name" >
@@ -30,6 +30,7 @@
             android:label="@string/title_activity_plan_detail" >
             <intent-filter>
                 <action android:name="no.hiof.action.PLAN_DETAIL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -38,21 +39,28 @@
             android:label="@string/title_activity_task_detail" >
             <intent-filter>
                 <action android:name="no.hiof.action.TASK_DETAIL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name="no.hiof.trace.activity.PlanEditorActivity"
-            android:label="@string/edit_plan" 
-            android:noHistory="true">
+            android:label="@string/edit_plan"
+            android:noHistory="true" >
         </activity>
-        <receiver 
+
+        <receiver
             android:name="no.hiof.trace.sensor.WifiReciever"
-            android:label="@string/trace_wifi_reciever">
-            <intent-filter >
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
+            android:label="@string/trace_wifi_reciever" >
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="no.hiof.trace.activity.TaskEditorActivity"
+            android:label="@string/title_activity_task_editor" >
+        </activity>
     </application>
 
 </manifest>

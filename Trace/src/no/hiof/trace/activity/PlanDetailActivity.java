@@ -96,6 +96,11 @@ public class PlanDetailActivity extends Activity
 		    	editPlanPage.putExtra("planId", plan.getId());
 	        	startActivity(editPlanPage);
 	            return true;
+	        case R.id.task_editor_button:
+	        	Intent newTaskPage = new Intent(this,TaskEditorActivity.class);
+	        	newTaskPage.putExtra("planId", plan.getId());
+	        	startActivity(newTaskPage);
+	        	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
 	}
