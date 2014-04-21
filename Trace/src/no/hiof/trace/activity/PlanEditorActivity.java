@@ -119,8 +119,6 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	{
 		long planId = getIntent().getLongExtra("planId", 0);
 		this.plan = database.getPlan(planId);
-		//this.plan = new Plan();
-		Log.d("TRACE-PEA", "The plan id was set to " + planId);	
 	}
 
 	private void populatePlanDataFields() 
@@ -131,7 +129,6 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 		planNFC.setText(plan.getNfc());
 		planAuto.setChecked(plan.getAutoRegister());
 		
-		//ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) planStatusSpinner.getAdapter();
 		int spinnerPosition = statusAdapter.getPosition(plan.getStatus());
 		planStatusSpinner.setSelection(spinnerPosition);
 		
