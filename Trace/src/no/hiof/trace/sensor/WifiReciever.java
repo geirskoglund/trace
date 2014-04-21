@@ -1,9 +1,15 @@
 package no.hiof.trace.sensor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import no.hiof.trace.application.TraceApp;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -33,6 +39,18 @@ public class WifiReciever extends BroadcastReceiver
 				Log.d("TRACE-WR","No connection"  + " | state: " + manager.getWifiState());
 			}
 		}
+	}
+	
+	public static List<String> getAllStoredSsid()
+	{
+		WifiManager manager = (WifiManager)TraceApp.getAppContext().getSystemService(Context.WIFI_SERVICE);
+		List<WifiConfiguration> networks = manager.getConfiguredNetworks();
+		List<String> ssids = new ArrayList<String>();
+		
+		for(WifiConfiguration network : networks)
+			ssids.add(network.SSID);
+		
+		return ssids;
 	}
 
 }
