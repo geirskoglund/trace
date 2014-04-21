@@ -15,8 +15,9 @@ public class TaskDetailActivity extends Activity implements OnClickListener
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_detail);
-		System.out.println("Click");
-		setListeners();
+		
+		
+		//setListeners();
 	}
 	
 	@Override
