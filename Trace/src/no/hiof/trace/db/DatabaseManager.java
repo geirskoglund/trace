@@ -265,7 +265,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		try
 		{
 			log("Før insert (2) ");
-			rowId = theDatabase.insert(TableName.PLAN, null, values);
+			rowId = theDatabase.insert(tableName, null, values);
 			log("Etter");
 			theDatabase.setTransactionSuccessful();
 			log("Etter transaction");
@@ -346,8 +346,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		Plan plan = new Plan();
 		
 		if(planId==0) return plan;
-		
-		//String query = "SELECT * FROM " + TableName.PLAN + " WHERE " + ColumnName.ID + " = " + planId;
+
 		String query = String.format("SELECT * FROM %s WHERE %s = %d", TableName.PLAN, ColumnName.ID, planId);
 		Cursor cursor = theDatabase.rawQuery(query, null);
 		
