@@ -4,6 +4,7 @@ import java.util.List;
 
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.sensor.WifiReciever;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -99,10 +100,8 @@ public class PlanEditorActivity extends Activity
 		switch (item.getItemId()) 
 	    {
 		case R.id.save_button:
-			Log.d("TRACE-PEA", "Preparing to save");
 			updatePlanData();
 			saveChanges();
-			Log.d("TRACE-PEA", "Plan was saved with id: " + plan.getId() + ". Going to plan details");
 			showPlanDetails();
 			break;
 	    }
@@ -139,6 +138,7 @@ public class PlanEditorActivity extends Activity
 	{
 		Intent showPlanDetails = new Intent(this,PlanDetailActivity.class);
 		showPlanDetails.putExtra("planId", plan.getId());
+		showPlanDetails.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(showPlanDetails);
 	}
 	
