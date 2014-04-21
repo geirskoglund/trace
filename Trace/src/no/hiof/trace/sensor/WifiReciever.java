@@ -48,7 +48,7 @@ public class WifiReciever extends BroadcastReceiver
 		List<String> ssids = new ArrayList<String>();
 		
 		for(WifiConfiguration network : networks)
-			ssids.add(network.SSID);
+			ssids.add(network.SSID.substring(1, network.SSID.length()-1)); //removes quotes
 		
 		return ssids;
 	}
