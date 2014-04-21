@@ -12,22 +12,9 @@
         android:id="@+id/allPlansList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/toPlanButton"
-        android:layout_alignLeft="@+id/toPlanButton"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp" >
 
     </ListView>
-    
-    <!-- DUMMY BUTTON FOR NAV TESTING. LISTVIEW WILL BE POSITIONED HERE INSTEAD -->
-    <Button 
-        android:id="@+id/toPlanButton"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:text="@string/DUMMY_PLAN_BUTTON"
-        android:onClick="viewPlanDetails"/>
-
-    
 
 </RelativeLayout>

@@ -8,191 +8,114 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PlanDetailActivity" >
 
-    <TableLayout
-        android:id="@+id/fragmentTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-        <!-- First row. Contains plan name label -->
-        <TableRow 
-            android:id="@+id/firstRow"
-            android:layout_width="match_parent">
-            
-            <TextView
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip" 
-	        	android:text="@string/label_name"
-        	/>
-    		
     		<TextView
     		    android:id="@+id/plan_detail_name"
 	        	android:layout_width="match_parent"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
+	    		android:textSize="20sp"
+	    		android:textStyle="bold"
 	        	android:text="@string/DUMMY_TEXT"
 	        />
-            
-        </TableRow>
-        
-        <!-- Second row. Contains plan description -->
-        <TableRow 
-            android:id="@+id/secondRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
-            
-            <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/label_description"
-        	/>
-            
+ 
             <TextView 
                 android:id="@+id/plan_detail_description"
-	        	android:layout_width="match_parent"
+	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
+	        	android:layout_below="@id/plan_detail_name"
 	        	android:text="@string/DUMMY_TEXT"
 	        />
             
-        </TableRow>
-        
-        <!-- Third row. Contains plan location -->
-        <TableRow 
-            android:id="@+id/thirdRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
             <TextView 
-	        	android:layout_width="match_parent"
+                android:id="@+id/location_label"
+	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
-	        	android:text="@string/latitude"
+	        	android:layout_below="@id/plan_detail_description"
+	        	android:text="@string/label_location"
         	/>
-            <TextView 
+            
+            <TextView
                 android:id="@+id/plan_detail_lat"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/location_label"
+                android:layout_toRightOf="@+id/location_label"
+                android:padding="5dip"
+                android:text="@string/DUMMY_TEXT" />
             
-            
-        </TableRow>
-        
-        <TableRow 
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
-            <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/longitude"
-        	/>
-            <TextView 
+            <TextView
                 android:id="@+id/plan_detail_lon"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
-            
-            
-        </TableRow>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/plan_detail_lat"
+                android:layout_toRightOf="@+id/plan_detail_lat"
+                android:padding="5dip"
+                android:text="@string/DUMMY_TEXT" />
         
-        <!-- Fourth row. Contains plan SSID -->
-        <TableRow 
-            android:id="@+id/fourthRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
-        <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/label_ssid"
-        	/>
-            <TextView 
-                android:id="@+id/plan_detail_ssid"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
+            <TextView
+            android:id="@+id/ssid_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_label"
+            android:padding="5dip"
+            android:text="@string/label_ssid" />
             
-        </TableRow>
-        
-        <!-- Fifth row. Contains plan NFC -->
-        <TableRow 
-            android:id="@+id/fifthRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
+        	<TextView 
+			android:id="@+id/plan_detail_ssid"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:padding="5dip"
+	        android:layout_alignBottom="@+id/ssid_label"
+            android:layout_toRightOf="@+id/ssid_label"
+	        android:text="@string/DUMMY_TEXT" />
+            
+        	
+        	
         <TextView 
-	        	android:layout_width="match_parent"
+            android:id="@+id/nfc_label"
+	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
+	        	android:layout_below="@+id/plan_detail_ssid"
 	        	android:text="@string/label_nfc"
         	/>
             <TextView 
                 android:id="@+id/plan_detail_nfc"
-	        	android:layout_width="match_parent"
+	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
+	        	android:layout_alignBottom="@+id/nfc_label"
+            	android:layout_toRightOf="@+id/nfc_label"
 	        	android:text="@string/DUMMY_TEXT"
 	        />
-        </TableRow>
-        
-        <!-- Sixth row. Contains plan status -->
-        <TableRow 
-            android:id="@+id/sixthRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
-        <TextView 
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/label_status"
-        	/>
-            <TextView 
+            
+            <TextView
+                android:id="@+id/status_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nfc_label"
+                android:padding="5dip"
+                android:text="@string/label_status" />
+            
+            <TextView
                 android:id="@+id/plan_detail_status"
-	        	android:layout_width="match_parent"
-	        	android:layout_height="wrap_content"
-	        	android:padding="5dip"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
-        </TableRow>
-        
-        <!-- Seventh row. Contains plan auto setting -->
-        <TableRow 
-            android:id="@+id/seventhRow"
-            android:layout_width="match_parent"
-            android:layout_height="0dip">
-        	<CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/status_label"
+                android:layout_toRightOf="@id/status_label"
+                android:padding="5dip"
+                android:text="@string/DUMMY_TEXT" />
+
+            
+            <CheckBox
 		        android:id="@+id/plan_detail_auto"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="16dp"
+		        android:layout_marginTop="5dp"
+		        android:textSize="14sp"
+		        android:layout_below="@+id/status_label"
 		        android:text="@string/label_auto_register" />
-        </TableRow>
-        
-    </TableLayout>
-    
-    
-    
-    <!-- DUMMY BUTTON FOR NAV TESTING. LISTVIEW WILL BE POSITIONED HERE INSTEAD -->
-    <Button 
-        android:id="@+id/toTaskButton"
-        android:layout_height="200dip"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:text="@string/DUMMY_TASK_BUTTON"
-        android:onClick="viewTaskDetails"/>
-    
-    <TextView 
-		android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:padding="5dip"
-	    android:layout_above="@id/toTaskButton"
-	    android:text="@string/label_tasks"/>
-    <!-- ListView ></ListView-->
 
 </RelativeLayout>

@@ -29,8 +29,8 @@ public class TaskDetailActivity extends Activity implements OnClickListener
 
 	private void setListeners()
 	{
-		View intervals = (View) findViewById(R.id.intervals);
-		intervals.setOnClickListener(this);
+//		View intervals = (View) findViewById(R.id.intervals);
+//		intervals.setOnClickListener(this);
 	}
 	
 	@Override
@@ -41,12 +41,12 @@ public class TaskDetailActivity extends Activity implements OnClickListener
 	
 	private void handleClicksForView(View view)
 	{
-		switch(view.getId())
-		{
-			case R.id.intervals:
-				changeBackgroundColor(view);
-				break;
-		}
+//		switch(view.getId())
+//		{
+//			case R.id.intervals:
+//				changeBackgroundColor(view);
+//				break;
+//		}
 	}
 	
 	public void changeBackgroundColor(View view)

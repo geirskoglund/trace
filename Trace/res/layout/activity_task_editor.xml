@@ -8,9 +8,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TaskEditorActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+    		<TextView
+                android:id="@+id/name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_name" />
+
+            <EditText
+                android:id="@+id/edit_task_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dip"
+                android:inputType="text"
+                android:padding="5dip"
+                android:layout_below="@+id/name_label">
+
+        		<requestFocus />
+    		</EditText>
+            
+            
+            <TextView
+                android:id="@+id/description_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:layout_below="@+id/edit_task_name"
+                android:text="@string/label_description" />
+
+            <EditText
+                android:id="@+id/edit_task_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:padding="5dip" 
+                android:layout_below="@+id/description_label"/>
+
+            <TextView
+                android:id="@+id/status_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_status" 
+                android:layout_below="@+id/edit_task_description"/>
+            
+            <Spinner
+		        android:id="@+id/edit_task_status_spinner"
+    		    android:layout_width="match_parent"
+        		android:layout_height="wrap_content"
+        		android:prompt="@string/select_status" 
+        		android:layout_below="@+id/status_label"/>
+            
+			<CheckBox
+		        android:id="@+id/edit_task_default"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="16dp"
+		        android:text="@string/label_default_task"
+		        android:layout_below="@+id/edit_task_status_spinner" />
 
 </RelativeLayout>
