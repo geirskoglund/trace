@@ -59,6 +59,7 @@ public class PlanParser
 		values.put(ColumnName.AUTO_REG, plan.getAutoRegister());
 		values.put(ColumnName.STATUS, plan.getStatus());
 		values.put(ColumnName.LAST_ACTIVATED, getDateTime(plan.getLastActivatedTimestamp()));
+		values.put(ColumnName.AUTO_TRIGGER, plan.getAutoTrigger());
 		
 		return values;
 	}

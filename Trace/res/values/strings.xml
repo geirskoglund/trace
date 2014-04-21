@@ -42,6 +42,14 @@
         <item>Open</item>
         <item>Closed</item>
     </string-array>
+    
+    <string-array name="auto_select_array">
+        <item>(NONE)</item>
+        <item>SSID</item>
+        <item>GPS</item>
+        <item>NFC</item>
+    </string-array>
+    
     <string name="select_status">Select Status</string>
     <string name="trace_wifi_reciever">Trace Wifi Receiver</string>
     <string name="label_default_task">Default task</string>
