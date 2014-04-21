@@ -15,6 +15,7 @@ public class CreateTableStatement
 			+"lat DOUBLE,"
 			+"auto_register BOOLEAN NOT NULL,"
 			+"status TEXT,"
+			+"auto_trigger TEXT,"
 			+"primary_task INTEGER,"
 			+"last_activated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,"
 			+"FOREIGN KEY(status) REFERENCES plan_status(status),"

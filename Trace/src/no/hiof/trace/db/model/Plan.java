@@ -20,6 +20,7 @@ public class Plan implements Comparable<Plan>
 	private Date lastActivated;
 	private Task primaryTask;
 	private ArrayList<Task> tasks;
+	private String autoTrigger = "";
 	
 	public Plan(){}
 	
@@ -145,6 +146,16 @@ public class Plan implements Comparable<Plan>
 	public void setLastActivatedTimestamp(Date timestamp)
 	{
 		lastActivated = timestamp;
+	}
+	
+	public String getAutoTrigger()
+	{
+		return autoTrigger;
+	}
+	
+	public void setAutoTrigger(String trigger)
+	{
+		this.autoTrigger = trigger;
 	}
 
 	public Task getPrimaryTask() {

@@ -282,7 +282,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		
 	}
 	
-	public long addPlan(Plan plan)
+	private long addPlan(Plan plan)
 	{
 		log("Starter addPlan");
 		if(plan == null)

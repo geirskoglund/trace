@@ -40,13 +40,8 @@ public class LatestPlansFragment extends Fragment
 		setHasOptionsMenu(true);
 		
 		database = new DatabaseManager(this.getActivity());
-		//List<Plan> latestPlans = database.getLatestPlans(LATEST_PLANS_QTY);
-		
-//		TraceApp trace = (TraceApp)getActivity().getApplication();
-//		List<Plan> latestPlans = trace.getLatestPlans();
 		
 		planListAdapter = new PlanListAdapter(this.getActivity());
-		//planListAdapter.updatePlans(latestPlans);
 		
 		latestPlansListView = (ListView)rootView.findViewById(R.id.latestPlansList);
 		latestPlansListView.setAdapter(planListAdapter);
