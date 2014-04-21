@@ -17,7 +17,7 @@
     <string name="label_plan_name">Plan name</string>
     <string name="label_location">Location</string>
     <string name="label_ssid">SSID</string>
-    <string name="label_nfc">NFC</string>
+    <string name="label_nfc">NFC-tag</string>
     <string name="label_status">Status</string>
     <string name="label_auto_register">Auto register</string>
     <string name="label_accumulated_time">Accumulated time</string>
@@ -53,5 +53,7 @@
     <string name="select_status">Select Status</string>
     <string name="trace_wifi_reciever">Trace Wifi Receiver</string>
     <string name="label_default_task">Default task</string>
+    <string name="auto_registration_method">Auto registration method</string>
+    <string name="auto_select_label">Auto select</string>
 
 </resources>

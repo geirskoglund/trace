@@ -28,11 +28,23 @@
 	        />
             
             <TextView 
+                android:id="@+id/auto_register_label"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:paddingTop="5dip"
+	        	android:paddingLeft="5dip"
+	        	android:paddingRight="5dip"
+	        	android:paddingBottom="0dp"
+	        	android:layout_below="@+id/plan_detail_description"
+	        	android:text="@string/auto_select_label"
+	        />
+            
+            <TextView 
                 android:id="@+id/location_label"
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
-	        	android:layout_below="@id/plan_detail_description"
+	        	android:layout_below="@+id/auto_register_label"
 	        	android:text="@string/label_location"
         	/>
             
@@ -58,7 +70,7 @@
             android:id="@+id/ssid_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/location_label"
+            android:layout_below="@+id/auto_register_label"
             android:padding="5dip"
             android:text="@string/label_ssid" />
             
@@ -78,7 +90,7 @@
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
-	        	android:layout_below="@+id/plan_detail_ssid"
+	        	android:layout_below="@+id/auto_register_label"
 	        	android:text="@string/label_nfc"
         	/>
             <TextView 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -25,6 +26,10 @@ public class PlanDetailActivity extends Activity
 	TextView planLongitude;
 	TextView planStatus;
 	CheckBox planAuto;
+	
+	TextView ssidLabel;
+	TextView nfcLabel;
+	TextView gpsLabel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,6 +44,7 @@ public class PlanDetailActivity extends Activity
 		
 		fetchPlan();
 		displayPlan();
+		displayAutoSelect();
 	}
 
 	private void setFieldVariables() 
@@ -51,6 +57,10 @@ public class PlanDetailActivity extends Activity
 		planLatitude = (TextView)findViewById(R.id.plan_detail_lat);
 		planLongitude = (TextView)findViewById(R.id.plan_detail_lon);
 		planAuto = (CheckBox)findViewById(R.id.plan_detail_auto);
+		
+		ssidLabel = (TextView) findViewById(R.id.ssid_label);
+		gpsLabel = (TextView) findViewById(R.id.location_label);
+		nfcLabel = (TextView) findViewById(R.id.nfc_label);
 	}
 
 	private void makeStatusReadOnly() 
@@ -102,6 +112,44 @@ public class PlanDetailActivity extends Activity
 	    return super.onOptionsItemSelected(item);
 	}
 	
+	
+	private void displayAutoSelect()
+	{
+		invisibleizeAutoSelect();
+		
+		if(plan.getAutoTrigger().equals("(NONE)"))
+		{
+		}
+		else if(plan.getAutoTrigger().equals("SSID"))
+		{
+			ssidLabel.setVisibility(View.VISIBLE);
+			planSSId.setVisibility(View.VISIBLE);
+		}
+		else if(plan.getAutoTrigger().equals("GPS"))
+		{
+			gpsLabel.setVisibility(View.VISIBLE);
+			planLongitude.setVisibility(View.VISIBLE);
+			planLatitude.setVisibility(View.VISIBLE);
+		}
+		else if(plan.getAutoTrigger().equals("NFC"))
+		{
+			nfcLabel.setVisibility(View.VISIBLE);
+			planNFC.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	public void invisibleizeAutoSelect()
+	{
+		gpsLabel.setVisibility(View.INVISIBLE);
+		planLongitude.setVisibility(View.INVISIBLE);
+		planLatitude.setVisibility(View.INVISIBLE);
+		
+		ssidLabel.setVisibility(View.INVISIBLE);
+		planSSId.setVisibility(View.INVISIBLE);
+		
+		nfcLabel.setVisibility(View.INVISIBLE);
+		planNFC.setVisibility(View.INVISIBLE);
+	}
 //	public void viewTaskDetails(View view)
 //	{
 //		Intent taskDetail = new Intent("no.hiof.action.TASK_DETAIL");
