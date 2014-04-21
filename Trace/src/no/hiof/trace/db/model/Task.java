@@ -5,11 +5,12 @@ import java.util.List;
 
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.db.DatabaseManager;
 
 public class Task
 {
 	private long id=0;
-	private Long planId;
+	private long planId=0;
 	private String name="";
 	private String description="";
 	private String status;
@@ -114,6 +115,12 @@ public class Task
 	public String toString()
 	{
 		return String.format("Id:%s Name:%s Intervals:%s", id, name, intervals.size());
+	}
+	
+	public Plan getPlan()
+	{
+		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
+		return database.getPlan(this.planId);
 	}
 	
 }
