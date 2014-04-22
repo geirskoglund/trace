@@ -1,7 +1,5 @@
 package no.hiof.trace.fragment;
 
-import java.util.List;
-
 import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
@@ -84,19 +82,11 @@ public class CurrentPlanFragment extends Fragment
 			}	
 		});
 	}
-
-	public void viewTaskDetails(View view)
-	{
-		Intent intent = new Intent("no.hiof.trace.activity.TaskDetailActivity");
-		startActivity(intent);
-	}
 	
 	@Override
 	public void onResume()
     {  
 	    super.onResume();
-	    Log.d("TRACE-MA","onResume");
-	    
 	    updatePlanData();
 	    updateTaskData();
      }
