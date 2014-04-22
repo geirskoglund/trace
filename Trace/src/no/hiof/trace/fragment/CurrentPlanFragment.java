@@ -118,24 +118,25 @@ public class CurrentPlanFragment extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-	    switch (item.getItemId()) {
-	    case R.id.add_button:
-	    	Log.d("TRACE-MA", "+ was pressed.");
-	    	Intent newPlanPage = new Intent(this.getActivity(), PlanEditorActivity.class);
-	    	startActivity(newPlanPage);
-	    	return true;
-	    case R.id.detail_button:
-	    	Log.d("TRACE-MA", "Detail was pressed.");
-	    	Intent detailPlanPage = new Intent(this.getActivity(),PlanDetailActivity.class);
-	    	detailPlanPage.putExtra("planId", currentPlan.getId());
-	    	startActivity(detailPlanPage);
-	    	return true;
-	    case R.id.edit_button:
-	    	Log.d("TRACE-MA", "Edit was pressed.");
-	    	Intent detailEditPage = new Intent(this.getActivity(),PlanEditorActivity.class);
-	    	detailEditPage.putExtra("planId", currentPlan.getId());
-	    	startActivity(detailEditPage);
-	    	return true;
+	    switch (item.getItemId()) 
+	    {
+		    case R.id.add_button:
+		    	Log.d("TRACE-MA", "+ was pressed.");
+		    	Intent newPlanPage = new Intent(this.getActivity(), PlanEditorActivity.class);
+		    	startActivity(newPlanPage);
+		    	return true;
+		    case R.id.detail_button:
+		    	Log.d("TRACE-MA", "Detail was pressed.");
+		    	Intent detailPlanPage = new Intent(this.getActivity(),PlanDetailActivity.class);
+		    	detailPlanPage.putExtra("planId", currentPlan.getId());
+		    	startActivity(detailPlanPage);
+		    	return true;
+		    case R.id.edit_button:
+		    	Log.d("TRACE-MA", "Edit was pressed.");
+		    	Intent detailEditPage = new Intent(this.getActivity(),PlanEditorActivity.class);
+		    	detailEditPage.putExtra("planId", currentPlan.getId());
+		    	startActivity(detailEditPage);
+		    	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
 	} 
