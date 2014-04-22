@@ -5,6 +5,7 @@ import java.util.List;
 import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
+import no.hiof.trace.activity.TaskDetailActivity;
 import no.hiof.trace.adapter.TaskListAdapter;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
@@ -20,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +36,8 @@ public class CurrentPlanFragment extends Fragment
 	private Plan currentPlan;
 	private DatabaseManager database;
 	private View rootView;
+	
+	boolean startup = true;
 	
 	public CurrentPlanFragment(){}
 
@@ -79,6 +84,27 @@ public class CurrentPlanFragment extends Fragment
 		tasks = database.getTasks(currentPlan.getId());
 		taskListAdapter.updateTasks(tasks);
 		taskListAdapter.notifyDataSetChanged();
+		
+		//MESSY, FOR PRESENTATION
+//		if(startup)
+//		{
+			tasksListView.setOnItemClickListener(new OnItemClickListener()
+			{
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
+				{
+					Task selectedTask = taskListAdapter.getTask(index);
+					
+					Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
+					showTaskDetail.putExtra("taskId", selectedTask.getId());
+					showTaskDetail.putExtra("planId", currentPlan.getId());
+					startActivity(showTaskDetail);
+				}
+				
+			});
+//			startup=false;
+//		}
      }
 	
 	@Override

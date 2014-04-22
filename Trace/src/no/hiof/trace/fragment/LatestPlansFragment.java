@@ -1,5 +1,6 @@
 package no.hiof.trace.fragment;
 
+import java.util.Date;
 import java.util.List;
 
 import no.hiof.trace.activity.PlanDetailActivity;
@@ -8,6 +9,7 @@ import no.hiof.trace.activity.R;
 import no.hiof.trace.adapter.PlanListAdapter;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 public class LatestPlansFragment extends Fragment
@@ -63,8 +67,37 @@ public class LatestPlansFragment extends Fragment
 				//navigateToPlanDetails(index);
 			}
 		});
+		
+		latestPlansListView.setOnItemLongClickListener(new OnItemLongClickListener()
+		{
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long id) 
+			{
+				Plan selectedPlan = planListAdapter.getPlan(index);
+				String toastText = selectedPlan.getName() + getActivity().getString(R.string.plan_was_activated);
+				
+				showToast(toastText);
+				
+				selectedPlan.setLastActivatedTimestamp(new Date());
+				
+				database.updatePlan(selectedPlan);
+				
+				return true;
+			}
+			
+		});
 	}
 
+	private void showToast(String text)
+	{
+		Context context = this.getActivity().getApplicationContext();
+		int duration = Toast.LENGTH_SHORT;
+		
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
+	}
+	
 	private void navigateToPlanDetails(long planId) 
 	{
 		Intent showPlanDetails = new Intent(this.getActivity(),PlanDetailActivity.class);
