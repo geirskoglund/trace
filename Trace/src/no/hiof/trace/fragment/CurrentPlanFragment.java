@@ -31,7 +31,6 @@ public class CurrentPlanFragment extends Fragment
 	
 	private Plan currentPlan;
 	private DatabaseManager database;
-	private View rootView;
 	
 	private TextView planName;
 	private TextView planDescription;
@@ -41,29 +40,29 @@ public class CurrentPlanFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		rootView = inflater.inflate(R.layout.fragment_current_plan, container, false);
+		View view = inflater.inflate(R.layout.fragment_current_plan, container, false);
 		
 		database = new DatabaseManager(this.getActivity());
-		setupListViewAdapter();
+		setupListViewAdapter(view);
 		setListViewListeners();
 		setHasOptionsMenu(true);
 		
-		setFieldVariables();
+		setFieldVariables(view);
 		
-		return rootView;
+		return view;
 	}
 	
-	private void setupListViewAdapter()
+	private void setupListViewAdapter(View view)
 	{
 		taskListAdapter = new TaskListAdapter(this.getActivity());
-		tasksListView = (ListView) rootView.findViewById(R.id.planTasksList);
+		tasksListView = (ListView) view.findViewById(R.id.planTasksList);
 		tasksListView.setAdapter(taskListAdapter);
 	}
 	
-	private void setFieldVariables()
+	private void setFieldVariables(View view)
 	{
-		planName = (TextView) rootView.findViewById(R.id.current_plan_name);
-		planDescription = (TextView) rootView.findViewById(R.id.current_plan_description);
+		planName = (TextView) view.findViewById(R.id.current_plan_name);
+		planDescription = (TextView) view.findViewById(R.id.current_plan_description);
 	}
 	
 	private void setListViewListeners()
