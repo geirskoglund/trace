@@ -2,9 +2,11 @@ package no.hiof.trace.db.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.db.DatabaseManager;
 
 public class Plan implements Comparable<Plan> 
 {
@@ -184,8 +186,10 @@ public class Plan implements Comparable<Plan>
 		this.primaryTask = primaryTask;
 	}
 
-	public ArrayList<Task> getTasks() {
-		return tasks;
+	public List<Task> getTasks() 
+	{
+		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
+		return database.getTasks(this.id);
 	}
 	
 	public void addTask(Task task)

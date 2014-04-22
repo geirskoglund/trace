@@ -31,13 +31,12 @@ public class CurrentPlanFragment extends Fragment
 	private ListView tasksListView;
 	private TaskListAdapter taskListAdapter;
 	
-	private List<Task> tasks;
-	
 	private Plan currentPlan;
 	private DatabaseManager database;
 	private View rootView;
 	
-	boolean startup = true;
+	private TextView planName;
+	private TextView planDescription;
 	
 	public CurrentPlanFragment(){}
 
@@ -46,20 +45,44 @@ public class CurrentPlanFragment extends Fragment
 	{
 		rootView = inflater.inflate(R.layout.fragment_current_plan, container, false);
 		
+		database = new DatabaseManager(this.getActivity());
+		setupListViewAdapter();
+		setListViewListeners();
 		setHasOptionsMenu(true);
 		
-		//TraceApp trace = (TraceApp)getActivity().getApplication();
-
+		setFieldVariables();
+		
 		return rootView;
 	}
 	
-	private void setFieldValues(View view) 
+	private void setupListViewAdapter()
 	{
-		TextView planName = (TextView) view.findViewById(R.id.current_plan_name);
-		TextView planDescription = (TextView) view.findViewById(R.id.current_plan_description);
-		
-		planName.setText(currentPlan.getName());
-		planDescription.setText(currentPlan.getDescription());
+		taskListAdapter = new TaskListAdapter(this.getActivity());
+		tasksListView = (ListView) rootView.findViewById(R.id.planTasksList);
+		tasksListView.setAdapter(taskListAdapter);
+	}
+	
+	private void setFieldVariables()
+	{
+		planName = (TextView) rootView.findViewById(R.id.current_plan_name);
+		planDescription = (TextView) rootView.findViewById(R.id.current_plan_description);
+	}
+	
+	private void setListViewListeners()
+	{
+		tasksListView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
+			{
+				Task selectedTask = taskListAdapter.getTask(index);
+				
+				Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
+				showTaskDetail.putExtra("taskId", selectedTask.getId());
+				showTaskDetail.putExtra("planId", currentPlan.getId());
+				startActivity(showTaskDetail);
+			}	
+		});
 	}
 
 	public void viewTaskDetails(View view)
@@ -72,40 +95,29 @@ public class CurrentPlanFragment extends Fragment
 	public void onResume()
     {  
 	    super.onResume();
+	    Log.d("TRACE-MA","onResume");
 	    
-		database = new DatabaseManager(this.getActivity());
-		currentPlan = database.getActivePlan();
-		setFieldValues(rootView);
-		
-		taskListAdapter = new TaskListAdapter(this.getActivity());
-		tasksListView = (ListView) this.getView().findViewById(R.id.planTasksList);
-		tasksListView.setAdapter(taskListAdapter);
-	    
-		tasks = database.getTasks(currentPlan.getId());
-		taskListAdapter.updateTasks(tasks);
-		taskListAdapter.notifyDataSetChanged();
-		
-		//MESSY, FOR PRESENTATION
-//		if(startup)
-//		{
-			tasksListView.setOnItemClickListener(new OnItemClickListener()
-			{
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
-				{
-					Task selectedTask = taskListAdapter.getTask(index);
-					
-					Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
-					showTaskDetail.putExtra("taskId", selectedTask.getId());
-					showTaskDetail.putExtra("planId", currentPlan.getId());
-					startActivity(showTaskDetail);
-				}
-				
-			});
-//			startup=false;
-//		}
+	    updatePlanData();
+	    updateTaskData();
      }
+	
+	private void updatePlanData()
+	{
+		currentPlan = database.getActivePlan();
+		setFieldValues();
+	}
+	
+	private void setFieldValues() 
+	{
+		planName.setText(currentPlan.getName());
+		planDescription.setText(currentPlan.getDescription());
+	}
+
+	private void updateTaskData()
+	{
+		taskListAdapter.updateTasks(currentPlan.getTasks());
+		taskListAdapter.notifyDataSetChanged();
+	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
@@ -117,7 +129,6 @@ public class CurrentPlanFragment extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-
 	    switch (item.getItemId()) {
 	    case R.id.add_button:
 	    	Log.d("TRACE-MA", "+ was pressed.");
