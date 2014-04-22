@@ -25,8 +25,8 @@
     		    android:id="@+id/task_detail_plan_name"
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
-	        	android:paddingLeft="15dip"
-	        	android:textSize="12sp"
+	        	android:paddingLeft="10dip"
+	        	android:textSize="14sp"
 	        	android:layout_below="@+id/task_detail_name"
 	        	android:text="@string/DUMMY_TEXT"
 	        />
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/task_detail_status"
                 android:padding="5dip"
-                android:text="@string/DUMMY_TEXT" />
+                android:text="Accumulated time:" />
 			
 <!-- 	IS SET TO DEFAULT TASK -->
 			<CheckBox
@@ -69,14 +69,22 @@
 		        android:layout_below="@+id/task_detail_accumulated_time"
 		        android:text="@string/label_default_task" />
 
-	<!-- LIST OF REGISTERED TIME SLOTS -->
+    
     <TextView
-        android:id="@+id/time_slot_header"
-		android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:padding="5dip"
-	    android:layout_below="@+id/task_detail_default"
-	    android:text="@string/label_time_slots" />
+		        android:id="@+id/time_slot_header"
+				android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="5dip"
+			    android:layout_below="@+id/task_detail_default"
+			    android:textSize="18sp"
+			    android:textStyle="bold"
+			    android:text="@string/label_time_slots" />
+    
+    		<View
+			    android:layout_width="fill_parent"
+			    android:layout_height="1dp"
+			    android:layout_below="@+id/time_slot_header"
+			    android:background="@android:color/darker_gray"/>
 
 
 <!--     ListView ></ListView -->

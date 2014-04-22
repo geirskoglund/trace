@@ -130,4 +130,20 @@
 		        android:layout_below="@+id/status_label"
 		        android:text="@string/label_auto_register" />
 
+            
+            <TextView
+		        android:id="@+id/taskHeader"
+				android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="5dip"
+			    android:layout_below="@+id/plan_detail_auto"
+			    android:textSize="18sp"
+			    android:textStyle="bold"
+			    android:text="@string/label_tasks" />
+    
+    		<View
+			    android:layout_width="fill_parent"
+			    android:layout_height="1dp"
+			    android:layout_below="@id/taskHeader"
+			    android:background="@android:color/darker_gray"/>
 </RelativeLayout>
