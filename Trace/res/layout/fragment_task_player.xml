@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#ff9933" 
+    android:padding="5dip">
+    
+    <LinearLayout 
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+		<TextView
+	        android:id="@+id/task_player_plan_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/DUMMY_TEXT" />
+	
+	    <TextView
+	        android:id="@+id/task_player_task_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/DUMMY_TEXT"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />        
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/task_player_button"
+        android:contentDescription="@string/play"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:src="@android:drawable/ic_media_play"
+        android:gravity="center_vertical|right" 
+        />
+        
+</LinearLayout>

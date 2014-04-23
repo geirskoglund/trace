@@ -55,5 +55,6 @@
     <string name="label_default_task">Default task</string>
     <string name="auto_registration_method">Auto registration method</string>
     <string name="auto_select_label">Auto select</string>
+    <string name="play">Play</string>
 
 </resources>
