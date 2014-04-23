@@ -18,18 +18,7 @@
 	    		android:textSize="20sp"
 	    		android:textStyle="bold"
 	        	android:text="@string/DUMMY_TEXT"
-	        />
-      
- 	<!-- PLAN NAME -->
-    		<TextView
-    		    android:id="@+id/task_detail_plan_name"
-	        	android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:paddingLeft="10dip"
-	        	android:textSize="14sp"
-	        	android:layout_below="@+id/task_detail_name"
-	        	android:text="@string/DUMMY_TEXT"
-	        />
+	        />      
    
 	<!-- TASK DESCRIPTION             -->
             <TextView 
@@ -37,7 +26,7 @@
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
 	        	android:padding="5dip"
-	        	android:layout_below="@+id/task_detail_plan_name"
+	        	android:layout_below="@+id/task_detail_name"
 	        	android:text="@string/DUMMY_TEXT"
 	        />
 
@@ -57,25 +46,16 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/task_detail_status"
                 android:padding="5dip"
-                android:text="Accumulated time:" />
+                android:text="@string/accumulated_time" />
+		
 			
-<!-- 	IS SET TO DEFAULT TASK -->
-			<CheckBox
-		        android:id="@+id/task_detail_default"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="5dp"
-		        android:textSize="14sp"
-		        android:layout_below="@+id/task_detail_accumulated_time"
-		        android:text="@string/label_default_task" />
-
-    
+			
     <TextView
 		        android:id="@+id/time_slot_header"
 				android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
 			    android:padding="5dip"
-			    android:layout_below="@+id/task_detail_default"
+			    android:layout_below="@+id/task_detail_accumulated_time"
 			    android:textSize="18sp"
 			    android:textStyle="bold"
 			    android:text="@string/label_time_slots" />

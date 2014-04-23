@@ -14,8 +14,7 @@ public class TaskDetailActivity extends Activity
 	DatabaseManager database;
 	Task task;
 	
-	TextView planName;
-	TextView taskName;
+	TextView planAndTaskName;
 	TextView taskDescription;
 	TextView taskStatus;
 	
@@ -34,8 +33,7 @@ public class TaskDetailActivity extends Activity
 	
 	private void setFieldVariables() 
 	{
-		planName = (TextView) findViewById(R.id.task_detail_plan_name);
-		taskName = (TextView) findViewById(R.id.task_detail_name);
+		planAndTaskName = (TextView) findViewById(R.id.task_detail_name);
 		taskDescription = (TextView) findViewById(R.id.task_detail_description);
 		taskStatus = (TextView) findViewById(R.id.task_detail_status);
 	}
@@ -48,10 +46,14 @@ public class TaskDetailActivity extends Activity
 
 	private void displayTask() 
 	{
-		planName.setText(task.getPlan().getName());
-		taskName.setText(task.getName());
+		planAndTaskName.setText(taskAndPlanCombined());
 		taskDescription.setText(task.getDescription());
 		taskStatus.setText(task.getStatus());
+	}
+	
+	private String taskAndPlanCombined()
+	{
+		return String.format("%s - %s", task.getPlan().getName(),task.getName());
 	}
 
 	@Override

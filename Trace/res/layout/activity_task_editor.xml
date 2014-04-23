@@ -58,13 +58,5 @@
         		android:layout_height="wrap_content"
         		android:prompt="@string/select_status" 
         		android:layout_below="@+id/status_label"/>
-            
-			<CheckBox
-		        android:id="@+id/edit_task_default"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="16dp"
-		        android:text="@string/label_default_task"
-		        android:layout_below="@+id/edit_task_status_spinner" />
 
 </RelativeLayout>
