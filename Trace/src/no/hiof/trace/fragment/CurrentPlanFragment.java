@@ -1,7 +1,5 @@
 package no.hiof.trace.fragment;
 
-import java.util.List;
-
 import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
@@ -31,81 +29,84 @@ public class CurrentPlanFragment extends Fragment
 	private ListView tasksListView;
 	private TaskListAdapter taskListAdapter;
 	
-	private List<Task> tasks;
-	
 	private Plan currentPlan;
 	private DatabaseManager database;
-	private View rootView;
 	
-	boolean startup = true;
+	private TextView planName;
+	private TextView planDescription;
 	
 	public CurrentPlanFragment(){}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		rootView = inflater.inflate(R.layout.fragment_current_plan, container, false);
+		View view = inflater.inflate(R.layout.fragment_current_plan, container, false);
 		
+		database = new DatabaseManager(this.getActivity());
+		setupListViewAdapter(view);
+		setListViewListeners();
 		setHasOptionsMenu(true);
 		
-		//TraceApp trace = (TraceApp)getActivity().getApplication();
-
-		return rootView;
+		setFieldVariables(view);
+		
+		return view;
 	}
 	
-	private void setFieldValues(View view) 
+	private void setupListViewAdapter(View view)
 	{
-		TextView planName = (TextView) view.findViewById(R.id.current_plan_name);
-		TextView planDescription = (TextView) view.findViewById(R.id.current_plan_description);
-		
-		planName.setText(currentPlan.getName());
-		planDescription.setText(currentPlan.getDescription());
+		taskListAdapter = new TaskListAdapter(this.getActivity());
+		tasksListView = (ListView) view.findViewById(R.id.planTasksList);
+		tasksListView.setAdapter(taskListAdapter);
 	}
-
-	public void viewTaskDetails(View view)
+	
+	private void setFieldVariables(View view)
 	{
-		Intent intent = new Intent("no.hiof.trace.activity.TaskDetailActivity");
-		startActivity(intent);
+		planName = (TextView) view.findViewById(R.id.current_plan_name);
+		planDescription = (TextView) view.findViewById(R.id.current_plan_description);
+	}
+	
+	private void setListViewListeners()
+	{
+		tasksListView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
+			{
+				Task selectedTask = taskListAdapter.getTask(index);
+				
+				Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
+				showTaskDetail.putExtra("taskId", selectedTask.getId());
+				showTaskDetail.putExtra("planId", currentPlan.getId());
+				startActivity(showTaskDetail);
+			}	
+		});
 	}
 	
 	@Override
 	public void onResume()
     {  
 	    super.onResume();
-	    
-		database = new DatabaseManager(this.getActivity());
-		currentPlan = database.getActivePlan();
-		setFieldValues(rootView);
-		
-		taskListAdapter = new TaskListAdapter(this.getActivity());
-		tasksListView = (ListView) this.getView().findViewById(R.id.planTasksList);
-		tasksListView.setAdapter(taskListAdapter);
-	    
-		tasks = database.getTasks(currentPlan.getId());
-		taskListAdapter.updateTasks(tasks);
-		taskListAdapter.notifyDataSetChanged();
-		
-		//MESSY, FOR PRESENTATION
-//		if(startup)
-//		{
-			tasksListView.setOnItemClickListener(new OnItemClickListener()
-			{
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
-				{
-					Task selectedTask = taskListAdapter.getTask(index);
-					
-					Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
-					showTaskDetail.putExtra("taskId", selectedTask.getId());
-					showTaskDetail.putExtra("planId", currentPlan.getId());
-					startActivity(showTaskDetail);
-				}
-				
-			});
-//			startup=false;
-//		}
+	    updatePlanData();
+	    updateTaskData();
      }
+	
+	private void updatePlanData()
+	{
+		currentPlan = database.getActivePlan();
+		setFieldValues();
+	}
+	
+	private void setFieldValues() 
+	{
+		planName.setText(currentPlan.getName());
+		planDescription.setText(currentPlan.getDescription());
+	}
+
+	private void updateTaskData()
+	{
+		taskListAdapter.updateTasks(currentPlan.getTasks());
+		taskListAdapter.notifyDataSetChanged();
+	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
@@ -117,25 +118,25 @@ public class CurrentPlanFragment extends Fragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-
-	    switch (item.getItemId()) {
-	    case R.id.add_button:
-	    	Log.d("TRACE-MA", "+ was pressed.");
-	    	Intent newPlanPage = new Intent(this.getActivity(), PlanEditorActivity.class);
-	    	startActivity(newPlanPage);
-	    	return true;
-	    case R.id.detail_button:
-	    	Log.d("TRACE-MA", "Detail was pressed.");
-	    	Intent detailPlanPage = new Intent(this.getActivity(),PlanDetailActivity.class);
-	    	detailPlanPage.putExtra("planId", currentPlan.getId());
-	    	startActivity(detailPlanPage);
-	    	return true;
-	    case R.id.edit_button:
-	    	Log.d("TRACE-MA", "Edit was pressed.");
-	    	Intent detailEditPage = new Intent(this.getActivity(),PlanEditorActivity.class);
-	    	detailEditPage.putExtra("planId", currentPlan.getId());
-	    	startActivity(detailEditPage);
-	    	return true;
+	    switch (item.getItemId()) 
+	    {
+		    case R.id.add_button:
+		    	Log.d("TRACE-MA", "+ was pressed.");
+		    	Intent newPlanPage = new Intent(this.getActivity(), PlanEditorActivity.class);
+		    	startActivity(newPlanPage);
+		    	return true;
+		    case R.id.detail_button:
+		    	Log.d("TRACE-MA", "Detail was pressed.");
+		    	Intent detailPlanPage = new Intent(this.getActivity(),PlanDetailActivity.class);
+		    	detailPlanPage.putExtra("planId", currentPlan.getId());
+		    	startActivity(detailPlanPage);
+		    	return true;
+		    case R.id.edit_button:
+		    	Log.d("TRACE-MA", "Edit was pressed.");
+		    	Intent detailEditPage = new Intent(this.getActivity(),PlanEditorActivity.class);
+		    	detailEditPage.putExtra("planId", currentPlan.getId());
+		    	startActivity(detailEditPage);
+		    	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
 	} 

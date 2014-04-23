@@ -8,129 +8,128 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".PlanEditorActivity" >
 
-            <TextView
-                android:id="@+id/name_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_name" />
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:text="@string/label_name" />
 
-            <EditText
-                android:id="@+id/edit_plan_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="150dip"
-                android:inputType="text"
-                android:padding="5dip"
-                android:layout_below="@+id/name_label">
+    <EditText
+        android:id="@+id/edit_plan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_label"
+        android:inputType="text"
+        android:minWidth="150dip"
+        android:padding="5dip" >
 
-        		<requestFocus />
-    		</EditText>
- 
-            
-            <TextView
-                android:id="@+id/description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:layout_below="@+id/edit_plan_name"
-                android:text="@string/label_description" />
+        <requestFocus />
+    </EditText>
 
-            <EditText
-                android:id="@+id/edit_plan_description"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip" 
-                android:layout_below="@+id/description_label"/>
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_name"
+        android:padding="5dip"
+        android:text="@string/label_description" />
 
-        	
-            <TextView
-                android:id="@+id/edit_plan_selection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_auto_register" 
-                android:layout_below="@+id/edit_plan_description"/>
-            
-            <Spinner
-		        android:id="@+id/edit_plan_auto_selection_spinner"
-    		    android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:prompt="@string/select_status" 
-        		android:layout_below="@+id/edit_plan_selection"/>
-            
-            <TextView
-                android:id="@+id/location_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:layout_below="@+id/edit_plan_auto_selection_spinner"
-                android:text="@string/label_location" />
+    <EditText
+        android:id="@+id/edit_plan_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description_label"
+        android:padding="5dip" />
 
-            <EditText
-                android:id="@+id/edit_plan_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/location_label"
-                android:padding="5dip" />
+    <TextView
+        android:id="@+id/edit_plan_selection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_description"
+        android:padding="5dip"
+        android:text="@string/label_auto_register" />
 
-            <TextView
-                android:id="@+id/ssid_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:layout_below="@+id/edit_plan_auto_selection_spinner"
-                android:text="@string/label_ssid" />
+    <Spinner
+        android:id="@+id/edit_plan_auto_selection_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_selection"
+        android:prompt="@string/select_status" />
 
-            <Spinner
-		        android:id="@+id/edit_plan_ssid"
-    		    android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:prompt="@string/select_status" 
-        		android:layout_below="@+id/ssid_label"/>
-            
-<!--             <EditText -->
-<!--                 android:id="@+id/edit_plan_ssid" -->
-<!--                 android:layout_width="match_parent" -->
-<!--                 android:layout_height="wrap_content" -->
-<!--                 android:padding="5dip"  -->
-<!--                 android:layout_below="@+id/ssid_label"/> -->
+    <TextView
+        android:id="@+id/location_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_auto_selection_spinner"
+        android:padding="5dip"
+        android:text="@string/label_location" />
 
-            <TextView
-                android:id="@+id/nfc_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_nfc" 
-                android:layout_below="@+id/edit_plan_auto_selection_spinner"/>
+    <EditText
+        android:id="@+id/edit_plan_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location_label"
+        android:padding="5dip" />
 
-            <EditText
-                android:id="@+id/edit_plan_nfc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip" 
-                android:layout_below="@+id/nfc_label"/>
+    <TextView
+        android:id="@+id/ssid_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_auto_selection_spinner"
+        android:padding="5dip"
+        android:text="@string/label_ssid" />
 
-            <TextView
-                android:id="@+id/status_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_status" 
-                android:layout_below="@+id/edit_plan_nfc"/>
-            
-            <Spinner
-		        android:id="@+id/edit_plan_status_spinner"
-    		    android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:prompt="@string/select_status" 
-        		android:layout_below="@+id/status_label"/>
-            
-			<CheckBox
-		        android:id="@+id/edit_plan_auto"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="16dp"
-		        android:text="@string/label_auto_register"
-		        android:layout_below="@+id/edit_plan_status_spinner" />
+    <Spinner
+        android:id="@+id/edit_plan_ssid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ssid_label"
+        android:prompt="@string/select_status" />
+
+    <!-- <EditText -->
+    <!-- android:id="@+id/edit_plan_ssid" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:padding="5dip" -->
+    <!-- android:layout_below="@+id/ssid_label"/> -->
+
+    <TextView
+        android:id="@+id/nfc_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_auto_selection_spinner"
+        android:padding="5dip"
+        android:text="@string/label_nfc" />
+
+    <EditText
+        android:id="@+id/edit_plan_nfc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nfc_label"
+        android:padding="5dip" />
+
+    <TextView
+        android:id="@+id/status_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_nfc"
+        android:padding="5dip"
+        android:text="@string/label_status" />
+
+    <Spinner
+        android:id="@+id/edit_plan_status_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/status_label"
+        android:prompt="@string/select_status" />
+
+    <CheckBox
+        android:id="@+id/edit_plan_auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_plan_status_spinner"
+        android:layout_marginTop="16dp"
+        android:text="@string/label_auto_register" />
+
 </RelativeLayout>

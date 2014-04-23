@@ -1,53 +1,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_current"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$DummySectionFragment" 
-    android:id="@+id/fragment_current">
-    
+    tools:context=".MainActivity$DummySectionFragment" >
+
     <TextView
-		android:id="@+id/current_plan_name"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:padding="5dip"
-	    android:textSize="20sp"
-	    android:textStyle="bold"
-	    android:text="@string/DUMMY_TEXT" />
-                    
-	<TextView
-	    android:id="@+id/current_plan_description"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@id/current_plan_name"
-	    android:padding="5dip"
-	    android:text="@string/DUMMY_TEXT" />
-    
+        android:id="@+id/current_plan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:text="@string/DUMMY_TEXT"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/current_plan_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_plan_name"
+        android:padding="5dip"
+        android:text="@string/DUMMY_TEXT" />
+
+    <ImageView
+        android:id="@+id/taskIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_plan_description"
+        android:contentDescription="@string/description_task_header_icon"
+        android:src="@drawable/ic_action_labels_dark" />
+
     <TextView
         android:id="@+id/taskHeader"
-		android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:padding="5dip"
-	    android:layout_below="@id/current_plan_description"
-	    android:textSize="18sp"
-	    android:textStyle="bold"
-	    android:text="@string/label_tasks" />
-    
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current_plan_description"
+        android:layout_toRightOf="@+id/taskIcon"
+        android:padding="5dip"
+        android:text="@string/label_tasks"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <View
-	    android:layout_width="fill_parent"
-	    android:layout_height="1dp"
-	    android:layout_below="@id/taskHeader"
-	    android:background="@android:color/darker_gray"/>
-    
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/taskHeader"
+        android:background="@android:color/darker_gray" />
+
     <ListView
         android:id="@+id/planTasksList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/taskHeader"
         android:layout_marginTop="5dp" >
-     </ListView> 
-            
+    </ListView>
+
 </RelativeLayout>

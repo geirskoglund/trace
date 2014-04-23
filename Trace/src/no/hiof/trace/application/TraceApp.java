@@ -14,12 +14,14 @@ public class TraceApp extends Application
 {
 	private static Context context;
 
-    public void onCreate(){
+    public void onCreate()
+    {
         super.onCreate();
         TraceApp.context = getApplicationContext();
     }
 
-    public static Context getAppContext() {
+    public static Context getAppContext() 
+    {
         return TraceApp.context;
     }
 	

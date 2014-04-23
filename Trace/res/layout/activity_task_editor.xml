@@ -8,55 +8,54 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TaskEditorActivity" >
 
-    		<TextView
-                android:id="@+id/name_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_name" />
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:text="@string/label_name" />
 
-            <EditText
-                android:id="@+id/edit_task_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="150dip"
-                android:inputType="text"
-                android:padding="5dip"
-                android:layout_below="@+id/name_label">
+    <EditText
+        android:id="@+id/edit_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_label"
+        android:inputType="text"
+        android:minWidth="150dip"
+        android:padding="5dip" >
 
-        		<requestFocus />
-    		</EditText>
-            
-            
-            <TextView
-                android:id="@+id/description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:layout_below="@+id/edit_task_name"
-                android:text="@string/label_description" />
+        <requestFocus />
+    </EditText>
 
-            <EditText
-                android:id="@+id/edit_task_description"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:padding="5dip" 
-                android:layout_below="@+id/description_label"/>
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_task_name"
+        android:padding="5dip"
+        android:text="@string/label_description" />
 
-            <TextView
-                android:id="@+id/status_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dip"
-                android:text="@string/label_status" 
-                android:layout_below="@+id/edit_task_description"/>
-            
-            <Spinner
-		        android:id="@+id/edit_task_status_spinner"
-    		    android:layout_width="match_parent"
-        		android:layout_height="wrap_content"
-        		android:prompt="@string/select_status" 
-        		android:layout_below="@+id/status_label"/>
+    <EditText
+        android:id="@+id/edit_task_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description_label"
+        android:inputType="text"
+        android:padding="5dip" />
+
+    <TextView
+        android:id="@+id/status_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_task_description"
+        android:padding="5dip"
+        android:text="@string/label_status" />
+
+    <Spinner
+        android:id="@+id/edit_task_status_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/status_label"
+        android:prompt="@string/select_status" />
 
 </RelativeLayout>
