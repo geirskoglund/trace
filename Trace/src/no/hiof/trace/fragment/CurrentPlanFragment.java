@@ -6,9 +6,11 @@ import no.hiof.trace.activity.R;
 import no.hiof.trace.activity.TaskDetailActivity;
 import no.hiof.trace.adapter.TaskListAdapter;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,11 +23,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class CurrentPlanFragment extends Fragment
 {
+	OnTaskLoadedListener taskLoaderListener;
+	
 	private ListView tasksListView;
 	private TaskListAdapter taskListAdapter;
 	
@@ -79,6 +84,17 @@ public class CurrentPlanFragment extends Fragment
 				showTaskDetail.putExtra("planId", currentPlan.getId());
 				startActivity(showTaskDetail);
 			}	
+		});
+		
+		tasksListView.setOnItemLongClickListener(new OnItemLongClickListener() 
+		{
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view, int index, long arg3) 
+			{
+				Task selectedTask = taskListAdapter.getTask(index);
+				taskLoaderListener.onTaskLoadedListener(selectedTask);
+				return true;
+			}
 		});
 	}
 	
@@ -140,4 +156,19 @@ public class CurrentPlanFragment extends Fragment
 	    }
 	    return super.onOptionsItemSelected(item);
 	} 
+	
+	@Override
+    public void onAttach(Activity activity) 
+	{
+        super.onAttach(activity);
+        
+        try
+        {
+        	taskLoaderListener = (OnTaskLoadedListener) activity;
+        }
+        catch(ClassCastException e)
+        {
+        	throw new ClassCastException(activity.toString() + " must implement OnTaskLoadedListener.");
+        }
+	}
 }

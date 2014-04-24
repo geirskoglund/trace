@@ -5,7 +5,6 @@ import no.hiof.trace.db.model.Plan;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 public class PlanDetailActivity extends Activity
 {
-	
 	DatabaseManager database;
 	Plan plan;
 	
@@ -148,10 +146,4 @@ public class PlanDetailActivity extends Activity
 		nfcLabel.setVisibility(View.INVISIBLE);
 		planNFC.setVisibility(View.INVISIBLE);
 	}
-//	public void viewTaskDetails(View view)
-//	{
-//		Intent taskDetail = new Intent("no.hiof.action.TASK_DETAIL");
-//		startActivity(taskDetail);
-//	}
-
 }

@@ -1,20 +1,15 @@
 package no.hiof.trace.activity;
 
-import java.util.List;
-
 import no.hiof.trace.adapter.SectionPagerAdapter;
-import no.hiof.trace.db.DatabaseManager;
-import no.hiof.trace.db.model.Plan;
-import android.content.Intent;
+import no.hiof.trace.contract.OnTaskLoadedListener;
+import no.hiof.trace.db.model.Task;
+import no.hiof.trace.fragment.TaskPlayerFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends FragmentActivity implements OnTaskLoadedListener
 {
 	SectionPagerAdapter pageInteractionAdapter;
 	ViewPager viewPager;
@@ -30,6 +25,14 @@ public class MainActivity extends FragmentActivity
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(pageInteractionAdapter);
+	}
+
+	@Override
+	public void onTaskLoadedListener(Task task) 
+	{
+		FragmentManager fragmentManager = getSupportFragmentManager();
+	   	TaskPlayerFragment player = (TaskPlayerFragment) fragmentManager.findFragmentById(R.id.task_player);
+		player.load(task);
 	}
 	
 }
