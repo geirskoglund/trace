@@ -123,4 +123,9 @@ public class Task
 		return database.getPlan(this.planId);
 	}
 	
+	public boolean existsInDatabase()
+	{
+		return this.id > 0;
+	}
+	
 }

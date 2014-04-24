@@ -251,4 +251,9 @@ public class Plan implements Comparable<Plan>
 	{
 		return this.getLastActivatedTimestamp().compareTo(other.getLastActivatedTimestamp());
 	}
+	
+	public boolean existsInDatabase()
+	{
+		return this.id > 0;
+	}
 }

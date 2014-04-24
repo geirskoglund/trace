@@ -7,6 +7,7 @@ import no.hiof.trace.db.model.Task;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState;
 import no.hiof.trace.utils.TaskPlayerState.State;
+import no.hiof.trace.utils.TaskPlayerState.Transition;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,16 +19,9 @@ import android.widget.TextView;
 
 public class TaskPlayerFragment extends Fragment
 {
-	DatabaseManager database;
-	final boolean PLAY = true;
-	final boolean PAUSE = true;
-	boolean playerStatus;
-	
 	ImageView button;
 	TextView planName;
 	TextView taskName;
-	
-	Task currentTask = new Task();
 	
 	public TaskPlayerFragment(){}
 
@@ -35,13 +29,9 @@ public class TaskPlayerFragment extends Fragment
 	{
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
 		
-		playerStatus = PAUSE;
-		
-		database = new DatabaseManager(this.getActivity());
 		setViewVariables(view);
 		setButtonEventListener();
-		setPlayerButtonIcon();
-		
+		setPlayerButtonIconForCurrentState();
 		return view;
 	}
 	
@@ -64,38 +54,33 @@ public class TaskPlayerFragment extends Fragment
 		});
 	}
 
-	private void setPlayerButtonIcon()
-	{
-		if(playerStatus == PAUSE)
-			button.setImageResource(android.R.drawable.ic_media_play);
-		else
-			button.setImageResource(android.R.drawable.ic_media_pause);
-	}
-
 	public void taskPlayerButtonToggle()
 	{
-		playerStatus = !playerStatus;
-		setState();
-		setPlayerButtonIcon();
-		Feedback.showToast("Pressed");
+		if(TraceApp.playerState.getPlayerState() == State.PAUSED)
+		{
+			TraceApp.playerState.startInterval();
+		}
+		else if(TraceApp.playerState.getPlayerState() == State.PLAYING)
+		{
+			TraceApp.playerState.stopInterval();
+		}
+		
+		setPlayerButtonIconForCurrentState();
 	}
 	
-	private void setState() 
+	private void setPlayerButtonIconForCurrentState() 
 	{
 		switch (TraceApp.playerState.getPlayerState())
 		{
 			case IDLE: 
-				TraceApp.playerState.setPlayerState(State.PAUSED);
-				break;
+				// TODO: Use correct idle icon
+				button.setImageResource(android.R.drawable.ic_media_ff); //temporary
+				return;
 			case PAUSED:
-				TraceApp.playerState.setPlayerState(State.PLAYING);
-				break;
+				button.setImageResource(android.R.drawable.ic_media_play);
+				return;
 			case PLAYING:
-				TraceApp.playerState.setPlayerState(State.PAUSED);
-				break;
-			default:
-				TraceApp.playerState.setPlayerState(State.IDLE);
-				break;
+				button.setImageResource(android.R.drawable.ic_media_pause);
 		}
 	}
 
@@ -103,39 +88,26 @@ public class TaskPlayerFragment extends Fragment
 	{
 		if(noLoadingIsNeeded(task)) return;
 		
-		pauseCurrentTask();
-		setNewCurrentTask(task);
-		displayTask();
+		TraceApp.playerState.stopInterval();
+		TraceApp.playerState.setActiveTask(task);
 		
-		Feedback.showToast(task.getName() + " loaded.");
+		displayTask();
+		setPlayerButtonIconForCurrentState();
+
+		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
 	}
 	
 	private boolean noLoadingIsNeeded(Task task) 
 	{
 		return (task == null || 
-				this.currentTask.getId() == task.getId() || 
+				TraceApp.playerState.getActiveTask().getId() == task.getId() || 
 				task.getId() == 0);	
-	}
-
-	private void pauseCurrentTask() 
-	{
-		if(TraceApp.playerState.getPlayerState() != TaskPlayerState.State.PLAYING)
-			return;
-		
-		// TODO Add pause functionality
-		return;
-	}
-
-	private void setNewCurrentTask(Task task) 
-	{
-		TraceApp.playerState.setActiveTask(task);
-		this.currentTask = task;
 	}
 
 	private void displayTask() 
 	{
-		this.taskName.setText(currentTask.getName());
-		this.planName.setText(currentTask.getPlan().getName());
+		this.taskName.setText(TraceApp.playerState.getActiveTask().getName());
+		this.planName.setText(TraceApp.playerState.getActiveTask().getPlan().getName());
 	}
 
 	@Override

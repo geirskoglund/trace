@@ -1,10 +1,12 @@
 package no.hiof.trace.db;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.db.model.definitions.CreateTableStatement;
@@ -12,6 +14,7 @@ import no.hiof.trace.db.values.ColumnName;
 import no.hiof.trace.db.values.Columns;
 import no.hiof.trace.db.values.DatabaseInfo;
 import no.hiof.trace.db.values.TableName;
+import no.hiof.trace.utils.IntervalParser;
 import no.hiof.trace.utils.PlanParser;
 import no.hiof.trace.utils.TaskParser;
 import android.annotation.SuppressLint;
@@ -207,6 +210,19 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return addTask(task);
 	}
 	
+	public long writeToDatabase(Interval interval)
+	{
+		if(interval==null)
+			throw new IllegalArgumentException();
+		
+		if(interval.getId()==0)
+			return addInterval(interval);
+		else if(intervalExists(interval))
+			return 0;
+		else
+			return addInterval(interval);
+	}
+	
 	public long updateTask(Task task)
 	{
 		ContentValues values = TaskParser.getContentValues(task);
@@ -227,6 +243,17 @@ public class DatabaseManager extends SQLiteOpenHelper
 		updateRow(TableName.PLAN, values, whereClause, whereArgs);
 		
 		return plan.getId();
+	}
+	
+	public long updateInterval(Interval interval)
+	{
+		ContentValues values = IntervalParser.getContentValues(interval);
+		String whereClause = ColumnName.ID + " = ?";
+		String[] whereArgs = {"" + interval.getId()};
+		
+		updateRow(TableName.INTERVAL, values, whereClause, whereArgs);
+		
+		return interval.getId();
 	}
 	
 	private int updateRow(String table, ContentValues values, String whereClause, String[] whereArgs)
@@ -293,6 +320,11 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return rowExists(TableName.PLAN, ColumnName.ID, plan.getId());
 	}
 	
+	private boolean intervalExists(Interval interval)
+	{
+		return rowExists(TableName.INTERVAL, ColumnName.ID, interval.getId());
+	}
+	
 	@SuppressLint("DefaultLocale")
 	private boolean rowExists(String tableName, String idColumnName, long rowId)
 	{
@@ -318,6 +350,19 @@ public class DatabaseManager extends SQLiteOpenHelper
 	{
 		ContentValues values = PlanParser.getContentValues(plan);	
 		return insertRow(TableName.PLAN, values);
+	}
+	public long addInterval(Interval interval)
+	{
+		ContentValues values = IntervalParser.getContentValues(interval);
+		return insertRow(TableName.INTERVAL, values);
+	}
+	public Interval createIntervalWithStartTime(long taskId)
+	{
+		Interval interval = new Interval(taskId);
+		interval.setStartTime(new Date());
+		long id = addInterval(interval);
+		interval.setId(id);
+		return interval;
 	}
 	
 	@SuppressLint("DefaultLocale")
