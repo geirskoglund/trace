@@ -195,9 +195,8 @@ public class Plan implements Comparable<Plan>
 	
 	public Task getPrimaryTask() 
 	{
-		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
 		if (this.hasPrimaryTask())
-			return database.getTask(this.primaryTaskId);
+			return TraceApp.database().getTask(this.primaryTaskId);
 		else if(this.getId()>0)
 		{
 			List<Task> tasks = this.getTasks();

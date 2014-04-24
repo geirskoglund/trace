@@ -2,12 +2,9 @@ package no.hiof.trace.fragment;
 
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
-import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.utils.Feedback;
-import no.hiof.trace.utils.TaskPlayerState;
 import no.hiof.trace.utils.TaskPlayerState.State;
-import no.hiof.trace.utils.TaskPlayerState.Transition;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -99,9 +96,7 @@ public class TaskPlayerFragment extends Fragment
 	
 	private boolean noLoadingIsNeeded(Task task) 
 	{
-		return (task == null || 
-				TraceApp.playerState.getActiveTask().getId() == task.getId() || 
-				task.getId() == 0);	
+		return (task == null || TraceApp.playerState.getActiveTask().getId() == task.getId() );	
 	}
 
 	private void displayTask() 

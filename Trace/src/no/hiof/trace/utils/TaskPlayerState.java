@@ -1,7 +1,5 @@
 package no.hiof.trace.utils;
 
-import java.util.Date;
-
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;

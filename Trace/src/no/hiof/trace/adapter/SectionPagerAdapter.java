@@ -72,4 +72,5 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
 	{
 		return context.getString(availableFragments.get(position).first);
 	}
+
 }

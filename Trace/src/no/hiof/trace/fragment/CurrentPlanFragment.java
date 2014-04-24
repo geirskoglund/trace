@@ -4,12 +4,14 @@ import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.activity.TaskDetailActivity;
+import no.hiof.trace.adapter.SectionPagerAdapter;
 import no.hiof.trace.adapter.TaskListAdapter;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
+import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,6 +55,8 @@ public class CurrentPlanFragment extends Fragment
 		setHasOptionsMenu(true);
 		
 		setFieldVariables(view);
+		updatePlanData();
+		taskLoaderListener.onTaskLoadedListener(currentPlan.getPrimaryTask());
 		
 		return view;
 	}
