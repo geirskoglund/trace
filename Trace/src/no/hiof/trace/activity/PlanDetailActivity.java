@@ -1,12 +1,10 @@
 package no.hiof.trace.activity;
 
-import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
