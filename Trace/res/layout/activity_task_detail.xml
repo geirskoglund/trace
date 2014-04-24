@@ -40,7 +40,6 @@
         android:text="@string/DUMMY_TEXT" />
 
     <!-- ACCUMULATED TIME -->
-
     <TextView
         android:id="@+id/task_detail_accumulated_time"
         android:layout_width="wrap_content"
@@ -49,13 +48,24 @@
         android:padding="5dip"
         android:text="@string/accumulated_time" />
 
+    
+    <ImageView 
+	    android:id="@+id/time_icon"
+	    android:src="@drawable/ic_action_time"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_below="@+id/task_detail_accumulated_time"
+        android:contentDescription="@string/description_task_header_icon"/>
+    
     <TextView
         android:id="@+id/time_slot_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/task_detail_accumulated_time"
         android:padding="5dip"
         android:text="@string/label_time_slots"
+        android:layout_below="@+id/task_detail_accumulated_time"
+        android:layout_alignBaseline="@+id/time_icon"
+        android:layout_toRightOf="@+id/time_icon"
         android:textSize="18sp"
         android:textStyle="bold" />
 
