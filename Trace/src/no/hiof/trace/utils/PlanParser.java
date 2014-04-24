@@ -1,15 +1,12 @@
 package no.hiof.trace.utils;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
+import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.db.values.ColumnName;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
-import no.hiof.trace.db.model.Plan;
-import no.hiof.trace.db.values.ColumnName;
 
 public class PlanParser 
 {

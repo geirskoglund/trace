@@ -21,7 +21,7 @@ public class Plan implements Comparable<Plan>
 	private String status="";
 	private Date lastActivated;
 	private long primaryTaskId;
-	private Task primaryTask;
+	//private Task primaryTask;
 	private ArrayList<Task> tasks;
 	private String autoTrigger = "";
 	
@@ -50,21 +50,21 @@ public class Plan implements Comparable<Plan>
 		this.tasks = tasks;
 	}
 	
-	public Plan(long id, String name, String description, String ssid,
-			String nfc, double lat, double lon, boolean autoRegister,
-			String status, Task primaryTask, ArrayList<Task> tasks){
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.ssid = ssid;
-		this.nfc = nfc;
-		this.lat = lat;
-		this.lon = lon;
-		this.autoRegister = autoRegister;
-		this.status = status;
-		this.primaryTask = primaryTask;
-		this.tasks = tasks;
-	}
+//	public Plan(long id, String name, String description, String ssid,
+//			String nfc, double lat, double lon, boolean autoRegister,
+//			String status, Task primaryTask, ArrayList<Task> tasks){
+//		this.id = id;
+//		this.name = name;
+//		this.description = description;
+//		this.ssid = ssid;
+//		this.nfc = nfc;
+//		this.lat = lat;
+//		this.lon = lon;
+//		this.autoRegister = autoRegister;
+//		this.status = status;
+//		this.primaryTask = primaryTask;
+//		this.tasks = tasks;
+//	}
 
 	public long getId()
 	{
@@ -221,7 +221,6 @@ public class Plan implements Comparable<Plan>
 		//	throw new IllegalArgumentException("The provided task does not exist");
 		
 		this.primaryTaskId = task.getId();
-		this.primaryTask = task;
 		TraceApp.database().updatePlan(this);
 	}
 

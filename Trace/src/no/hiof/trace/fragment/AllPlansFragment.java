@@ -8,32 +8,24 @@ import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.adapter.PlanListAdapter;
 import no.hiof.trace.application.TraceApp;
-import android.app.Activity;
-import android.app.ListFragment;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.utils.Feedback;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class AllPlansFragment extends Fragment
 {
@@ -42,28 +34,28 @@ public class AllPlansFragment extends Fragment
 	private PlanListAdapter planListAdapter;
 	
 	List<Plan> allPlans;
-	DatabaseManager database;
+	DatabaseManager database = TraceApp.database();
 	
 	public AllPlansFragment(){}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.fragment_all_plans, container, false);
+		View view = inflater.inflate(R.layout.fragment_all_plans, container, false);
 		
 		setHasOptionsMenu(true);
-		
-		database = new DatabaseManager(this.getActivity());
-		
-		planListAdapter = new PlanListAdapter(this.getActivity());
-		
-		allPlansListView = (ListView)v.findViewById(R.id.allPlansList);
-		allPlansListView.setAdapter(planListAdapter);
-		
+		setupAdapter(view);
 		setListViewListener();
 		
-		return v;
+		return view;
 	}
 	
+	private void setupAdapter(View view) 
+	{
+		planListAdapter = new PlanListAdapter(this.getActivity());
+		allPlansListView = (ListView)view.findViewById(R.id.allPlansList);
+		allPlansListView.setAdapter(planListAdapter);
+	}
+
 	public void setListViewListener()
 	{
 		allPlansListView.setOnItemClickListener(new OnItemClickListener() 
@@ -83,7 +75,7 @@ public class AllPlansFragment extends Fragment
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long id) 
 			{
 				Plan selectedPlan = planListAdapter.getPlan(index);
-				String toastText = selectedPlan.getName() + getActivity().getString(R.string.plan_was_activated);
+				String toastText = "Plan \"" + selectedPlan.getName() + "\"" + getActivity().getString(R.string.plan_was_activated);
 				
 				Feedback.showToast(toastText);
 				

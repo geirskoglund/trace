@@ -7,12 +7,12 @@ import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.adapter.PlanListAdapter;
+import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
@@ -36,27 +35,28 @@ public class LatestPlansFragment extends Fragment
 	private final int LATEST_PLANS_QTY = 3;
 	
 	private List<Plan> latestPlans;
-	DatabaseManager database;
+	DatabaseManager database = TraceApp.database();
 	
 	public LatestPlansFragment(){}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View rootView = inflater.inflate(R.layout.fragment_latest_plans, container, false);
+		View view = inflater.inflate(R.layout.fragment_latest_plans, container, false);
 		
 		setHasOptionsMenu(true);
-		
-		database = new DatabaseManager(this.getActivity());
-		
-		planListAdapter = new PlanListAdapter(this.getActivity());
-		
-		latestPlansListView = (ListView)rootView.findViewById(R.id.latestPlansList);
-		latestPlansListView.setAdapter(planListAdapter);
-		
+		setupAdapter(view);
 		setListViewListener();
 		
-		return rootView;
+		return view;
+	}
+
+	private void setupAdapter(View view) 
+	{
+		planListAdapter = new PlanListAdapter(this.getActivity());
+		latestPlansListView = (ListView)view.findViewById(R.id.latestPlansList);
+		latestPlansListView.setAdapter(planListAdapter);
+		
 	}
 
 	private void setListViewListener() 
@@ -79,7 +79,7 @@ public class LatestPlansFragment extends Fragment
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long id) 
 			{
 				Plan selectedPlan = planListAdapter.getPlan(index);
-				String toastText = selectedPlan.getName() + getActivity().getString(R.string.plan_was_activated);
+				String toastText = "Plan \"" + selectedPlan.getName() + "\"" + getActivity().getString(R.string.plan_was_activated);
 				
 				Feedback.showToast(toastText);
 				
