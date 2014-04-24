@@ -8,13 +8,16 @@ import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.adapter.PlanListAdapter;
 import no.hiof.trace.application.TraceApp;
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.utils.Feedback;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,6 +37,7 @@ import android.widget.Toast;
 
 public class AllPlansFragment extends Fragment
 {
+	OnTaskLoadedListener taskLoaderListener;
 	private ListView allPlansListView;
 	private PlanListAdapter planListAdapter;
 	
@@ -81,25 +85,16 @@ public class AllPlansFragment extends Fragment
 				Plan selectedPlan = planListAdapter.getPlan(index);
 				String toastText = selectedPlan.getName() + getActivity().getString(R.string.plan_was_activated);
 				
-				showToast(toastText);
+				Feedback.showToast(toastText);
 				
 				selectedPlan.setLastActivatedTimestamp(new Date());
 				
 				database.updatePlan(selectedPlan);
-				
+				taskLoaderListener.onTaskLoadedListener(selectedPlan.getPrimaryTask());
 				return true;
 			}
 			
 		});
-	}
-
-	private void showToast(String text)
-	{
-		Context context = this.getActivity().getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
 	}
 	
 	private void navigateToPlanDetails(long planId) 
@@ -140,4 +135,18 @@ public class AllPlansFragment extends Fragment
 	    return super.onOptionsItemSelected(item);
 	} 
 	
+	@Override
+    public void onAttach(Activity activity) 
+	{
+        super.onAttach(activity);
+        
+        try
+        {
+        	taskLoaderListener = (OnTaskLoadedListener) activity;
+        }
+        catch(ClassCastException e)
+        {
+        	throw new ClassCastException(activity.toString() + " must implement OnTaskLoadedListener.");
+        }
+	}
 }

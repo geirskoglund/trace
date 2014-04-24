@@ -27,6 +27,7 @@ public class PlanParser
 		int autoRegister = cursor.getColumnIndex(ColumnName.AUTO_REG);
 		int status = cursor.getColumnIndex(ColumnName.STATUS);
 		int autoTrigger = cursor.getColumnIndex(ColumnName.AUTO_TRIGGER);
+		int primaryTask = cursor.getColumnIndex(ColumnName.PRIMARY_TASK);
 		
 		Plan plan = new Plan();
 		plan.setId(cursor.getLong(id));
@@ -40,6 +41,9 @@ public class PlanParser
 		plan.setStatus(cursor.getString(status));
 		plan.setAutoTrigger(cursor.getString(autoTrigger));
 		plan.setLastActivatedTimestamp(Timestamp.valueOf(cursor.getString(lastActivated)));
+		
+		if (!cursor.isNull(primaryTask))
+			plan.setPrimaryTaskId(cursor.getLong(primaryTask));
 		
 		Log.d("TRACE-PP",plan.getName() + ": Timestamp: " + plan.getLastActivatedTimestamp());
 		
@@ -60,6 +64,9 @@ public class PlanParser
 		values.put(ColumnName.STATUS, plan.getStatus());
 		values.put(ColumnName.AUTO_TRIGGER, plan.getAutoTrigger());
 		values.put(ColumnName.LAST_ACTIVATED, DateHelper.getDateTime(plan.getLastActivatedTimestamp()));
+		
+		if(plan.hasPrimaryTask())
+			values.put(ColumnName.PRIMARY_TASK, plan.getPrimaryTaskId());
 		
 		return values;
 	}

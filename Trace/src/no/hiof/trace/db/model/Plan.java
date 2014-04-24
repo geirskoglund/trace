@@ -20,6 +20,7 @@ public class Plan implements Comparable<Plan>
 	private boolean autoRegister = false;
 	private String status="";
 	private Date lastActivated;
+	private long primaryTaskId;
 	private Task primaryTask;
 	private ArrayList<Task> tasks;
 	private String autoTrigger = "";
@@ -177,13 +178,51 @@ public class Plan implements Comparable<Plan>
 	{
 		this.autoTrigger = trigger;
 	}
-
-	public Task getPrimaryTask() {
-		return primaryTask;
+	
+	public long getPrimaryTaskId()
+	{
+		return this.primaryTaskId;
+	}
+	public void setPrimaryTaskId(long taskId)
+	{
+		this.primaryTaskId = taskId;
+	}
+	
+	public boolean hasPrimaryTask()
+	{
+		return primaryTaskId > 0;
+	}
+	
+	public Task getPrimaryTask() 
+	{
+		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
+		if (this.hasPrimaryTask())
+			return database.getTask(this.primaryTaskId);
+		else if(this.getId()>0)
+		{
+			List<Task> tasks = this.getTasks();
+			if(!tasks.isEmpty())
+			{
+				this.setPrimaryTask(tasks.get(0));
+				return this.getPrimaryTask();
+			}
+		}
+		
+		return new Task();
 	}
 
-	public void setPrimaryTask(Task primaryTask) {
-		this.primaryTask = primaryTask;
+	public void setPrimaryTask(Task task) 
+	{
+		if(task == null)
+			throw new IllegalArgumentException("Task was set to null");
+		
+		if(task.getId()==0)
+			return;
+		//	throw new IllegalArgumentException("The provided task does not exist");
+		
+		this.primaryTaskId = task.getId();
+		this.primaryTask = task;
+		TraceApp.database().updatePlan(this);
 	}
 
 	public List<Task> getTasks() 
