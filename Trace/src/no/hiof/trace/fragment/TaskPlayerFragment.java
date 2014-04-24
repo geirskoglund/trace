@@ -1,12 +1,12 @@
 package no.hiof.trace.fragment;
 
-import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.R;
+import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Task;
-import android.R.anim;
-import android.content.Context;
-import android.content.Intent;
+import no.hiof.trace.utils.Feedback;
+import no.hiof.trace.utils.TaskPlayerState;
+import no.hiof.trace.utils.TaskPlayerState.State;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TaskPlayerFragment extends Fragment
 {
@@ -28,7 +27,7 @@ public class TaskPlayerFragment extends Fragment
 	TextView planName;
 	TextView taskName;
 	
-	Task task = new Task();
+	Task currentTask = new Task();
 	
 	public TaskPlayerFragment(){}
 
@@ -76,33 +75,73 @@ public class TaskPlayerFragment extends Fragment
 	public void taskPlayerButtonToggle()
 	{
 		playerStatus = !playerStatus;
-		
+		setState();
 		setPlayerButtonIcon();
-		
-		showToast("Pressed");
+		Feedback.showToast("Pressed");
 	}
 	
-	private void showToast(String text)
+	private void setState() 
 	{
-		Context context = this.getActivity().getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
+		switch (TraceApp.playerState.getPlayerState())
+		{
+			case IDLE: 
+				TraceApp.playerState.setPlayerState(State.PAUSED);
+				break;
+			case PAUSED:
+				TraceApp.playerState.setPlayerState(State.PLAYING);
+				break;
+			case PLAYING:
+				TraceApp.playerState.setPlayerState(State.PAUSED);
+				break;
+			default:
+				TraceApp.playerState.setPlayerState(State.IDLE);
+				break;
+		}
 	}
-	
-	private void navigateToPlanDetails(long planId) 
+
+	public void load(Task task)
 	{
-		Intent showPlanDetails = new Intent(this.getActivity(),PlanDetailActivity.class);
-		showPlanDetails.putExtra("planId", planId);
-		startActivity(showPlanDetails);
+		if(noLoadingIsNeeded(task)) return;
+		
+		pauseCurrentTask();
+		setNewCurrentTask(task);
+		displayTask();
+		
+		Feedback.showToast(task.getName() + " loaded.");
 	}
 	
+	private boolean noLoadingIsNeeded(Task task) 
+	{
+		return (task == null || 
+				this.currentTask.getId() == task.getId() || 
+				task.getId() == 0);	
+	}
+
+	private void pauseCurrentTask() 
+	{
+		if(TraceApp.playerState.getPlayerState() != TaskPlayerState.State.PLAYING)
+			return;
+		
+		// TODO Add pause functionality
+		return;
+	}
+
+	private void setNewCurrentTask(Task task) 
+	{
+		TraceApp.playerState.setActiveTask(task);
+		this.currentTask = task;
+	}
+
+	private void displayTask() 
+	{
+		this.taskName.setText(currentTask.getName());
+		this.planName.setText(currentTask.getPlan().getName());
+	}
+
 	@Override
 	public void onResume()
     {  
 	    super.onResume();
 	    
-     }
-		
+    }	
 }
