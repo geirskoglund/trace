@@ -474,7 +474,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 		List<Interval> intervals = new ArrayList<Interval>();
 		SQLiteDatabase theDatabase = this.getReadableDatabase();
 		
-		String query = "SELECT * FROM "+ TableName.INTERVAL + " WHERE " + ColumnName.TASK_ID + " = " + taskId;
+		String query = "SELECT * FROM "+ TableName.INTERVAL + " WHERE " + ColumnName.TASK_ID + " = " + taskId + 
+						" ORDER BY " + ColumnName.ID + " DESC";
 		Cursor cursor = theDatabase.rawQuery(query, null);
 		
 		if(cursor.moveToFirst())

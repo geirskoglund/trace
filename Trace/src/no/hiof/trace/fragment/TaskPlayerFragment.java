@@ -6,11 +6,13 @@ import no.hiof.trace.db.model.Task;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState.State;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class TaskPlayerFragment extends Fragment
 	ImageView button;
 	TextView planName;
 	TextView taskName;
+	Chronometer timer;
 	
 	public TaskPlayerFragment(){}
 
@@ -37,6 +40,7 @@ public class TaskPlayerFragment extends Fragment
 		button = (ImageView)view.findViewById(R.id.task_player_button);
 		planName = (TextView)view.findViewById(R.id.task_player_plan_name);
 		taskName = (TextView)view.findViewById(R.id.task_player_task_name);
+		timer = (Chronometer)view.findViewById(R.id.task_player_chronometer);
 	}
 
 	private void setButtonEventListener()
@@ -75,9 +79,13 @@ public class TaskPlayerFragment extends Fragment
 				return;
 			case PAUSED:
 				button.setImageResource(android.R.drawable.ic_media_play);
+				timer.stop();
 				return;
 			case PLAYING:
 				button.setImageResource(android.R.drawable.ic_media_pause);
+				timer.setBase(SystemClock.elapsedRealtime());
+				timer.start();
+				return;
 		}
 	}
 
