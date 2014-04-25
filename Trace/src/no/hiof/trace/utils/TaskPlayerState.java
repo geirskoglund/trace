@@ -51,6 +51,7 @@ public class TaskPlayerState
 			activeInterval.stop();
 			this.state = State.PAUSED;
 			TraceApp.database().updateInterval(activeInterval);
+			Feedback.showToast("Time slot saved");
 		}
 	}
 	

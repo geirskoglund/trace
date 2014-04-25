@@ -76,14 +76,18 @@ public class TaskPlayerFragment extends Fragment
 			case IDLE: 
 				// TODO: Use correct idle icon
 				button.setImageResource(android.R.drawable.ic_media_ff); //temporary
+				timer.stop();
+				timer.setVisibility(View.INVISIBLE);
 				return;
 			case PAUSED:
 				button.setImageResource(android.R.drawable.ic_media_play);
 				timer.stop();
+				timer.setVisibility(View.VISIBLE);
 				return;
 			case PLAYING:
 				button.setImageResource(android.R.drawable.ic_media_pause);
 				timer.setBase(SystemClock.elapsedRealtime());
+				timer.setVisibility(View.VISIBLE);
 				timer.start();
 				return;
 		}
@@ -97,6 +101,7 @@ public class TaskPlayerFragment extends Fragment
 		TraceApp.playerState.setActiveTask(task);
 		
 		displayTask();
+		timer.setBase(SystemClock.elapsedRealtime());
 		setPlayerButtonIconForCurrentState();
 
 		Feedback.showToast("Task \"" + task.getName() + "\" loaded");

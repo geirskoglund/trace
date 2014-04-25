@@ -56,8 +56,7 @@ public class CurrentPlanFragment extends Fragment
 		
 		setFieldVariables(view);
 		updatePlanData();
-		taskLoaderListener.onTaskLoadedListener(currentPlan.getPrimaryTask());
-		
+
 		return view;
 	}
 	
