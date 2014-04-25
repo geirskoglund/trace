@@ -480,8 +480,11 @@ public class DatabaseManager extends SQLiteOpenHelper
 		if(cursor.moveToFirst())
 		{
 			do
-				intervals.add(IntervalParser.parse(cursor));
-			while(cursor.moveToNext());
+			{
+				Interval interval = IntervalParser.parse(cursor);
+				if(interval.isCompleted())
+					intervals.add(interval);
+			}while(cursor.moveToNext());
 		}
 		return intervals;
 	}
