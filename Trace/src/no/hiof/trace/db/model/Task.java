@@ -95,7 +95,7 @@ public class Task
 
 	public List<Interval> getIntervals() 
 	{
-		return intervals;
+		return TraceApp.database().getIntervals(this.id);
 	}
 
 	public void setIntervals(ArrayList<Interval> intervals) {

@@ -468,6 +468,23 @@ public class DatabaseManager extends SQLiteOpenHelper
 		
 		return tasks;
 	}
+	
+	public List<Interval> getIntervals(long taskId)
+	{
+		List<Interval> intervals = new ArrayList<Interval>();
+		SQLiteDatabase theDatabase = this.getReadableDatabase();
+		
+		String query = "SELECT * FROM "+ TableName.INTERVAL + " WHERE " + ColumnName.TASK_ID + " = " + taskId;
+		Cursor cursor = theDatabase.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+		{
+			do
+				intervals.add(IntervalParser.parse(cursor));
+			while(cursor.moveToNext());
+		}
+		return intervals;
+	}
 
 
 	public void deletePlan(long planId)
