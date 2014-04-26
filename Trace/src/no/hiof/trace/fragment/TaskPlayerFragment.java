@@ -1,28 +1,36 @@
 package no.hiof.trace.fragment;
 
 import no.hiof.trace.activity.R;
+import no.hiof.trace.activity.TaskDetailActivity;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState.State;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class TaskPlayerFragment extends Fragment
+public class TaskPlayerFragment extends Fragment implements OnClickListener
 {
 	ImageView button;
 	TextView planName;
 	TextView taskName;
 	Chronometer timer;
 	
+	LinearLayout infoBox;
 	public TaskPlayerFragment(){}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -30,8 +38,11 @@ public class TaskPlayerFragment extends Fragment
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
 		
 		setViewVariables(view);
-		setButtonEventListener();
 		setPlayerButtonIconForCurrentState();
+		
+		button.setOnClickListener(this);
+		infoBox.setOnClickListener(this);
+		
 		return view;
 	}
 	
@@ -41,18 +52,7 @@ public class TaskPlayerFragment extends Fragment
 		planName = (TextView)view.findViewById(R.id.task_player_plan_name);
 		taskName = (TextView)view.findViewById(R.id.task_player_task_name);
 		timer = (Chronometer)view.findViewById(R.id.task_player_chronometer);
-	}
-
-	private void setButtonEventListener()
-	{
-		button.setOnClickListener(new OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				taskPlayerButtonToggle();		
-			}
-		});
+		infoBox = (LinearLayout)view.findViewById(R.id.task_player_info_box);
 	}
 
 	public void taskPlayerButtonToggle()
@@ -124,4 +124,30 @@ public class TaskPlayerFragment extends Fragment
 	    super.onResume();
 	    
     }	
+	
+	@Override
+	public void onClick(View v) 
+	{
+		switch (v.getId())
+		{
+		case R.id.task_player_info_box:
+			navigateToTaskDetail();
+			break;
+		case R.id.task_player_button:
+			taskPlayerButtonToggle();
+			break;
+		}	
+	}
+
+	private void navigateToTaskDetail() 
+	{
+		Task task = TraceApp.playerState.getActiveTask();
+		if(task==null || task.getId()==0)
+			return;
+		
+		Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
+		showTaskDetail.putExtra("taskId", task.getId());
+		showTaskDetail.putExtra("planId", task.getPlanId());
+		startActivity(showTaskDetail);
+	}
 }

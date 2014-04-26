@@ -4,13 +4,17 @@
     android:layout_height="wrap_content"
     android:background="#ff9933"
     android:orientation="horizontal"
-    android:padding="5dip" >
+     >
 
     <LinearLayout
+        android:id="@+id/task_player_info_box"
+        android:clickable="true"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="5dip"
+        android:background="@drawable/player_background">
 
         <TextView
             android:id="@+id/task_player_plan_name"
@@ -41,6 +45,7 @@
         android:layout_height="fill_parent"
         android:contentDescription="@string/play"
         android:gravity="center_vertical"
+        android:layout_marginRight="5dip"
         android:src="@android:drawable/ic_media_play" />
     
 
