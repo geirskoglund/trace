@@ -1,20 +1,29 @@
 package no.hiof.trace.activity;
 
+import no.hiof.trace.adapter.TaskListAdapter;
+import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.db.model.Task;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class PlanDetailActivity extends Activity
 {
 	DatabaseManager database;
 	Plan plan;
+	
+	private ListView tasksListView;
+	private TaskListAdapter taskListAdapter;
 	
 	TextView planName;
 	TextView planDescription;
@@ -41,6 +50,8 @@ public class PlanDetailActivity extends Activity
 		fetchPlan();
 		displayPlan();
 		displayAutoSelect();
+		setupAdapter();
+		setListViewListeners();
 	}
 
 	private void setFieldVariables() 
@@ -80,6 +91,30 @@ public class PlanDetailActivity extends Activity
 		planLatitude.setText(""+plan.getLat());
 		planLongitude.setText(""+plan.getLon());
 		planAuto.setChecked(plan.getAutoRegister());
+	}
+	
+	private void setupAdapter()
+	{
+		taskListAdapter = new TaskListAdapter(this);
+		tasksListView = (ListView) this.findViewById(R.id.planTasksList);
+		tasksListView.setAdapter(taskListAdapter);
+	}
+	
+	private void setListViewListeners()
+	{
+		tasksListView.setOnItemClickListener(new OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) 
+			{
+				Task selectedTask = taskListAdapter.getTask(index);
+				
+				Intent showTaskDetail = new Intent(TraceApp.getAppContext() , TaskDetailActivity.class);
+				showTaskDetail.putExtra("taskId", selectedTask.getId());
+				showTaskDetail.putExtra("planId", plan.getId());
+				startActivity(showTaskDetail);
+			}	
+		});
 	}
 
 	@Override
@@ -146,4 +181,18 @@ public class PlanDetailActivity extends Activity
 		nfcLabel.setVisibility(View.INVISIBLE);
 		planNFC.setVisibility(View.INVISIBLE);
 	}
+	
+	@Override
+	public void onResume()
+    {  
+	    super.onResume();
+	    updateTaskData();
+     }
+	
+	private void updateTaskData()
+	{
+		taskListAdapter.updateTasks(plan.getTasks());
+		taskListAdapter.notifyDataSetChanged();
+	}
+	
 }
