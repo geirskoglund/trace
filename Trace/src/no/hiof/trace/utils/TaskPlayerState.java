@@ -13,6 +13,21 @@ public class TaskPlayerState
 	private Task activeTask = new Task();
 	private Interval activeInterval = new Interval(); 
 	
+	public TaskPlayerState()
+	{
+		Interval interval = TraceApp.database().getNewestInterval();
+		if(interval != null)
+		{
+			this.activeInterval = interval;
+			this.activeTask = interval.getTask();
+			
+			if(activeInterval.isCompleted())
+				state=State.PAUSED;
+			else if(activeInterval.isRunning())
+				state=State.PLAYING;
+		}
+	}
+	
 	public State getPlayerState()
 	{
 		return state;
@@ -55,5 +70,8 @@ public class TaskPlayerState
 		}
 	}
 	
-	
+	public Interval getCurrentInterval()
+	{
+		return activeInterval;
+	}
 }

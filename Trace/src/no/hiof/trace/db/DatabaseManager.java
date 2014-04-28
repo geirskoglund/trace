@@ -11,7 +11,6 @@ import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.db.model.definitions.CreateTableStatement;
 import no.hiof.trace.db.values.ColumnName;
-import no.hiof.trace.db.values.Columns;
 import no.hiof.trace.db.values.DatabaseInfo;
 import no.hiof.trace.db.values.TableName;
 import no.hiof.trace.utils.IntervalParser;
@@ -21,11 +20,9 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.util.Pair;
 
 public class DatabaseManager extends SQLiteOpenHelper
 {	
@@ -382,6 +379,19 @@ public class DatabaseManager extends SQLiteOpenHelper
 		}
 		
 		return task;
+	}
+	
+	public Interval getNewestInterval()
+	{
+		SQLiteDatabase theDatabase = getReadableDatabase();
+		
+		String query = String.format("SELECT * FROM %s ORDER BY %s DESC", TableName.INTERVAL, ColumnName.ID);
+		Cursor cursor = theDatabase.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+			return IntervalParser.parse(cursor);
+		else
+			return null;
 	}
 	
 	@SuppressLint("DefaultLocale")

@@ -20,7 +20,6 @@
         android:textStyle="bold" />
 
     <!-- TASK DESCRIPTION -->
-
     <TextView
         android:id="@+id/task_detail_description"
         android:layout_width="wrap_content"
@@ -29,26 +28,15 @@
         android:padding="5dip"
         android:text="@string/DUMMY_TEXT" />
 
-    <!-- TASK STATUS -->
-
-    <TextView
-        android:id="@+id/task_detail_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/task_detail_description"
-        android:padding="5dip"
-        android:text="@string/DUMMY_TEXT" />
-
     <!-- ACCUMULATED TIME -->
     <TextView
         android:id="@+id/task_detail_accumulated_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/task_detail_status"
+        android:layout_below="@+id/task_detail_description"
         android:padding="5dip"
         android:text="@string/accumulated_time" />
 
-    
     <ImageView 
 	    android:id="@+id/time_icon"
 	    android:src="@drawable/ic_action_time"
@@ -83,5 +71,13 @@
         android:layout_marginTop="5dp" >
     </ListView>
 
+    <ImageView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/description_task_header_icon"
+        android:src="@drawable/closed_stamp" />
 
 </RelativeLayout>
