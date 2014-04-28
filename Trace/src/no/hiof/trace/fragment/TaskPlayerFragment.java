@@ -6,6 +6,7 @@ import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState.State;
+import no.hiof.trace.view.TimerTextView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	ImageView button;
 	TextView planName;
 	TextView taskName;
-	Chronometer timer;
+	TimerTextView timer;
 	
 	LinearLayout infoBox;
 	public TaskPlayerFragment(){}
@@ -38,11 +39,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
 		
 		setViewVariables(view);
-		setPlayerButtonIconForCurrentState();
+		updateBasedOnState();
 		
 		button.setOnClickListener(this);
 		infoBox.setOnClickListener(this);
-		
+		displayTask();
 		return view;
 	}
 	
@@ -51,7 +52,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		button = (ImageView)view.findViewById(R.id.task_player_button);
 		planName = (TextView)view.findViewById(R.id.task_player_plan_name);
 		taskName = (TextView)view.findViewById(R.id.task_player_task_name);
-		timer = (Chronometer)view.findViewById(R.id.task_player_chronometer);
+		timer = (TimerTextView)view.findViewById(R.id.task_player_timer);
 		infoBox = (LinearLayout)view.findViewById(R.id.task_player_info_box);
 	}
 
@@ -66,30 +67,26 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 			TraceApp.playerState.stopInterval();
 		}
 		
-		setPlayerButtonIconForCurrentState();
+		updateBasedOnState();
 	}
 	
-	private void setPlayerButtonIconForCurrentState() 
+	private void updateBasedOnState() 
 	{
 		switch (TraceApp.playerState.getPlayerState())
 		{
 			case IDLE: 
-				// TODO: Use correct idle icon
-//				button.setImageResource(android.R.drawable.ic_media_ff); //temporary
 				button.setImageResource(R.drawable.ic_action_play_dark); //temporary
 				timer.stop();
 				timer.setVisibility(View.INVISIBLE);
 				return;
 			case PAUSED:
-//				button.setImageResource(android.R.drawable.ic_media_play);
 				button.setImageResource(R.drawable.ic_action_play);
 				timer.stop();
 				timer.setVisibility(View.VISIBLE);
 				return;
 			case PLAYING:
-//				button.setImageResource(android.R.drawable.ic_media_pause);
 				button.setImageResource(R.drawable.ic_action_stop);
-				timer.setBase(SystemClock.elapsedRealtime());
+				timer.setTime(TraceApp.playerState.getCurrentInterval().getStartTime());
 				timer.setVisibility(View.VISIBLE);
 				timer.start();
 				return;
@@ -104,8 +101,8 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		TraceApp.playerState.setActiveTask(task);
 		
 		displayTask();
-		timer.setBase(SystemClock.elapsedRealtime());
-		setPlayerButtonIconForCurrentState();
+		timer.setTime(TraceApp.playerState.getCurrentInterval().getStartTime());
+		updateBasedOnState();
 
 		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
 	}
