@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class TaskDetailActivity extends Activity
 	
 	TextView planAndTaskName;
 	TextView taskDescription;
-	TextView taskStatus;
+	ImageView taskStatus;
 	
 	private IntervalListAdapter intervalListAdapter;
 	private ListView intervalListView;
@@ -53,9 +54,9 @@ public class TaskDetailActivity extends Activity
 	{
 		planAndTaskName = (TextView) findViewById(R.id.task_detail_name);
 		taskDescription = (TextView) findViewById(R.id.task_detail_description);
-		taskStatus = (TextView) findViewById(R.id.task_detail_status);
+		taskStatus = (ImageView) findViewById(R.id.status_icon);
 	}
-
+	
 	private void fetchTask() 
 	{
 		long taskId = getIntent().getLongExtra("taskId", 0);
@@ -66,7 +67,19 @@ public class TaskDetailActivity extends Activity
 	{
 		planAndTaskName.setText(taskAndPlanCombined());
 		taskDescription.setText(task.getDescription());
-		taskStatus.setText(task.getStatus());
+		setStatusIconVisibility(task.getStatus());
+	}
+
+	private void setStatusIconVisibility(String status)
+	{
+		if(status.equals("Open"))
+		{
+			taskStatus.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			taskStatus.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	private String taskAndPlanCombined()

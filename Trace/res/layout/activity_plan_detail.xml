@@ -96,28 +96,28 @@
         android:padding="5dip"
         android:text="@string/DUMMY_TEXT" />
 
-    <TextView
-        android:id="@+id/status_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nfc_label"
-        android:padding="5dip"
-        android:text="@string/label_status" />
+<!--     <TextView -->
+<!--         android:id="@+id/status_label" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_below="@+id/nfc_label" -->
+<!--         android:padding="5dip" -->
+<!--         android:text="@string/label_status" /> -->
 
-    <TextView
-        android:id="@+id/plan_detail_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/status_label"
-        android:layout_toRightOf="@id/status_label"
-        android:padding="5dip"
-        android:text="@string/DUMMY_TEXT" />
+<!--     <TextView -->
+<!--         android:id="@+id/plan_detail_status" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignBaseline="@id/status_label" -->
+<!--         android:layout_toRightOf="@id/status_label" -->
+<!--         android:padding="5dip" -->
+<!--         android:text="@string/DUMMY_TEXT" /> -->
 
     <CheckBox
         android:id="@+id/plan_detail_auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/status_label"
+        android:layout_below="@+id/plan_detail_nfc"
         android:layout_marginTop="5dp"
         android:text="@string/label_auto_register"
         android:textSize="14sp" />
@@ -155,5 +155,14 @@
         android:layout_below="@id/taskHeader"
         android:layout_marginTop="5dp" >
     </ListView>
-
+    
+    <ImageView
+        android:id="@+id/status_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:contentDescription="@string/description_task_header_icon"
+        android:src="@drawable/closed_stamp" />
+    
 </RelativeLayout>

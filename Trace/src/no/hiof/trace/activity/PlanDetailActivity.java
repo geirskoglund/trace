@@ -12,10 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class PlanDetailActivity extends Activity
 {
@@ -31,7 +32,7 @@ public class PlanDetailActivity extends Activity
 	TextView planNFC;
 	TextView planLatitude;
 	TextView planLongitude;
-	TextView planStatus;
+	ImageView planStatus;
 	CheckBox planAuto;
 	
 	TextView ssidLabel;
@@ -60,7 +61,7 @@ public class PlanDetailActivity extends Activity
 		planDescription = (TextView)findViewById(R.id.plan_detail_description);
 		planSSId = (TextView)findViewById(R.id.plan_detail_ssid);
 		planNFC = (TextView)findViewById(R.id.plan_detail_nfc);
-		planStatus = (TextView)findViewById(R.id.plan_detail_status);
+		planStatus = (ImageView)findViewById(R.id.status_icon);
 		planLatitude = (TextView)findViewById(R.id.plan_detail_lat);
 		planLongitude = (TextView)findViewById(R.id.plan_detail_lon);
 		planAuto = (CheckBox)findViewById(R.id.plan_detail_auto);
@@ -87,10 +88,22 @@ public class PlanDetailActivity extends Activity
 		planDescription.setText(plan.getDescription());
 		planSSId.setText(plan.getSsid());
 		planNFC.setText(plan.getNfc());
-		planStatus.setText(plan.getStatus());
 		planLatitude.setText(""+plan.getLat());
 		planLongitude.setText(""+plan.getLon());
 		planAuto.setChecked(plan.getAutoRegister());
+		setStatusIconVisibility(plan.getStatus());
+	}
+	
+	private void setStatusIconVisibility(String status)
+	{
+		if(status.equals("Open"))
+		{
+			planStatus.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			planStatus.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	private void setupAdapter()

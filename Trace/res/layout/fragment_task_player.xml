@@ -46,7 +46,8 @@
         android:contentDescription="@string/play"
         android:gravity="center_vertical"
         android:layout_marginRight="5dip"
-        android:src="@android:drawable/ic_media_play" />
+        android:src="@drawable/ic_action_play_dark" />
+<!--         android:src="@android:drawable/ic_media_play" /> -->
     
 
 </LinearLayout>

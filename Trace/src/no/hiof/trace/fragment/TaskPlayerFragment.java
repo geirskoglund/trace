@@ -75,17 +75,20 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		{
 			case IDLE: 
 				// TODO: Use correct idle icon
-				button.setImageResource(android.R.drawable.ic_media_ff); //temporary
+//				button.setImageResource(android.R.drawable.ic_media_ff); //temporary
+				button.setImageResource(R.drawable.ic_action_play_dark); //temporary
 				timer.stop();
 				timer.setVisibility(View.INVISIBLE);
 				return;
 			case PAUSED:
-				button.setImageResource(android.R.drawable.ic_media_play);
+//				button.setImageResource(android.R.drawable.ic_media_play);
+				button.setImageResource(R.drawable.ic_action_play);
 				timer.stop();
 				timer.setVisibility(View.VISIBLE);
 				return;
 			case PLAYING:
-				button.setImageResource(android.R.drawable.ic_media_pause);
+//				button.setImageResource(android.R.drawable.ic_media_pause);
+				button.setImageResource(R.drawable.ic_action_stop);
 				timer.setBase(SystemClock.elapsedRealtime());
 				timer.setVisibility(View.VISIBLE);
 				timer.start();
