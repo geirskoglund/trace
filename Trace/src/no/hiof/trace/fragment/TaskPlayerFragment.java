@@ -240,7 +240,6 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		{
 			if(intent.getAction().equals(TaskPlayerState.REFRESH_DATA_INTENT))
 			{
-				Feedback.showToast("Oppdaterer player");
 				updateBasedOnState();
 	            displayTask();
 			}
