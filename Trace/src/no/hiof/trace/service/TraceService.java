@@ -1,6 +1,5 @@
 package no.hiof.trace.service;
 
-import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.utils.TaskPlayerState;
 import android.app.IntentService;
 import android.content.Intent;
@@ -9,7 +8,7 @@ import android.os.IBinder;
 
 public class TraceService extends IntentService 
 {
-
+	
 	public final TaskPlayerState playerState = new TaskPlayerState();
 	private final IBinder binder = new TraceBinder();
 	//private final DatabaseManager database = new DatabaseManager(this);
@@ -20,9 +19,15 @@ public class TraceService extends IntentService
 	}
 
 	@Override
-	public IBinder onBind(Intent arg0) 
+	public IBinder onBind(Intent intent) 
 	{
+		
 		return binder;
+	}
+	
+	public void sendStuff(String text)
+	{
+		sendBroadcast(new Intent(text));
 	}
 	
 	/**
@@ -76,7 +81,7 @@ public class TraceService extends IntentService
 	}
 
 	@Override
-	protected void onHandleIntent(Intent arg0) 
+	protected void onHandleIntent(Intent intent) 
 	{
 		// TODO Auto-generated method stub
 	}

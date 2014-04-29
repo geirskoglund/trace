@@ -9,14 +9,14 @@ import android.content.Context;
 public class TraceApp extends Application 
 {
 	private static Context context;
-	public static TaskPlayerState playerState;
+	//public static TaskPlayerState playerState;
 	private static DatabaseManager database;
 	
     public void onCreate()
     {
         super.onCreate();
         TraceApp.context = getApplicationContext();
-        playerState = new TaskPlayerState();
+        //playerState = new TaskPlayerState(context);
     }
     
     public static DatabaseManager database()

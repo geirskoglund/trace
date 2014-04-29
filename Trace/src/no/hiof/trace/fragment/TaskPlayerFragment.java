@@ -7,11 +7,14 @@ import no.hiof.trace.db.model.Task;
 import no.hiof.trace.service.TraceService;
 import no.hiof.trace.service.TraceService.TraceBinder;
 import no.hiof.trace.utils.Feedback;
+import no.hiof.trace.utils.TaskPlayerState;
 import no.hiof.trace.utils.TaskPlayerState.State;
 import no.hiof.trace.view.TimerTextView;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -34,6 +37,8 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	TraceService service;
 	boolean bound = false;
 	
+	private PlayerUpdateReceiver playerUpdateReciever;
+	
 	LinearLayout infoBox;
 	public TaskPlayerFragment(){}
 
@@ -42,11 +47,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
 		
 		setViewVariables(view);
-		updateBasedOnState();
+		//updateBasedOnState();
 		
 		button.setOnClickListener(this);
 		infoBox.setOnClickListener(this);
-		displayTask();
+		//displayTask();
 		return view;
 	}
 	
@@ -73,7 +78,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 			service.playerState.stopInterval();
 		}
 		
-		updateBasedOnState();
+		//updateBasedOnState();
 	}
 	
 	private void updateBasedOnState() 
@@ -112,9 +117,9 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		service.playerState.stopInterval();
 		service.playerState.setActiveTask(task);
 		
-		displayTask();
+		//displayTask();
 		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
-		updateBasedOnState();
+		//updateBasedOnState();
 
 		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
 	}
@@ -140,8 +145,20 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	public void onResume()
     {  
 	    super.onResume();
+	    if (playerUpdateReciever==null)
+	    	playerUpdateReciever = new PlayerUpdateReceiver();
 	    
+	    IntentFilter intentFilter = new IntentFilter(TaskPlayerState.REFRESH_DATA_INTENT);
+	    this.getActivity().registerReceiver(playerUpdateReciever, intentFilter);
     }
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if(playerUpdateReciever != null)
+			this.getActivity().unregisterReceiver(playerUpdateReciever);
+	}
 	
 	@Override
 	public void onStart()
@@ -211,4 +228,23 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
             bound = false;
         }
     };
+    
+    /**
+     * Receive updates from service
+     * */
+    private class PlayerUpdateReceiver extends BroadcastReceiver
+    {
+
+		@Override
+		public void onReceive(Context context, Intent intent) 
+		{
+			if(intent.getAction().equals(TaskPlayerState.REFRESH_DATA_INTENT))
+			{
+				Feedback.showToast("Oppdaterer player");
+				updateBasedOnState();
+	            displayTask();
+			}
+		}
+    	
+    }
 }

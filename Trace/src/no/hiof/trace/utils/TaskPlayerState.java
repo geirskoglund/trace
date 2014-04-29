@@ -3,17 +3,20 @@ package no.hiof.trace.utils;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;
+import android.content.Intent;
+import android.util.Log;
 
-public class TaskPlayerState 
+public class TaskPlayerState
 {
 	public static enum State {PLAYING, PAUSED, IDLE};
 	public static enum Transition {TASK_IS_IN_DB, TASK_IS_NOT_IN_DB, BUTTON_PRESS, AUTO_PLAY_INVOKED};
+	public final static String REFRESH_DATA_INTENT = "no.hiof.trace.REFRESH_DATA_INTENT"; 
 	
 	private State state = TaskPlayerState.State.IDLE;
 	private Task activeTask = new Task();
 	private Interval activeInterval = new Interval(); 
 	
-	public TaskPlayerState()
+	public TaskPlayerState() 
 	{
 		Interval interval = TraceApp.database().getNewestInterval();
 		if(interval != null)
@@ -26,6 +29,8 @@ public class TaskPlayerState
 			else if(activeInterval.isRunning())
 				state=State.PLAYING;
 		}
+		
+		notifyUpdate();
 	}
 	
 	public State getPlayerState()
@@ -33,9 +38,15 @@ public class TaskPlayerState
 		return state;
 	}
 	
+	private void notifyUpdate()
+	{
+		TraceApp.getAppContext().sendBroadcast(new Intent(REFRESH_DATA_INTENT));
+	}
+	
 	public void setPlayerState(State state)
 	{
 		this.state=state;
+		notifyUpdate();
 	}
 	
 	public Task getActiveTask()
@@ -48,6 +59,7 @@ public class TaskPlayerState
 		stopInterval();
 		this.state = task.existsInDatabase() ? State.PAUSED : State.IDLE;
 		this.activeTask = task;
+		notifyUpdate();
 	}
 	
 	public void startInterval()
@@ -56,6 +68,8 @@ public class TaskPlayerState
 		{
 			activeInterval = TraceApp.database().createIntervalWithStartTime(this.activeTask.getId());
 			this.state = State.PLAYING;
+			
+			notifyUpdate();
 		}
 	}
 	
@@ -67,6 +81,8 @@ public class TaskPlayerState
 			this.state = State.PAUSED;
 			TraceApp.database().updateInterval(activeInterval);
 			Feedback.showToast("Time slot saved");
+			
+			notifyUpdate();
 		}
 	}
 	
