@@ -16,7 +16,7 @@
     <string name="label_name">Name</string>
     <string name="label_plan_name">Plan name</string>
     <string name="label_location">Location</string>
-    <string name="label_ssid">SSID</string>
+    <string name="label_ssid">WiFi</string>
     <string name="label_nfc">NFC-tag</string>
     <string name="label_status">Status</string>
     <string name="label_auto_register">Auto register</string>
@@ -45,7 +45,7 @@
     
     <string-array name="auto_select_array">
         <item>(NONE)</item>
-        <item>SSID</item>
+        <item>WiFi</item>
         <item>GPS</item>
         <item>NFC</item>
     </string-array>

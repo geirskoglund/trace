@@ -134,10 +134,30 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 		autoSelectionSpinner.setSelection(autoSelectionSpinnerPosition);
 		System.out.println("AUTOTRIGGER: "+plan.getAutoTrigger());
 		
+		if(!ssidExistsInAdapter())
+		{
+			ssidAdapter.add(plan.getSsid());
+		}
+		
 		int ssidSpinnerPosition = ssidAdapter.getPosition(plan.getSsid());
 		planSSId.setSelection(ssidSpinnerPosition);
+		
 	}
 
+	private boolean ssidExistsInAdapter()
+	{
+		String ssid = plan.getSsid();
+		for(int i = 0; i<ssidAdapter.getCount(); i++)
+		{
+			if(ssidAdapter.getItem(i).equals(ssid))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
@@ -198,15 +218,11 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	@Override
 	public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
 	{
-		System.out.println("####################################################################");
-		System.out.println("CLICKED: "+position);
-		System.out.println(autoSelectionAdapter.getItem(position));
-		
 		if(autoSelectionAdapter.getItem(position).equals("(NONE)"))
 		{
 			hideLabelsAndEditBoxes();
 		}
-		else if(autoSelectionAdapter.getItem(position).equals("SSID"))
+		else if(autoSelectionAdapter.getItem(position).equals("WiFi"))
 		{
 			hideLabelsAndEditBoxes();
 			ssidLabel.setVisibility(View.VISIBLE);
@@ -230,8 +246,6 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 	
 
