@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TaskListAdapter extends BaseAdapter
@@ -52,11 +53,29 @@ public class TaskListAdapter extends BaseAdapter
 		
 		TextView taskName = (TextView)view.findViewById(R.id.listitem_task_name);
 		TextView taskDescription = (TextView)view.findViewById(R.id.listitem_task_desc);
+		ImageView defaultIcon = (ImageView)view.findViewById(R.id.listitem_task_default);
 		
 		taskName.setText(task.getName());
 		taskDescription.setText(task.getDescription());
+		defaultIcon.setVisibility(determineDefaultIconVisibility(task));
 		
 		return view;
+	}
+
+	private int determineDefaultIconVisibility(Task task)
+	{
+		Task defaultPlanTask = task.getPlan().getPrimaryTask();
+		
+		if(defaultPlanTask==null)
+		{
+			return View.GONE;
+		}
+		else if(task.getId() == defaultPlanTask.getId())
+		{
+			return View.VISIBLE;
+		}
+		
+		return View.GONE;
 	}
 	
 	public void updateTasks(List<Task> tasks)

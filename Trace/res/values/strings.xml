@@ -58,5 +58,6 @@
     <string name="accumulated_time">Accumulated time:</string>
     <string name="play">Play</string>
     <string name="description_task_header_icon">taskHeaderIcon</string>
+    <string name="description_default_task_marking">Default task marking</string>
 
 </resources>

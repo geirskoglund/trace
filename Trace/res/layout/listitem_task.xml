@@ -8,14 +8,31 @@
         android:id="@+id/listitem_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="5dp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+        android:text="@string/DUMMY_TEXT"/>
 
     <TextView
         android:id="@+id/listitem_task_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/listitem_task_name"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/listitem_task_default"
+        android:text="@string/DUMMY_TEXT" />
+    
+    <ImageView
+        android:src="@drawable/ic_action_important"
+        android:contentDescription="@string/description_default_task_marking" 
+        android:id="@+id/listitem_task_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dip"
+        android:padding="2dip"/>
+<!--         android:background="#ff9933"/> -->
 
 </RelativeLayout>
