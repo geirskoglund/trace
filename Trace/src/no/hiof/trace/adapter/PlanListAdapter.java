@@ -60,7 +60,7 @@ public class PlanListAdapter extends BaseAdapter
 		planName.setAlpha(alphaOpenFactor);
 		planDescription.setAlpha(alphaOpenFactor);
 		  
-		if(planHasClosedStatus(plan))
+		if(!plan.isOpen())
 		{
 			planName.setAlpha(alphaClosedFactor);
 		    planDescription.setAlpha(alphaClosedFactor);
@@ -73,11 +73,6 @@ public class PlanListAdapter extends BaseAdapter
 		planDescription.setText(plan.getDescription());
 		
 		return view;
-	}
-	
-	public boolean planHasClosedStatus(Plan plan)
-	{
-		return plan.getStatus().equals("Closed");
 	}
 	
 	public void updatePlans(List<Plan> plans)

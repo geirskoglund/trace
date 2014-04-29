@@ -59,5 +59,7 @@
     <string name="play">Play</string>
     <string name="description_task_header_icon">taskHeaderIcon</string>
     <string name="description_default_task_marking">Default task marking</string>
+    <string name="new_task">New task</string>
+    <string name="default_task">Set as default task</string>
 
 </resources>

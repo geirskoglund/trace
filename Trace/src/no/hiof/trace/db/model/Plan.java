@@ -239,6 +239,11 @@ public class Plan implements Comparable<Plan>
 		this.tasks.addAll(tasks);
 	}
 	
+	public boolean isOpen()
+	{
+		return status.equals("Open");
+	}
+	
 	//Should only be used for debugging
 	public String toString()
 	{

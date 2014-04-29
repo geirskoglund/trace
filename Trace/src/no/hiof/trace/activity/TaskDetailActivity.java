@@ -7,9 +7,11 @@ import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -93,6 +95,23 @@ public class TaskDetailActivity extends Activity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.task_detail, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+
+	    switch (item.getItemId()) {
+	        case R.id.edit_button:                
+	        	Intent editTaskPage = new Intent(this, TaskEditorActivity.class);
+		    	editTaskPage.putExtra("taskId", task.getId());
+	        	startActivity(editTaskPage);
+	            return true;
+	        case R.id.default_button:
+	        	//HANDLE SETTING THE TASK AS DEFAULT
+	        	return true;
+	    }
+	    return super.onOptionsItemSelected(item);
 	}
 	
 	public void changeBackgroundColor(View view)
