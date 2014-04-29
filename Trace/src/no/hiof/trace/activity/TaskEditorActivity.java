@@ -4,10 +4,9 @@ import java.util.List;
 
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Task;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;

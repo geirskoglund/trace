@@ -3,7 +3,6 @@ package no.hiof.trace.db;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
@@ -24,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+@SuppressLint("DefaultLocale")
 public class DatabaseManager extends SQLiteOpenHelper
 {	
 	//private SQLiteDatabase theDatabase;
@@ -128,21 +128,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 		finally{ database.endTransaction(); }
 		
 		log("DropTables: " + tableNames.toString());
-	}
-
-	//Prints all tables in the database
-	private void writeTableNamesToLog()
-	{
-		SQLiteDatabase theDatabase = getReadableDatabase();
-		
-		Cursor cursor = theDatabase.rawQuery("SELECT * FROM sqlite_master WHERE type='table'",null);
-		log("getTables kjører");
-		while(cursor.moveToNext())
-		{
-			log("..."+cursor.getString(cursor.getColumnIndex("name")));
-		}
-		
-		//theDatabase.close();
 	}
 
 	private void log(String message)
