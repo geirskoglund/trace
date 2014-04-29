@@ -54,10 +54,30 @@ public class PlanListAdapter extends BaseAdapter
 		TextView planName = (TextView)view.findViewById(R.id.listitem_plan_name);
 		TextView planDescription = (TextView)view.findViewById(R.id.listitem_plan_desc);
 		
+		float alphaOpenFactor = 1f;
+		float alphaClosedFactor = 0.5f;
+		  
+		planName.setAlpha(alphaOpenFactor);
+		planDescription.setAlpha(alphaOpenFactor);
+		  
+		if(planHasClosedStatus(plan))
+		{
+			planName.setAlpha(alphaClosedFactor);
+		    planDescription.setAlpha(alphaClosedFactor);
+		}
+		  
+		planName.setText(plan.getName());
+		planDescription.setText(plan.getDescription());
+		
 		planName.setText(plan.getName());
 		planDescription.setText(plan.getDescription());
 		
 		return view;
+	}
+	
+	public boolean planHasClosedStatus(Plan plan)
+	{
+		return plan.getStatus().equals("Closed");
 	}
 	
 	public void updatePlans(List<Plan> plans)
