@@ -161,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:contentDescription="@string/description_task_header_icon"
         android:src="@drawable/closed_stamp" />
     
