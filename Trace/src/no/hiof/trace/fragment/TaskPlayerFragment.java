@@ -4,11 +4,17 @@ import no.hiof.trace.activity.R;
 import no.hiof.trace.activity.TaskDetailActivity;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Task;
+import no.hiof.trace.service.TraceService;
+import no.hiof.trace.service.TraceService.TraceBinder;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState.State;
 import no.hiof.trace.view.TimerTextView;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +30,9 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	TextView planName;
 	TextView taskName;
 	TimerTextView timer;
+	
+	TraceService service;
+	boolean bound = false;
 	
 	LinearLayout infoBox;
 	public TaskPlayerFragment(){}
@@ -52,13 +61,16 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 
 	public void taskPlayerButtonToggle()
 	{
-		if(TraceApp.playerState.getPlayerState() == State.PAUSED)
+		if(!bound)
+			return;
+
+		if(service.playerState.getPlayerState() == State.PAUSED)
 		{
-			TraceApp.playerState.startInterval();
+			service.playerState.startInterval();
 		}
-		else if(TraceApp.playerState.getPlayerState() == State.PLAYING)
+		else if(service.playerState.getPlayerState() == State.PLAYING)
 		{
-			TraceApp.playerState.stopInterval();
+			service.playerState.stopInterval();
 		}
 		
 		updateBasedOnState();
@@ -66,7 +78,10 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	
 	private void updateBasedOnState() 
 	{
-		switch (TraceApp.playerState.getPlayerState())
+		if(!bound)
+			return;
+		
+		switch (service.playerState.getPlayerState())
 		{
 			case IDLE: 
 				button.setImageResource(R.drawable.ic_action_play_dark); //temporary
@@ -80,7 +95,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 				return;
 			case PLAYING:
 				button.setImageResource(R.drawable.ic_action_stop);
-				timer.setTime(TraceApp.playerState.getCurrentInterval().getStartTime());
+				timer.setTime(service.playerState.getCurrentInterval().getStartTime());
 				timer.setVisibility(View.VISIBLE);
 				timer.start();
 				return;
@@ -89,13 +104,16 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 
 	public void load(Task task)
 	{
+		if(!bound)
+			return;
+		
 		if(noLoadingIsNeeded(task)) return;
 		
-		TraceApp.playerState.stopInterval();
-		TraceApp.playerState.setActiveTask(task);
+		service.playerState.stopInterval();
+		service.playerState.setActiveTask(task);
 		
 		displayTask();
-		timer.setTime(TraceApp.playerState.getCurrentInterval().getStartTime());
+		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
 		updateBasedOnState();
 
 		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
@@ -103,13 +121,19 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	
 	private boolean noLoadingIsNeeded(Task task) 
 	{
-		return (task == null || TraceApp.playerState.getActiveTask().getId() == task.getId() );	
+		if(!bound)
+			return true;
+		
+		return (task == null || service.playerState.getActiveTask().getId() == task.getId() );
 	}
 
 	private void displayTask() 
 	{
-		this.taskName.setText(TraceApp.playerState.getActiveTask().getName());
-		this.planName.setText(TraceApp.playerState.getActiveTask().getPlan().getName());
+		if(bound)
+		{
+			this.taskName.setText(service.playerState.getActiveTask().getName());
+			this.planName.setText(service.playerState.getActiveTask().getPlan().getName());
+		}
 	}
 
 	@Override
@@ -117,7 +141,26 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
     {  
 	    super.onResume();
 	    
-    }	
+    }
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		Intent intent = new Intent(this.getActivity(), TraceService.class);
+		this.getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+	}
+	
+	@Override
+	public void onStop()
+	{
+		super.onStop();
+		if(bound)
+		{
+			this.getActivity().unbindService(serviceConnection);
+			bound = false;
+		}
+	}
 	
 	@Override
 	public void onClick(View v) 
@@ -135,7 +178,10 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 
 	private void navigateToTaskDetail() 
 	{
-		Task task = TraceApp.playerState.getActiveTask();
+		if(!bound)
+			return;
+		
+		Task task = service.playerState.getActiveTask();
 		if(task==null || task.getId()==0)
 			return;
 		
@@ -144,4 +190,25 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		showTaskDetail.putExtra("planId", task.getPlanId());
 		startActivity(showTaskDetail);
 	}
+	
+	/** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) 
+        {
+            // We've bound to LocalService, cast the IBinder and get TraceService instance
+            TraceBinder traceBinder = (TraceBinder) binder;
+            service = traceBinder.getService();
+            bound = true;
+            updateBasedOnState();
+            displayTask();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) 
+        {
+            bound = false;
+        }
+    };
 }
