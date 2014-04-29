@@ -1,8 +1,13 @@
 package no.hiof.trace.service;
 
+import no.hiof.trace.sensor.WifiReciever;
+import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.TaskPlayerState;
 import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 
@@ -11,6 +16,7 @@ public class TraceService extends IntentService
 	
 	public final TaskPlayerState playerState = new TaskPlayerState();
 	private final IBinder binder = new TraceBinder();
+	private SensorUpdatesReceiver sensorUpdatesReceiver;
 	//private final DatabaseManager database = new DatabaseManager(this);
 	
 	public TraceService() 
@@ -51,8 +57,14 @@ public class TraceService extends IntentService
 	{
 	    handleCommand(intent);
 	    super.onStart(intent, startId);
+	    
+	    if(sensorUpdatesReceiver==null)
+	    	sensorUpdatesReceiver = new SensorUpdatesReceiver();
+	    
+	    IntentFilter wifiFilter = new IntentFilter(WifiReciever.SSID_CHANGED);
+	    this.registerReceiver(sensorUpdatesReceiver, wifiFilter);
 	}
-
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) 
 	{
@@ -77,7 +89,8 @@ public class TraceService extends IntentService
 	public void onDestroy ()
 	{
 		super.onDestroy();
-		
+		if(sensorUpdatesReceiver != null)
+			this.unregisterReceiver(sensorUpdatesReceiver);
 	}
 
 	@Override
@@ -85,5 +98,28 @@ public class TraceService extends IntentService
 	{
 		// TODO Auto-generated method stub
 	}
+	
+	private class SensorUpdatesReceiver extends BroadcastReceiver
+    {
+
+		@Override
+		public void onReceive(Context context, Intent intent) 
+		{
+			if(intent.getAction().equals(WifiReciever.SSID_CHANGED))
+			{
+				boolean connected = intent.getBooleanExtra("connected", false);
+				if(connected)
+				{
+					String ssid = intent.getStringExtra("ssid");
+					Feedback.showToast("Service knows: "+ssid);
+				}
+				else
+				{
+					Feedback.showToast("Service knows: No wifi connection");
+				}
+			}
+		}
+    	
+    }
 
 }

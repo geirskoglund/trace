@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.service.TraceService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.util.Log;
 
 public class WifiReciever extends BroadcastReceiver 
 {
+	public final static String SSID_CHANGED = "no.hiof.trace.SSID_CHANGED";
 
 	@Override
 	public void onReceive(Context context, Intent intent) 
@@ -28,11 +30,25 @@ public class WifiReciever extends BroadcastReceiver
 			NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 			NetworkInfo.State state = networkInfo.getState();
 			
+			//make sure we have the service up and running
+			Intent startServiceIntent = new Intent(context, TraceService.class);
+			context.startService(startServiceIntent);
+			
 			if(state == NetworkInfo.State.CONNECTED)
 			{
 				WifiInfo wifiInfo = manager.getConnectionInfo();
 				String ssid = wifiInfo.getSSID();
-				Log.d("TRACE-WR","Connected to: " + ssid );
+				Intent newSSID = new Intent(SSID_CHANGED);
+				newSSID.putExtra("connected", true);
+				newSSID.putExtra("ssid", ssid);
+				TraceApp.getAppContext().sendBroadcast(newSSID);
+				//Log.d("TRACE-WR","Connected to: " + ssid );
+			}
+			else if(state == NetworkInfo.State.DISCONNECTED)
+			{
+				Intent newSSID = new Intent(SSID_CHANGED);
+				newSSID.putExtra("connected", false);
+				TraceApp.getAppContext().sendBroadcast(newSSID);
 			}
 			else
 			{
