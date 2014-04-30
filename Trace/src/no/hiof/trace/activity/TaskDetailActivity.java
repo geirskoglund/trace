@@ -6,6 +6,7 @@ import no.hiof.trace.adapter.IntervalListAdapter;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;
+import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -108,10 +109,33 @@ public class TaskDetailActivity extends Activity
 	        	startActivity(editTaskPage);
 	            return true;
 	        case R.id.default_button:
-	        	//HANDLE SETTING THE TASK AS DEFAULT
+	        	setTaskAsPrimary();
+	        	saveChanges();
 	        	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
+	}
+	
+	private void setTaskAsPrimary()
+	{
+		task.getPlan().setPrimaryTask(task);
+	}
+	
+	private void saveChanges() 
+	{
+		if(fieldsAreOk())
+		{
+			long planId = database.writeToDatabase(task.getPlan());
+			task.getPlan().setId(planId);
+			
+			Feedback.showToast("Task is set as default");
+			Feedback.vibrateDevice(Feedback.SHORT_VIBRATION);
+		}
+	}
+
+	private boolean fieldsAreOk() 
+	{
+		return task.getPlanId()>0;
 	}
 	
 	public void changeBackgroundColor(View view)
