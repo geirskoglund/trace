@@ -38,6 +38,8 @@ public class WifiReciever extends BroadcastReceiver
 			{
 				WifiInfo wifiInfo = manager.getConnectionInfo();
 				String ssid = wifiInfo.getSSID();
+				ssid = ssid.substring(1,ssid.length()-1); //remove quotes
+				
 				Intent newSSID = new Intent(SSID_CHANGED);
 				newSSID.putExtra("connected", true);
 				newSSID.putExtra("ssid", ssid);

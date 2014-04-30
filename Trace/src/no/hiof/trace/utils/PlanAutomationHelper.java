@@ -3,6 +3,9 @@ package no.hiof.trace.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R;
+import android.util.Log;
+
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
@@ -13,10 +16,10 @@ public class PlanAutomationHelper {
 	Plan ssidPlan = null;
 	List<Plan> ssidPlans = new ArrayList<Plan>();
 	String ssid = "";
+	String wifiTrigger="WiFi";
 
 	public PlanAutomationHelper() 
 	{
-		
 	}
 	
 	public Plan getPlanForSSID(String ssid)
@@ -32,7 +35,7 @@ public class PlanAutomationHelper {
 		if(!ssidIsQueried(ssid))
 		{
 			DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
-			ssidPlans = database.getOpenAutoLoadingPlans(ColumnName.SSID, ssid);
+			ssidPlans = database.getOpenAutoLoadingPlans(ColumnName.SSID, ssid, wifiTrigger);
 		}
 		
 		return ssidPlans;
@@ -42,7 +45,7 @@ public class PlanAutomationHelper {
 	{
 		if(!ssidIsQueried(ssid))
 			getPlansForSSID(ssid);
-		
+		Log.d("TRACE-DM","Helper: Lengde på listen: "+ssidPlans.size());
 		return !ssidPlans.isEmpty();
 	}
 	
@@ -52,6 +55,12 @@ public class PlanAutomationHelper {
 			return new Plan();
 		else
 			return plans.get(0);
+	}
+	
+	public Plan getCurrentPlan()
+	{
+		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
+		return database.getActivePlan();
 	}
 	
 	private boolean ssidIsQueried(String ssid)
