@@ -1,5 +1,7 @@
 package no.hiof.trace.fragment;
 
+import java.util.List;
+
 import no.hiof.trace.activity.PlanDetailActivity;
 import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
@@ -201,6 +203,27 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 			Feedback.showToast("Task is refreshed");
 			currentPlan = result;
 			setFieldValues();
+			new RefreshTasklistDataTask().execute(result);
 		}
+	}
+	
+	private class RefreshTasklistDataTask extends AsyncTask<Plan, Void, List<Task>>
+	{
+
+		@Override
+		protected List<Task> doInBackground(Plan... params) 
+		{
+			return params[0].getTasks();
+		}
+		
+		@Override
+		protected void onPostExecute(List<Task> result) 
+		{
+			taskListAdapter.updateTasks(result);
+			taskListAdapter.notifyDataSetChanged();
+		}
+
+
+	
 	}
 }

@@ -27,10 +27,22 @@ public class MainActivity extends FragmentActivity implements OnTaskLoadedListen
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(pageInteractionAdapter);
-		
-		setViewPagerListener();
 	}
 
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		viewPager.setOnPageChangeListener(null); 
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		setViewPagerListener();
+	}
+	
 	private void setViewPagerListener() 
 	{
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() 
