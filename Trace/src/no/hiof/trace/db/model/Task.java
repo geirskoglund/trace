@@ -112,6 +112,11 @@ public class Task
 		this.intervals.addAll(intervals);
 	}
 	
+	public boolean isOpen()
+	{
+		return status.equals("Open");
+	}
+	
 	public String toString()
 	{
 		return String.format("Id:%s Name:%s Intervals:%s", id, name, intervals.size());

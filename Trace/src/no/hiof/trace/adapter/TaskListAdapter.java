@@ -55,6 +55,18 @@ public class TaskListAdapter extends BaseAdapter
 		TextView taskDescription = (TextView)view.findViewById(R.id.listitem_task_desc);
 		ImageView defaultIcon = (ImageView)view.findViewById(R.id.listitem_task_default);
 		
+		float alphaOpenFactor = 1f;
+		float alphaClosedFactor = 0.5f;
+		  
+		taskName.setAlpha(alphaOpenFactor);
+		taskDescription.setAlpha(alphaOpenFactor);
+		  
+		if(!task.isOpen())
+		{
+			taskName.setAlpha(alphaClosedFactor);
+			taskDescription.setAlpha(alphaClosedFactor);
+		}
+		
 		taskName.setText(task.getName());
 		taskDescription.setText(task.getDescription());
 		defaultIcon.setVisibility(determineDefaultIconVisibility(task));
