@@ -161,11 +161,6 @@ public class PlanDetailActivity extends Activity
 	{
 		invisibleizeAutoSelect();	
 		
-		if(plan.getAutoRegister()==false)
-		{
-			return;
-		}
-		
 		if(plan.getAutoTrigger().equals("(NONE)"))
 		{
 		}
