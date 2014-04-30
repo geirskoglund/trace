@@ -17,4 +17,5 @@ public class ColumnName {
 	public static final String TASK_ID = "task_id";
 	public static final String LAST_ACTIVATED = "last_activated";
 	public static final String AUTO_TRIGGER = "auto_trigger";
+	public static final String ELAPSED_SECONDS = "elapsed_seconds";
 }

@@ -37,7 +37,7 @@ public class CreateTableStatement
 			"CREATE TABLE interval ( "
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"start_time DATETIME NOT NULL,"
-			+"end_time DATETIME,"
+			+"elapsed_seconds INTEGER DEFAULT 0,"
 			+"task_id INTEGER,"
 			+"FOREIGN KEY(task_id) REFERENCES task(id)"
 			+")";

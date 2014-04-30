@@ -3,13 +3,14 @@ package no.hiof.trace.db.model;
 import java.util.Date;
 
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.utils.DateHelper;
 import no.hiof.trace.utils.TimeSlot;
 
 public class Interval 
 {
 	private long id;
 	private Date startTime = null;
-	private Date endTime = null;
+	private long elapsedSeconds = 0;
 	private long taskId;
 	
 	public Interval(){}
@@ -60,21 +61,34 @@ public class Interval
 	{
 		if(isIdle()) this.startTime = new Date();
 	}
-
-	public Date getEndTime() 
+	
+	public long getElapsedSeconds()
 	{
-		return this.endTime;
+		return this.elapsedSeconds;
 	}
-	public void setEndTime(Date date)
+	
+	public void setElapsedSeconds(long elapsedSeconds)
 	{
-		this.endTime = date;
+		this.elapsedSeconds = elapsedSeconds;
 	}
 	
 	public void stop() 
 	{
-		if(isRunning()) this.endTime = new Date();
+		if(!isRunning())
+			return;
+		
+		Date endTime = new Date();
+		long elapsed = DateHelper.getDiffInSeconds(endTime, this.startTime);
+		
+		stop(elapsed);
 	}
 
+	public void stop(long elapsedSeconds) 
+	{
+		if(isRunning()) 
+			this.elapsedSeconds = elapsedSeconds;
+	}
+	
 	public boolean isRunning() 
 	{
 		return wasStarted() && !wasStopped();
@@ -97,17 +111,17 @@ public class Interval
 	
 	private boolean wasStopped()
 	{
-		return this.endTime!=null;
+		return this.elapsedSeconds > 0;
 	}
 	
 	public TimeSlot getElapsedTime()
 	{
 		if(isIdle())
-			return new TimeSlot(new Date(), new Date());		
+			return new TimeSlot(0);		
 		else if(isCompleted())
-			return new TimeSlot(this.startTime, this.endTime);
+			return new TimeSlot(this.elapsedSeconds);
 		else
-			return new TimeSlot(this.startTime, new Date());
+			return new TimeSlot(DateHelper.getDiffInSeconds(new Date(), startTime));
 	}
 		
 }

@@ -47,11 +47,10 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
 		
 		setViewVariables(view);
-		//updateBasedOnState();
 		
 		button.setOnClickListener(this);
 		infoBox.setOnClickListener(this);
-		//displayTask();
+
 		return view;
 	}
 	
@@ -75,10 +74,8 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		}
 		else if(service.playerState.getPlayerState() == State.PLAYING)
 		{
-			service.playerState.stopInterval();
+			service.playerState.stopInterval(timer.getTimeInSeconds()-1);
 		}
-		
-		//updateBasedOnState();
 	}
 	
 	private void updateBasedOnState() 
@@ -117,9 +114,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		service.playerState.stopInterval();
 		service.playerState.setActiveTask(task);
 		
-		//displayTask();
 		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
-		//updateBasedOnState();
 
 		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
 	}
