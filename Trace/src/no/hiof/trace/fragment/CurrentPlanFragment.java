@@ -198,6 +198,7 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		@Override
 		protected void onPostExecute(Plan result) 
 		{
+			Feedback.showToast("Task is refreshed");
 			currentPlan = result;
 			setFieldValues();
 		}
