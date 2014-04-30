@@ -78,7 +78,7 @@ public class TaskListAdapter extends BaseAdapter
 	{
 		Task defaultPlanTask = task.getPlan().getPrimaryTask();
 		
-		if(defaultPlanTask==null)
+		if(defaultPlanTask==null || !task.isOpen())
 		{
 			return View.GONE;
 		}
@@ -86,7 +86,7 @@ public class TaskListAdapter extends BaseAdapter
 		{
 			return View.VISIBLE;
 		}
-		
+			
 		return View.GONE;
 	}
 	

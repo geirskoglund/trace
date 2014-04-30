@@ -110,7 +110,6 @@ public class TaskDetailActivity extends Activity
 	            return true;
 	        case R.id.default_button:
 	        	setTaskAsPrimary();
-	        	saveChanges();
 	        	return true;
 	    }
 	    return super.onOptionsItemSelected(item);
@@ -118,7 +117,15 @@ public class TaskDetailActivity extends Activity
 	
 	private void setTaskAsPrimary()
 	{
+		if(!task.isOpen())
+		{
+			Feedback.showToast("Cannot set a closed task as default!");
+			Feedback.vibrateDevice(Feedback.LONG_VIBRATION);
+			
+			return;
+		}
 		task.getPlan().setPrimaryTask(task);
+		saveChanges();
 	}
 	
 	private void saveChanges() 

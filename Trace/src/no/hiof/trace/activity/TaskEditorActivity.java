@@ -2,9 +2,13 @@ package no.hiof.trace.activity;
 
 import java.util.List;
 
+import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
+import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +26,8 @@ public class TaskEditorActivity extends Activity
 	
 	private DatabaseManager database;
 	private ArrayAdapter<String> statusAdapter;
+	
+	AlertDialog.Builder alertDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -84,7 +90,7 @@ public class TaskEditorActivity extends Activity
 			case R.id.save_button:
 				updateTaskData();
 				saveChanges();
-				showTaskDetails();
+//				showTaskDetails();
 				break;
 	    }
 		return true;
@@ -99,16 +105,106 @@ public class TaskEditorActivity extends Activity
 
 	private void saveChanges() 
 	{
-		if(fieldsAreOk())
+		if(fieldsAreOk() && !isDefault())
 		{
 			long taskId = database.writeToDatabase(task);
 			task.setId(taskId);
+			showTaskDetails();
 		}
+		else if(fieldsAreOk() && isDefault())
+		{
+			if(task.isOpen())
+			{
+				long taskId = database.writeToDatabase(task);
+				task.setId(taskId);
+				showTaskDetails();
+				return;
+			}
+			
+			Task newDefaultTask = null;
+			Plan taskPlan = task.getPlan();
+			
+			for(Task currentTask: taskPlan.getTasks())
+			{
+				if(!(currentTask.getId()==task.getId()) && currentTask.isOpen())
+				{
+					newDefaultTask=currentTask;
+					break;
+				}
+			}
+			
+			if(newDefaultTask!=null)
+			{
+				taskPlan.setPrimaryTask(newDefaultTask);
+				long taskPlanId = database.writeToDatabase(taskPlan);
+				taskPlan.setId(taskPlanId);
+				
+				long taskId = database.writeToDatabase(task);
+				task.setId(taskId);
+				showTaskDetails();
+			}
+			else
+			{
+				//HANDLE CLOSING OF PLAN
+				buildAlertDialog();
+				alertDialog.show();
+			}
+			
+//			long taskId = database.writeToDatabase(task);
+//			task.setId(taskId);
+		}
+	}
+	
+	private void buildAlertDialog()
+	{
+		alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setTitle(R.string.app_name);
+		alertDialog.setMessage(R.string.closing_task_close_plan);
+		
+		alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface arg0, int arg1)
+			{
+				Plan taskPlan = task.getPlan();
+				
+				taskPlan.removePrimaryTask();
+				taskPlan.setStatus("Closed");
+				long taskPlanId = database.writeToDatabase(taskPlan);
+				taskPlan.setId(taskPlanId);
+				
+				long taskId = database.writeToDatabase(task);
+				task.setId(taskId);
+				
+				showTaskDetails();
+			}
+		});
+		
+		alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface arg0, int arg1)
+			{
+				Plan taskPlan = task.getPlan();
+				
+				taskPlan.removePrimaryTask();
+				long taskPlanId = database.writeToDatabase(taskPlan);
+				taskPlan.setId(taskPlanId);
+				
+				long taskId = database.writeToDatabase(task);
+				task.setId(taskId);
+				
+				showTaskDetails();
+			}
+		});
 	}
 
 	private boolean fieldsAreOk() 
 	{
 		return task.getName().length()>0 && task.getPlanId()>0;
+	}
+	
+	public boolean isDefault()
+	{
+		return task.getPlan().getPrimaryTaskId()==task.getId();
 	}
 	
 	private void showTaskDetails() 

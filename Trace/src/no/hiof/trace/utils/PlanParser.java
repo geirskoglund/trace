@@ -64,6 +64,8 @@ public class PlanParser
 		
 		if(plan.hasPrimaryTask())
 			values.put(ColumnName.PRIMARY_TASK, plan.getPrimaryTaskId());
+		else
+			values.put(ColumnName.PRIMARY_TASK, 0);
 		
 		return values;
 	}

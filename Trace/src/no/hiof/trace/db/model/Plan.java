@@ -222,6 +222,11 @@ public class Plan implements Comparable<Plan>
 		this.primaryTaskId = task.getId();
 		TraceApp.database().updatePlan(this);
 	}
+	
+	public void removePrimaryTask()
+	{
+		this.primaryTaskId = 0;
+	}
 
 	public List<Task> getTasks() 
 	{

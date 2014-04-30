@@ -61,5 +61,8 @@
     <string name="description_default_task_marking">Default task marking</string>
     <string name="new_task">New task</string>
     <string name="default_task">Set as default task</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="closing_task_close_plan">You are closing the last open task. Do you want to close the plan?</string>
 
 </resources>
