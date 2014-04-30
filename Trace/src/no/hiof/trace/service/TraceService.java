@@ -113,9 +113,6 @@ public class TraceService extends IntentService
 		{
 			if(intent.getAction().equals(WifiReciever.SSID_CHANGED))
 			{				
-				SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
-				SharedPreferences.Editor editor = prefs.edit();
-				
 				PlanAutomationHelper helper = new PlanAutomationHelper();
 				boolean connected = intent.getBooleanExtra("connected", false);
 				
@@ -125,9 +122,6 @@ public class TraceService extends IntentService
 						return;
 					
 					String ssid = intent.getStringExtra("ssid");
-					
-					editor.putString("last_ssid", ssid);
-					editor.commit();
 
 					if(helper.autoLoadingSetForSSID(ssid))
 					{
@@ -137,18 +131,16 @@ public class TraceService extends IntentService
 							return;
 						
 						plan.setAsCurrent();
-						editor.putLong("last_autoload", plan.getId());
 						
 						Task task = plan.getPrimaryTask();
 						
 						if(!task.existsInDatabase())
 							return;
 						
-						playerState.setActiveTask(plan.getPrimaryTask());
+						playerState.setActiveTask(task);
 						
 						if(plan.getAutoRegister())
 							playerState.startInterval(true);
-						
 					}
 				}
 				else
