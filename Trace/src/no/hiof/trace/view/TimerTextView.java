@@ -110,6 +110,11 @@ public class TimerTextView extends TextView
 		this.seconds = seconds;
 	}
 	
+	public long getTimeInSeconds()
+	{
+		return this.seconds;
+	}
+	
 	protected void setTimerText()
 	{
 		this.setText(getTimerString());
@@ -128,10 +133,8 @@ public class TimerTextView extends TextView
 		
 		if(hrs>0)
 			return String.format("%s:%s:%s", leadingZero(hrs),leadingZero(mins),leadingZero(secs));
-		else if (mins>0)
+		else 
 			return String.format("%s:%s", leadingZero(mins),leadingZero(secs));
-		else
-			return leadingZero(secs);
 	}
 	
 	public String leadingZero(int number)

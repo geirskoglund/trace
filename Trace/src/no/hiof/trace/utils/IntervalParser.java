@@ -13,7 +13,7 @@ public class IntervalParser
 	{
 		int id = cursor.getColumnIndex(ColumnName.ID);
 		int startTime =  cursor.getColumnIndex(ColumnName.START_TIME);
-		int endTime = cursor.getColumnIndex(ColumnName.END_TIME);
+		int elapsedSeconds = cursor.getColumnIndex(ColumnName.ELAPSED_SECONDS);
 		int taskId = cursor.getColumnIndex(ColumnName.TASK_ID);
 		
 		Interval interval = new Interval();
@@ -21,8 +21,8 @@ public class IntervalParser
 		
 		if(!cursor.isNull(startTime))
 			interval.setStartTime(Timestamp.valueOf(cursor.getString(startTime)));
-		if(!cursor.isNull(endTime))
-			interval.setEndTime(Timestamp.valueOf(cursor.getString(endTime)));
+		if(!cursor.isNull(elapsedSeconds))
+			interval.setElapsedSeconds(cursor.getLong(elapsedSeconds));
 		if(!cursor.isNull(taskId))
 			interval.setTaskId(cursor.getLong(taskId));
 		
@@ -36,7 +36,7 @@ public class IntervalParser
 		if(!interval.isIdle())
 			values.put(ColumnName.START_TIME, DateHelper.getDateTime(interval.getStartTime()));
 		if(interval.isCompleted())
-			values.put(ColumnName.END_TIME, DateHelper.getDateTime(interval.getEndTime()));
+			values.put(ColumnName.ELAPSED_SECONDS, interval.getElapsedSeconds());
 		values.put(ColumnName.TASK_ID, interval.getTaskId());
 		
 		return values;

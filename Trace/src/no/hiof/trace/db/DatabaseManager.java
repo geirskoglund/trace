@@ -107,7 +107,6 @@ public class DatabaseManager extends SQLiteOpenHelper
 		//Drops all tables at this point. Should fetch all data, parse and write to new database.
 		dropTables(theDatabaseInStartupMode, TableName.PLAN, TableName.TASK, TableName.INTERVAL, TableName.PLAN_STATUS, TableName.TASK_STATUS);
 		onCreate(theDatabaseInStartupMode);
-		
 	}
 	
 	private void dropTables(SQLiteDatabase database, String... tableNames)

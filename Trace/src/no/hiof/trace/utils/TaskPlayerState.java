@@ -4,7 +4,6 @@ import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;
 import android.content.Intent;
-import android.util.Log;
 
 public class TaskPlayerState
 {
@@ -78,12 +77,26 @@ public class TaskPlayerState
 		if(activeInterval.isRunning())
 		{
 			activeInterval.stop();
-			this.state = State.PAUSED;
-			TraceApp.database().updateInterval(activeInterval);
-			Feedback.showToast("Time slot saved");
-			
-			notifyUpdate();
+			completeStoppingTasks();
 		}
+	}
+	
+	public void stopInterval(long elapsedSeconds)
+	{
+		if(activeInterval.isRunning())
+		{
+			activeInterval.stop(elapsedSeconds);
+			completeStoppingTasks();
+		}
+	}
+	
+	private void completeStoppingTasks()
+	{
+		this.state = State.PAUSED;
+		TraceApp.database().updateInterval(activeInterval);
+		Feedback.showToast("Time slot saved");
+		
+		notifyUpdate();
 	}
 	
 	public Interval getCurrentInterval()

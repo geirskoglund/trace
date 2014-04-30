@@ -5,6 +5,7 @@ import java.util.List;
 
 import no.hiof.trace.activity.R;
 import no.hiof.trace.db.model.Interval;
+import no.hiof.trace.utils.DateHelper;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,9 +54,10 @@ public class IntervalListAdapter extends BaseAdapter
 		TextView intervalLabel = (TextView)view.findViewById(R.id.listitem_interval_label);
 		TextView intervalTime = (TextView)view.findViewById(R.id.listitem_interval_time);
 		
-		intervalLabel.setText(interval.getStartTime().toString() + " - " + interval.getEndTime().toString());
-		intervalTime.setText(interval.getElapsedTime().getHours()+ ":" + interval.getElapsedTime().getMinutes());
+		String dateString = DateHelper.getDateString(interval.getStartTime());
 		
+		intervalLabel.setText(dateString);
+		intervalTime.setText(interval.getElapsedTime().toString());
 		return view;
 	}
 	
