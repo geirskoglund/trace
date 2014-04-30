@@ -37,87 +37,36 @@
         android:text="@string/auto_select_label" />
 
     <TextView
-        android:id="@+id/location_label"
+        android:id="@+id/auto_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/auto_register_label"
         android:padding="5dip"
-        android:text="@string/label_location" />
+        android:text="@string/DUMMY_TEXT" />
 
     <TextView
-        android:id="@+id/plan_detail_lat"
+        android:id="@+id/first_auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/location_label"
-        android:layout_toRightOf="@+id/location_label"
+        android:layout_alignBottom="@+id/auto_label"
+        android:layout_toRightOf="@+id/auto_label"
         android:padding="5dip"
         android:text="@string/DUMMY_TEXT" />
 
     <TextView
-        android:id="@+id/plan_detail_lon"
+        android:id="@+id/second_auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/plan_detail_lat"
-        android:layout_toRightOf="@+id/plan_detail_lat"
+        android:layout_alignBottom="@+id/first_auto"
+        android:layout_toRightOf="@+id/first_auto"
         android:padding="5dip"
         android:text="@string/DUMMY_TEXT" />
-
-    <TextView
-        android:id="@+id/ssid_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/auto_register_label"
-        android:padding="5dip"
-        android:text="@string/label_ssid" />
-
-    <TextView
-        android:id="@+id/plan_detail_ssid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ssid_label"
-        android:layout_toRightOf="@+id/ssid_label"
-        android:padding="5dip"
-        android:text="@string/DUMMY_TEXT" />
-
-    <TextView
-        android:id="@+id/nfc_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/auto_register_label"
-        android:padding="5dip"
-        android:text="@string/label_nfc" />
-
-    <TextView
-        android:id="@+id/plan_detail_nfc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/nfc_label"
-        android:layout_toRightOf="@+id/nfc_label"
-        android:padding="5dip"
-        android:text="@string/DUMMY_TEXT" />
-
-<!--     <TextView -->
-<!--         android:id="@+id/status_label" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_below="@+id/nfc_label" -->
-<!--         android:padding="5dip" -->
-<!--         android:text="@string/label_status" /> -->
-
-<!--     <TextView -->
-<!--         android:id="@+id/plan_detail_status" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignBaseline="@id/status_label" -->
-<!--         android:layout_toRightOf="@id/status_label" -->
-<!--         android:padding="5dip" -->
-<!--         android:text="@string/DUMMY_TEXT" /> -->
 
     <CheckBox
         android:id="@+id/plan_detail_auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/plan_detail_nfc"
+        android:layout_below="@+id/auto_label"
         android:layout_marginTop="5dp"
         android:text="@string/label_auto_register"
         android:textSize="14sp" />
@@ -147,7 +96,7 @@
         android:layout_height="1dp"
         android:layout_below="@id/taskHeader"
         android:background="@android:color/darker_gray" />
-    
+
     <ListView
         android:id="@+id/planTasksList"
         android:layout_width="match_parent"
@@ -155,14 +104,14 @@
         android:layout_below="@id/taskHeader"
         android:layout_marginTop="5dp" >
     </ListView>
-    
+
     <ImageView
         android:id="@+id/status_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:contentDescription="@string/description_task_header_icon"
         android:src="@drawable/closed_stamp" />
-    
+
 </RelativeLayout>

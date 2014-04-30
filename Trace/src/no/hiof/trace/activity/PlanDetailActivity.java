@@ -28,16 +28,12 @@ public class PlanDetailActivity extends Activity
 	
 	TextView planName;
 	TextView planDescription;
-	TextView planSSId;
-	TextView planNFC;
-	TextView planLatitude;
-	TextView planLongitude;
+	TextView firstAutoLabel;
+	TextView secondAutoLabel;
 	ImageView planStatus;
 	CheckBox planAuto;
 	
-	TextView ssidLabel;
-	TextView nfcLabel;
-	TextView gpsLabel;
+	TextView autoTypeLabel;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,16 +55,12 @@ public class PlanDetailActivity extends Activity
 	{
 		planName = (TextView)findViewById(R.id.plan_detail_name);
 		planDescription = (TextView)findViewById(R.id.plan_detail_description);
-		planSSId = (TextView)findViewById(R.id.plan_detail_ssid);
-		planNFC = (TextView)findViewById(R.id.plan_detail_nfc);
 		planStatus = (ImageView)findViewById(R.id.status_icon);
-		planLatitude = (TextView)findViewById(R.id.plan_detail_lat);
-		planLongitude = (TextView)findViewById(R.id.plan_detail_lon);
+		firstAutoLabel = (TextView)findViewById(R.id.first_auto);
+		secondAutoLabel = (TextView)findViewById(R.id.second_auto);
 		planAuto = (CheckBox)findViewById(R.id.plan_detail_auto);
 		
-		ssidLabel = (TextView) findViewById(R.id.ssid_label);
-		gpsLabel = (TextView) findViewById(R.id.location_label);
-		nfcLabel = (TextView) findViewById(R.id.nfc_label);
+		autoTypeLabel = (TextView) findViewById(R.id.auto_label);
 	}
 
 	private void makeStatusReadOnly() 
@@ -86,10 +78,6 @@ public class PlanDetailActivity extends Activity
 	{
 		planName.setText(plan.getName());
 		planDescription.setText(plan.getDescription());
-		planSSId.setText(plan.getSsid());
-		planNFC.setText(plan.getNfc());
-		planLatitude.setText(""+plan.getLat());
-		planLongitude.setText(""+plan.getLon());
 		planAuto.setChecked(plan.getAutoRegister());
 		setStatusIconVisibility(plan.getStatus());
 	}
@@ -163,36 +151,41 @@ public class PlanDetailActivity extends Activity
 		
 		if(plan.getAutoTrigger().equals("(NONE)"))
 		{
+			autoTypeLabel.setText("No auto selection");
 		}
 		else if(plan.getAutoTrigger().equals("WiFi"))
 		{
-			ssidLabel.setVisibility(View.VISIBLE);
-			planSSId.setVisibility(View.VISIBLE);
+			autoTypeLabel.setText("WiFi");
+			firstAutoLabel.setText(plan.getSsid());
+			
+			autoTypeLabel.setVisibility(View.VISIBLE);
+			firstAutoLabel.setVisibility(View.VISIBLE);
 		}
 		else if(plan.getAutoTrigger().equals("GPS"))
 		{
-			gpsLabel.setVisibility(View.VISIBLE);
-			planLongitude.setVisibility(View.VISIBLE);
-			planLatitude.setVisibility(View.VISIBLE);
+			autoTypeLabel.setText("GPS");
+			firstAutoLabel.setText(""+plan.getLat());
+			secondAutoLabel.setText(""+plan.getLon());
+			
+			autoTypeLabel.setVisibility(View.VISIBLE);
+			secondAutoLabel.setVisibility(View.VISIBLE);
+			firstAutoLabel.setVisibility(View.VISIBLE);
 		}
 		else if(plan.getAutoTrigger().equals("NFC"))
 		{
-			nfcLabel.setVisibility(View.VISIBLE);
-			planNFC.setVisibility(View.VISIBLE);
+			autoTypeLabel.setText("NFC-tag");
+			firstAutoLabel.setText(plan.getNfc());
+			
+			autoTypeLabel.setVisibility(View.VISIBLE);
+			firstAutoLabel.setVisibility(View.VISIBLE);
 		}
 	}
 	
 	public void invisibleizeAutoSelect()
 	{
-		gpsLabel.setVisibility(View.INVISIBLE);
-		planLongitude.setVisibility(View.INVISIBLE);
-		planLatitude.setVisibility(View.INVISIBLE);
-		
-		ssidLabel.setVisibility(View.INVISIBLE);
-		planSSId.setVisibility(View.INVISIBLE);
-		
-		nfcLabel.setVisibility(View.INVISIBLE);
-		planNFC.setVisibility(View.INVISIBLE);
+		autoTypeLabel.setVisibility(View.INVISIBLE);
+		secondAutoLabel.setVisibility(View.INVISIBLE);
+		firstAutoLabel.setVisibility(View.INVISIBLE);
 	}
 	
 	@Override
