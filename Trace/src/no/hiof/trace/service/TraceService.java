@@ -1,6 +1,7 @@
 package no.hiof.trace.service;
 
 import no.hiof.trace.db.model.Plan;
+import no.hiof.trace.db.model.Task;
 import no.hiof.trace.sensor.WifiReciever;
 import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.PlanAutomationHelper;
@@ -110,11 +111,8 @@ public class TraceService extends IntentService
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{
-			if(playerState.getPlayerState() == State.PLAYING)
-				return;
-			
 			if(intent.getAction().equals(WifiReciever.SSID_CHANGED))
-			{
+			{				
 				SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
 				SharedPreferences.Editor editor = prefs.edit();
 				
@@ -123,6 +121,9 @@ public class TraceService extends IntentService
 				
 				if(connected)
 				{
+					if(playerState.getPlayerState() == State.PLAYING)
+						return;
+					
 					String ssid = intent.getStringExtra("ssid");
 					
 					editor.putString("last_ssid", ssid);
@@ -138,30 +139,26 @@ public class TraceService extends IntentService
 						plan.setAsCurrent();
 						editor.putLong("last_autoload", plan.getId());
 						
+						Task task = plan.getPrimaryTask();
+						
+						if(!task.existsInDatabase())
+							return;
+						
 						playerState.setActiveTask(plan.getPrimaryTask());
 						
 						if(plan.getAutoRegister())
-							playerState.startInterval();
+							playerState.startInterval(true);
 						
-						//Feedback.showToast("Plan \"" + plan.getName() + "\" was auto loaded.");
 					}
 				}
 				else
 				{
-//					String previous = prefs.getString("last_ssid", "");
-//					long autoLoadedPlanId = prefs.getLong("last_autoload", 0);
-//					Plan plan = helper.getCurrentPlan();
-//					
-//					if(autoLoadedPlanId==0)
-//					{
-//						
-//					}
-//					else if(plan.getId() == autoLoadedPlanId)
-//					{
-//						
-//					}
+					if(playerState.getPlayerState() == State.PLAYING)
+					{
+						if(playerState.getCurrentInterval().isAutoRegistered())
+							playerState.stopInterval();
+					}
 					
-					//Feedback.showToast("Service knows: No wifi connection");
 				}
 			}
 		}

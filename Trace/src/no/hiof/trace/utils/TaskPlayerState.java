@@ -63,9 +63,22 @@ public class TaskPlayerState
 	
 	public void startInterval()
 	{
+//		if(!activeInterval.isRunning())
+//		{
+//			activeInterval = TraceApp.database().createIntervalWithStartTime(this.activeTask.getId());
+//			this.state = State.PLAYING;
+//			
+//			notifyUpdate();
+//		}
+		startInterval(false);
+	}
+	
+	public void startInterval(boolean autoRegister)
+	{
 		if(!activeInterval.isRunning())
 		{
 			activeInterval = TraceApp.database().createIntervalWithStartTime(this.activeTask.getId());
+			activeInterval.setAutoRegistered(autoRegister);
 			this.state = State.PLAYING;
 			
 			notifyUpdate();
