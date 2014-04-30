@@ -160,11 +160,16 @@ public class PlanDetailActivity extends Activity
 	private void displayAutoSelect()
 	{
 		invisibleizeAutoSelect();	
-	
+		
+		if(plan.getAutoRegister()==false)
+		{
+			return;
+		}
+		
 		if(plan.getAutoTrigger().equals("(NONE)"))
 		{
 		}
-		else if(plan.getAutoTrigger().equals("SSID"))
+		else if(plan.getAutoTrigger().equals("WiFi"))
 		{
 			ssidLabel.setVisibility(View.VISIBLE);
 			planSSId.setVisibility(View.VISIBLE);
