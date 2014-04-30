@@ -8,6 +8,7 @@ import no.hiof.trace.activity.PlanEditorActivity;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.adapter.PlanListAdapter;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.contract.DatasetRefresh;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
@@ -27,7 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-public class AllPlansFragment extends Fragment
+public class AllPlansFragment extends Fragment implements DatasetRefresh
 {
 	OnTaskLoadedListener taskLoaderListener;
 	private ListView allPlansListView;
@@ -140,5 +141,11 @@ public class AllPlansFragment extends Fragment
         {
         	throw new ClassCastException(activity.toString() + " must implement OnTaskLoadedListener.");
         }
+	}
+
+	@Override
+	public void refreshData() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -6,12 +6,15 @@ import no.hiof.trace.activity.R;
 import no.hiof.trace.activity.TaskDetailActivity;
 import no.hiof.trace.adapter.TaskListAdapter;
 import no.hiof.trace.application.TraceApp;
+import no.hiof.trace.contract.DatasetRefresh;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
+import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,7 +30,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class CurrentPlanFragment extends Fragment
+public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 {
 	OnTaskLoadedListener taskLoaderListener;
 	
@@ -171,5 +174,32 @@ public class CurrentPlanFragment extends Fragment
         {
         	throw new ClassCastException(activity.toString() + " must implement OnTaskLoadedListener.");
         }
+	}
+
+	@Override
+	public void refreshData() 
+	{
+		//Feedback.showToast("oppdatert");
+		if(currentPlan!=null)
+		{
+			new RefreshPlanDataTask().execute();
+		}
+	}
+	
+	private class RefreshPlanDataTask extends AsyncTask<Void, Void, Plan>
+	{
+
+		@Override
+		protected Plan doInBackground(Void... params) 
+		{	
+			return database.getActivePlan();
+		}
+
+		@Override
+		protected void onPostExecute(Plan result) 
+		{
+			currentPlan = result;
+			setFieldValues();
+		}
 	}
 }

@@ -11,13 +11,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
 public class TraceService extends IntentService 
 {
-	
+	public static final String PREFS_NAME = "TracePrefs";
 	public final TaskPlayerState playerState = new TaskPlayerState();
 	private final IBinder binder = new TraceBinder();
 	private SensorUpdatesReceiver sensorUpdatesReceiver;
@@ -114,12 +115,18 @@ public class TraceService extends IntentService
 			
 			if(intent.getAction().equals(WifiReciever.SSID_CHANGED))
 			{
+				SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
+				SharedPreferences.Editor editor = prefs.edit();
+				
+				PlanAutomationHelper helper = new PlanAutomationHelper();
 				boolean connected = intent.getBooleanExtra("connected", false);
+				
 				if(connected)
 				{
 					String ssid = intent.getStringExtra("ssid");
 					
-					PlanAutomationHelper helper = new PlanAutomationHelper();
+					editor.putString("last_ssid", ssid);
+					editor.commit();
 
 					if(helper.autoLoadingSetForSSID(ssid))
 					{
@@ -129,13 +136,27 @@ public class TraceService extends IntentService
 							return;
 						
 						plan.setAsCurrent();
+						editor.putLong("last_autoload", plan.getId());
 						
-						Feedback.showToast("Plan \"" + plan.getName() + "\" was auto loaded.");
+						//Feedback.showToast("Plan \"" + plan.getName() + "\" was auto loaded.");
 					}
 				}
 				else
 				{
-					Feedback.showToast("Service knows: No wifi connection");
+//					String previous = prefs.getString("last_ssid", "");
+//					long autoLoadedPlanId = prefs.getLong("last_autoload", 0);
+//					Plan plan = helper.getCurrentPlan();
+//					
+//					if(autoLoadedPlanId==0)
+//					{
+//						
+//					}
+//					else if(plan.getId() == autoLoadedPlanId)
+//					{
+//						
+//					}
+					
+					//Feedback.showToast("Service knows: No wifi connection");
 				}
 			}
 		}
