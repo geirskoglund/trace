@@ -2,7 +2,6 @@ package no.hiof.trace.activity;
 
 import java.util.List;
 
-import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;

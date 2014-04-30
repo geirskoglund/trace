@@ -1,8 +1,10 @@
 package no.hiof.trace.utils;
 
+import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.model.Task;
+import android.content.Context;
 import android.content.Intent;
 
 public class TaskPlayerState
@@ -14,9 +16,11 @@ public class TaskPlayerState
 	private State state = TaskPlayerState.State.IDLE;
 	private Task activeTask = new Task();
 	private Interval activeInterval = new Interval(); 
+	private Context context;
 	
 	public TaskPlayerState() 
 	{
+		context = TraceApp.getAppContext();
 		Interval interval = TraceApp.database().getNewestInterval();
 		if(interval != null)
 		{
@@ -107,7 +111,7 @@ public class TaskPlayerState
 	{
 		this.state = State.PAUSED;
 		TraceApp.database().updateInterval(activeInterval);
-		Feedback.showToast("Time slot saved");
+		Feedback.showToast(context.getString(R.string.interval_saved));
 		
 		notifyUpdate();
 	}

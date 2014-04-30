@@ -3,7 +3,6 @@ package no.hiof.trace.service;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.sensor.WifiReciever;
-import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.PlanAutomationHelper;
 import no.hiof.trace.utils.TaskPlayerState;
 import no.hiof.trace.utils.TaskPlayerState.State;
@@ -12,10 +11,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
 public class TraceService extends IntentService 
 {

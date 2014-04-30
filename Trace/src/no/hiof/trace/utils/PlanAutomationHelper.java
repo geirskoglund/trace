@@ -3,13 +3,11 @@ package no.hiof.trace.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.R;
-import android.util.Log;
-
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.values.ColumnName;
+import android.util.Log;
 
 public class PlanAutomationHelper {
 	

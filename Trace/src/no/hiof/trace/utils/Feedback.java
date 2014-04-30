@@ -3,7 +3,6 @@ package no.hiof.trace.utils;
 import no.hiof.trace.application.TraceApp;
 import android.content.Context;
 import android.os.Vibrator;
-import android.view.View;
 import android.widget.Toast;
 
 public class Feedback 

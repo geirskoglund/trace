@@ -80,7 +80,7 @@ public class LatestPlansFragment extends Fragment implements DatasetRefresh
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long id) 
 			{
 				Plan selectedPlan = planListAdapter.getPlan(index);
-				String toastText = "Plan \"" + selectedPlan.getName() + "\"" + getActivity().getString(R.string.plan_was_activated);
+				String toastText = getActivity().getString(R.string.capital_plan)+"\"" + selectedPlan.getName() + "\"" + getActivity().getString(R.string.plan_was_activated);
 				
 				Feedback.showToast(toastText);
 				

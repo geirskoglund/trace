@@ -40,6 +40,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	private PlayerUpdateReceiver playerUpdateReciever;
 	
 	LinearLayout infoBox;
+	
 	public TaskPlayerFragment(){}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -116,7 +117,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		
 		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
 
-		Feedback.showToast("Task \"" + task.getName() + "\" loaded");
+		Feedback.showToast(getActivity().getString(R.string.capital_task)+"\"" + task.getName() + "\"" +getActivity().getString(R.string.loaded));
 	}
 	
 	private boolean noLoadingIsNeeded(Task task) 

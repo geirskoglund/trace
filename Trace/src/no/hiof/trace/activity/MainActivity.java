@@ -4,7 +4,6 @@ import no.hiof.trace.adapter.SectionPagerAdapter;
 import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.fragment.TaskPlayerFragment;
-import no.hiof.trace.utils.Feedback;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;

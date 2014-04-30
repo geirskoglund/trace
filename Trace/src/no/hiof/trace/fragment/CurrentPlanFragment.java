@@ -13,7 +13,6 @@ import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
-import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -200,7 +199,6 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		@Override
 		protected void onPostExecute(Plan result) 
 		{
-			Feedback.showToast("Task is refreshed");
 			currentPlan = result;
 			setFieldValues();
 			new RefreshTasklistDataTask().execute(result);

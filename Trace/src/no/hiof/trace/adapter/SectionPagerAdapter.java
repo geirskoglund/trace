@@ -3,6 +3,7 @@ package no.hiof.trace.adapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import no.hiof.trace.activity.R;
 import no.hiof.trace.contract.DatasetRefresh;
 import no.hiof.trace.fragment.AllPlansFragment;
@@ -12,7 +13,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.util.Pair;
 
 public class SectionPagerAdapter extends FragmentPagerAdapter

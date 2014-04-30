@@ -119,7 +119,7 @@ public class TaskDetailActivity extends Activity
 	{
 		if(!task.isOpen())
 		{
-			Feedback.showToast("Cannot set a closed task as default!");
+			Feedback.showToast(getString(R.string.cannot_set_a_closed_task_as_default));
 			Feedback.vibrateDevice(Feedback.LONG_VIBRATION);
 			
 			return;
@@ -135,7 +135,7 @@ public class TaskDetailActivity extends Activity
 			long planId = database.writeToDatabase(task.getPlan());
 			task.getPlan().setId(planId);
 			
-			Feedback.showToast("Task is set as default");
+			Feedback.showToast(getString(R.string.task_is_set_as_default));
 			Feedback.vibrateDevice(Feedback.SHORT_VIBRATION);
 		}
 	}
