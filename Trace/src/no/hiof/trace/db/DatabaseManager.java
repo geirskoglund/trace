@@ -446,17 +446,17 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
-	public List<Plan> getOpenAutoLoadingPlans(String column, String criteria)
+	public List<Plan> getOpenAutoLoadingPlans(String column, String criteria, String autoTrigger)
 	{
 		List<Plan> plans = new ArrayList<Plan>();
 		SQLiteDatabase theDatabase = this.getReadableDatabase();
 		
-		String whereClause = String.format("%s = ? AND %s = ?", column, ColumnName.STATUS);
+		String whereClause = String.format("%s = ? AND %s = ? AND %s = ?", column, ColumnName.STATUS, ColumnName.AUTO_TRIGGER);
 		String open = TraceApp.getAppContext().getString(R.string.status_open);
 		
-		Cursor cursor = theDatabase.query(TableName.PLAN, null, whereClause , new String[]{criteria, open}, 
+		Cursor cursor = theDatabase.query(TableName.PLAN, null, whereClause , new String[]{criteria, open, autoTrigger}, 
 				null, null, ColumnName.ID + " DESC", null);
-		
+				
 		if(cursor.moveToFirst())
 		{
 			do
