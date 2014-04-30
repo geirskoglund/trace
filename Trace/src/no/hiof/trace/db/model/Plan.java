@@ -260,4 +260,14 @@ public class Plan implements Comparable<Plan>
 	{
 		return this.id > 0;
 	}
+	
+	public void setAsCurrent()
+	{
+		if (this.existsInDatabase())
+		{
+			DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
+			this.setLastActivatedTimestamp(new Date());
+			database.updatePlan(this);
+		}
+	}
 }

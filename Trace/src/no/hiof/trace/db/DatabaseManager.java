@@ -446,6 +446,29 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
+	public List<Plan> getOpenAutoLoadingPlans(String column, String criteria)
+	{
+		List<Plan> plans = new ArrayList<Plan>();
+		SQLiteDatabase theDatabase = this.getReadableDatabase();
+		
+		String whereClause = String.format("%s = ? AND %s = ?", column, ColumnName.STATUS);
+		String open = TraceApp.getAppContext().getString(R.string.status_open);
+		
+		Cursor cursor = theDatabase.query(TableName.PLAN, null, whereClause , new String[]{criteria, open}, 
+				null, null, ColumnName.ID + " DESC", null);
+		
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				plans.add(PlanParser.parse(cursor));
+			}
+			while(cursor.moveToNext());
+		}
+		
+		return plans;
+	}
+	
 	public List<Task> getTasks(long planId)
 	{
 		List<Task> tasks = new ArrayList<Task>();

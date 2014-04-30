@@ -1,8 +1,11 @@
 package no.hiof.trace.service;
 
+import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.sensor.WifiReciever;
 import no.hiof.trace.utils.Feedback;
+import no.hiof.trace.utils.PlanAutomationHelper;
 import no.hiof.trace.utils.TaskPlayerState;
+import no.hiof.trace.utils.TaskPlayerState.State;
 import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -105,13 +108,26 @@ public class TraceService extends IntentService
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{
+			if(playerState.getPlayerState() == State.PLAYING)
+				return;
+			
 			if(intent.getAction().equals(WifiReciever.SSID_CHANGED))
 			{
 				boolean connected = intent.getBooleanExtra("connected", false);
 				if(connected)
 				{
 					String ssid = intent.getStringExtra("ssid");
-					Feedback.showToast("Service knows: "+ssid);
+					
+					PlanAutomationHelper helper = new PlanAutomationHelper();
+					if(helper.autoLoadingSetForSSID(ssid))
+					{
+						Plan plan = helper.getPlanForSSID(ssid);
+						
+						plan.setAsCurrent();
+						
+						Feedback.showToast("Plan \"" + plan.getName() + "\" was auto loaded.");
+					}
+					
 				}
 				else
 				{
