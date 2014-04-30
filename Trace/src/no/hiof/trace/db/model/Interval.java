@@ -13,6 +13,8 @@ public class Interval
 	private long elapsedSeconds = 0;
 	private long taskId;
 	
+	private boolean autoRegister = false;
+	
 	public Interval(){}
 	
 	public Interval(long taskId)
@@ -26,6 +28,15 @@ public class Interval
 		this.startTime = startTime;
 	}
 
+	public void setAutoRegistered(boolean auto)
+	{
+		this.autoRegister = auto;
+	}
+	public boolean isAutoRegistered()
+	{
+		return autoRegister;
+	}
+	
 	public void setTaskId(long taskId)
 	{
 		this.taskId = taskId;

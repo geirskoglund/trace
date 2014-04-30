@@ -138,6 +138,11 @@ public class TraceService extends IntentService
 						plan.setAsCurrent();
 						editor.putLong("last_autoload", plan.getId());
 						
+						playerState.setActiveTask(plan.getPrimaryTask());
+						
+						if(plan.getAutoRegister())
+							playerState.startInterval();
+						
 						//Feedback.showToast("Plan \"" + plan.getName() + "\" was auto loaded.");
 					}
 				}

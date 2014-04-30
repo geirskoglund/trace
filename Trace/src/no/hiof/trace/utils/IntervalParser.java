@@ -15,6 +15,7 @@ public class IntervalParser
 		int startTime =  cursor.getColumnIndex(ColumnName.START_TIME);
 		int elapsedSeconds = cursor.getColumnIndex(ColumnName.ELAPSED_SECONDS);
 		int taskId = cursor.getColumnIndex(ColumnName.TASK_ID);
+		int autoRegister = cursor.getColumnIndex(ColumnName.AUTO_REG);
 		
 		Interval interval = new Interval();
 		interval.setId(cursor.getLong(id));
@@ -25,6 +26,8 @@ public class IntervalParser
 			interval.setElapsedSeconds(cursor.getLong(elapsedSeconds));
 		if(!cursor.isNull(taskId))
 			interval.setTaskId(cursor.getLong(taskId));
+		if(!cursor.isNull(autoRegister))
+			interval.setAutoRegistered(cursor.getInt(autoRegister)>0);
 		
 		return interval;
 	}
@@ -38,6 +41,7 @@ public class IntervalParser
 		if(interval.isCompleted())
 			values.put(ColumnName.ELAPSED_SECONDS, interval.getElapsedSeconds());
 		values.put(ColumnName.TASK_ID, interval.getTaskId());
+		values.put(ColumnName.AUTO_REG, interval.isAutoRegistered());
 		
 		return values;
 	}

@@ -38,6 +38,7 @@ public class CreateTableStatement
 			+"id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+"start_time DATETIME NOT NULL,"
 			+"elapsed_seconds INTEGER DEFAULT 0,"
+			+"auto_register BOOLEAN NOT NULL,"
 			+"task_id INTEGER,"
 			+"FOREIGN KEY(task_id) REFERENCES task(id)"
 			+")";
