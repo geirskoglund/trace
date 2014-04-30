@@ -25,6 +25,7 @@ public class TaskDetailActivity extends Activity
 	
 	TextView planAndTaskName;
 	TextView taskDescription;
+	TextView aggregatedTime;
 	ImageView taskStatus;
 	
 	private IntervalListAdapter intervalListAdapter;
@@ -58,6 +59,7 @@ public class TaskDetailActivity extends Activity
 		planAndTaskName = (TextView) findViewById(R.id.task_detail_name);
 		taskDescription = (TextView) findViewById(R.id.task_detail_description);
 		taskStatus = (ImageView) findViewById(R.id.status_icon);
+		aggregatedTime = (TextView) findViewById(R.id.task_detail_accumulated_time_display);
 	}
 	
 	private void fetchTask() 
@@ -70,6 +72,7 @@ public class TaskDetailActivity extends Activity
 	{
 		planAndTaskName.setText(taskAndPlanCombined());
 		taskDescription.setText(task.getDescription());
+		aggregatedTime.setText(task.getAggregatedTimeSlots().toString());
 		setStatusIconVisibility(task.getStatus());
 	}
 

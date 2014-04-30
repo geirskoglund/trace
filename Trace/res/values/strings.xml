@@ -22,7 +22,7 @@
     <string name="label_auto_register">Auto register</string>
     <string name="label_accumulated_time">Accumulated time</string>
     <string name="label_time_slots">Time slots</string>
-    <string name="DUMMY_TEXT">Hansebans</string>
+    <string name="DUMMY_TEXT"></string>
     <string name="DUMMY_TASK_BUTTON">To task</string>
     <string name="DUMMY_PLAN_BUTTON">To plan</string>
     <string name="DUMMY_TIME_SLOT">To plan</string>
@@ -31,10 +31,10 @@
     <string name="title_activity_plan_editor">PlanEditorActivity</string>
     <string name="edit_plan">Edit Plan</string>
     <string name="save">Save</string>
-    <string name="details">details</string>
+    <string name="details">Details</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
-    <string name="plan_was_activated">" activated."</string>
+    <string name="plan_was_activated">activated.</string>
     <string name="status_open">Open</string>
     <string name="status_closed">Closed</string>
 
@@ -64,5 +64,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="closing_task_close_plan">You are closing the last open task. Do you want to close the plan?</string>
-
+	<string name="interval_saved">Interval saved</string>
+	<string name="capital_task">Task</string>
+	<string name="loaded">loaded</string>
+	<string name="capital_plan">Plan </string>
+	<string name="task_is_refreshed">Task is refreshed</string>
+	<string name="task_is_set_as_default">Task is set as default</string>
+	<string name="cannot_set_a_closed_task_as_default">Cannot set a closed task as default!</string>
 </resources>

@@ -15,6 +15,7 @@ import no.hiof.trace.db.values.TableName;
 import no.hiof.trace.utils.IntervalParser;
 import no.hiof.trace.utils.PlanParser;
 import no.hiof.trace.utils.TaskParser;
+import no.hiof.trace.utils.TimeSlot;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -505,6 +506,21 @@ public class DatabaseManager extends SQLiteOpenHelper
 			}while(cursor.moveToNext());
 		}
 		return intervals;
+	}
+	
+	public long getAggregatedTimeSlots(long taskId)
+	{
+		SQLiteDatabase theDatabase = this.getReadableDatabase();
+		
+		String query = "SELECT SUM("+ColumnName.ELAPSED_SECONDS +") FROM "+ TableName.INTERVAL + " WHERE " + ColumnName.TASK_ID + " = " + taskId;
+		Cursor cursor = theDatabase.rawQuery(query, null);
+		
+		if(cursor.moveToFirst())
+		{
+			return cursor.getLong(0);
+		}
+		
+		return 0;
 	}
 
 

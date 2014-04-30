@@ -36,6 +36,15 @@
         android:layout_below="@+id/task_detail_description"
         android:padding="5dip"
         android:text="@string/accumulated_time" />
+    
+    <TextView
+        android:id="@+id/task_detail_accumulated_time_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/task_detail_accumulated_time"
+        android:layout_toRightOf="@+id/task_detail_accumulated_time"
+        android:padding="5dip"
+        android:text="@string/DUMMY_TEXT" />
 
     <ImageView 
 	    android:id="@+id/time_icon"

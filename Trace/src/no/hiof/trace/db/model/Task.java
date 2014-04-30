@@ -6,6 +6,7 @@ import java.util.List;
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
+import no.hiof.trace.utils.TimeSlot;
 
 public class Task
 {
@@ -110,6 +111,11 @@ public class Task
 	public void addIntervals(ArrayList<Interval> intervals)
 	{
 		this.intervals.addAll(intervals);
+	}
+	
+	public TimeSlot getAggregatedTimeSlots()
+	{
+		return new TimeSlot(TraceApp.database().getAggregatedTimeSlots(this.id));
 	}
 	
 	public boolean isOpen()
