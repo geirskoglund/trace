@@ -7,6 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 
 
+/**
+ * @author Trace Inc.
+ * Provides static methods for app context and database connection, as well as
+ * starting the TraceService.
+ */
 public class TraceApp extends Application 
 {
 	private static Context context;
