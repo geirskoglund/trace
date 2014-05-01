@@ -42,6 +42,8 @@ public class PlanDetailActivity extends Activity
 		setContentView(R.layout.activity_plan_detail);
 		
 		database = new DatabaseManager(this);
+		
+		//These tasks should be self-explanatory
 		setFieldVariables();
 		makeStatusReadOnly();
 		fetchPlan();
@@ -145,6 +147,10 @@ public class PlanDetailActivity extends Activity
 	}
 	
 	
+	/**
+	 * Toggles the visibility of views for auto selection, based on
+	 * the given auto select method. 
+	 */
 	private void displayAutoSelect()
 	{
 		invisibleizeAutoSelect();	
@@ -181,6 +187,9 @@ public class PlanDetailActivity extends Activity
 		}
 	}
 	
+	/**
+	 * Hides all the auto select views.
+	 */
 	public void invisibleizeAutoSelect()
 	{
 		autoTypeLabel.setVisibility(View.INVISIBLE);
