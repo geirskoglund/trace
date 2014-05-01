@@ -75,4 +75,9 @@
 	<string name="overlay_description">Plans are entry-points for registering time.</string>
 	<string name="task_list_overlay_header">View Plan details to add a Task</string>
 	<string name="task_list_overlay_description">Tasks are used to organize registered time slots.</string>
+	<string name="auto_registration">auto registration</string>
+	<string name="auto_selection">auto selection</string>
+	<string name="plan">Plan</string>
+	<string name="is_selected">is selected</string>
+	<string name="started_to_register_time_for">Started to register time for</string>
 </resources>
