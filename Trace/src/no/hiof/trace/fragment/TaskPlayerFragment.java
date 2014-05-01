@@ -27,6 +27,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * @author Trace Inc.
+ * 
+ * A fragment displaying a small player, inspired by music players like Spotify.
+ * 
+ * A task can be loaded to the player, and registration of intervals is done by pressing play or stop.
+ * The player is tightly connected to the TaskPlayerState, which is instantiated on the TraceService.
+ */
 public class TaskPlayerFragment extends Fragment implements OnClickListener
 {
 	ImageView button;
@@ -35,14 +43,15 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	TimerTextView timer;
 	
 	TraceService service;
-	boolean bound = false;
-	
+	boolean bound = false;	
 	private PlayerUpdateReceiver playerUpdateReciever;
-	
 	LinearLayout infoBox;
-	
-	public TaskPlayerFragment(){}
 
+	
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * Preparing the fragment for loading data.
+	 */
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_task_player, container, false);
@@ -55,6 +64,7 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		return view;
 	}
 	
+	// Instantiating all View variables
 	private void setViewVariables(View view) 
 	{
 		button = (ImageView)view.findViewById(R.id.task_player_button);
@@ -64,7 +74,8 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		infoBox = (LinearLayout)view.findViewById(R.id.task_player_info_box);
 	}
 
-	public void taskPlayerButtonToggle()
+	// Callback for the Start/Stop button. Starts or stops registering, based on the state.
+	private void taskPlayerButtonToggle()
 	{
 		if(!bound)
 			return;
@@ -79,6 +90,9 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		}
 	}
 	
+	// Updates elements in the fragment, based on state. This is de facto a callback for the 
+	// players local broadcast reciever (playerUpdateReceiver) who is listening to broadcasts
+	// from the TaskPlayerState-instance on the service.
 	private void updateBasedOnState() 
 	{
 		if(!bound)
@@ -87,13 +101,20 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		switch (service.playerState.getPlayerState())
 		{
 			case IDLE: 
-				button.setImageResource(R.drawable.ic_action_play_dark); //temporary
+				button.setImageResource(R.drawable.ic_action_play_dark); 
 				timer.stop();
 				timer.setVisibility(View.INVISIBLE);
 				return;
 			case PAUSED:
 				button.setImageResource(R.drawable.ic_action_play);
+				
+				boolean aNewTaskWasJustLoaded = service.playerState.getCurrentInterval().
+						getTaskId() != service.playerState.getActiveTask().getId();
+				if(aNewTaskWasJustLoaded)
+					timer.setTime(0);
+				
 				timer.stop();
+				timer.setTimerText();
 				timer.setVisibility(View.VISIBLE);
 				return;
 			case PLAYING:
@@ -105,6 +126,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		}
 	}
 
+	/**
+	 * @param task The Task-instance to be loaded to the player
+	 * 
+	 * 
+	 */
 	public void load(Task task)
 	{
 		if(!bound)
@@ -114,10 +140,6 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		
 		service.playerState.stopInterval();
 		service.playerState.setActiveTask(task);
-		
-//		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
-		timer.setTime(0);
-		timer.setTimerText();
 
 		if(!task.getName().equals(""))
 			Feedback.showToast(getActivity().getString(R.string.capital_task)+"\"" + task.getName() + "\"" +getActivity().getString(R.string.loaded));
@@ -140,6 +162,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		}
 	}
 
+	/**
+	 * @see android.support.v4.app.Fragment#onResume()
+	 * 
+	 * Setting up the broadcast receiver used for listening to state changes
+	 */
 	@Override
 	public void onResume()
     {  
@@ -151,6 +178,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 	    this.getActivity().registerReceiver(playerUpdateReciever, intentFilter);
     }
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onPause()
+	 * 
+	 * Unregistering broadcast reciever
+	 */
 	@Override
 	public void onPause()
 	{
@@ -159,6 +191,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 			this.getActivity().unregisterReceiver(playerUpdateReciever);
 	}
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onStart()
+	 * 
+	 * Binds to the TraceService
+	 */
 	@Override
 	public void onStart()
 	{
@@ -167,6 +204,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		this.getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 	}
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onStop()
+	 * 
+	 * Unbinds from the TraceService
+	 */
 	@Override
 	public void onStop()
 	{
@@ -178,6 +220,11 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		}
 	}
 	
+	/**
+	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 * 
+	 * OnClick callback wrapper, routing to proper methods
+	 */
 	@Override
 	public void onClick(View v) 
 	{
