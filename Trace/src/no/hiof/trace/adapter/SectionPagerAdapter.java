@@ -15,10 +15,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Pair;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Implementation of a FragmentPagerAdapter, used to display fragments in a pager.
+ */
 public class SectionPagerAdapter extends FragmentPagerAdapter
 {
+	//List of Pairs, holding 
+	// (a) a reference to the id of a text string, holding the display name for the fragment
+	// (b) the fragment
 	List<Pair<Integer,Fragment>> availableFragments = new ArrayList<Pair<Integer,Fragment>>();
 	Context context;
+	
+	//List of DatasetRefresh-representations of the Fragments. All included fragments implements DatasetRefresh.
 	List<DatasetRefresh> refreshFragments = new ArrayList<DatasetRefresh>();
 	
 	public SectionPagerAdapter(FragmentManager fragmentManager, Context context)
@@ -30,6 +40,11 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
 		defineRefreshFragments();
 	}
 	
+	
+	/**
+	 * Recasts the Fragments as DatasetRefresh and stores them in a list. If recast fails
+	 * an exception is thrown. 
+	 */
 	private void defineRefreshFragments() 
 	{
 		for(Pair<Integer,Fragment> pair : availableFragments)
@@ -53,6 +68,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
 		availableFragments.add(fragmentData(R.string.title_all_section, new AllPlansFragment()));
 	}
 	
+	//The Pair definition
 	private Pair<Integer,Fragment> fragmentData(int fragmentTitleReference, Fragment fragment)
 	{
 		return new Pair<Integer,Fragment>(fragmentTitleReference,fragment);
@@ -65,8 +81,15 @@ public class SectionPagerAdapter extends FragmentPagerAdapter
 
 	}
 	
+	/**
+	 * @param sectionPosition
+	 * Calls the refreshData-method on the fragment in the given position.
+	 */
 	public void updateFragmentOnSection(int sectionPosition)
 	{
+		if(sectionPosition<0 || sectionPosition >= refreshFragments.size())
+			return;
+		
 		refreshFragments.get(sectionPosition).refreshData();
 	}
 	

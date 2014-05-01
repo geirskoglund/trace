@@ -13,6 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Straight forward implementation of a BaseAdapter, used to display a list of Tasks.
+ */
 public class TaskListAdapter extends BaseAdapter
 {
 	List<Task> tasks = Collections.emptyList();
@@ -41,6 +46,9 @@ public class TaskListAdapter extends BaseAdapter
 		return tasks.get(index).getId();
 	}
 
+	/* 
+	 * Populates the views based on the list. Additionally gives Closed Tasks a different color.
+	 */
 	@Override
 	public View getView(int index, View view, ViewGroup viewGroup) 
 	{

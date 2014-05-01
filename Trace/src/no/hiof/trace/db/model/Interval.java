@@ -6,6 +6,10 @@ import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.utils.DateHelper;
 import no.hiof.trace.utils.TimeSlot;
 
+/**
+ * @author Trace Inc.
+ * Class representing the Interval entity from the data model.
+ */
 public class Interval 
 {
 	private long id;
@@ -68,6 +72,9 @@ public class Interval
 		this.startTime = date;
 	}
 	
+	/**
+	 * Starts a new registration on an idle Interval
+	 */
 	public void start() 
 	{
 		if(isIdle()) this.startTime = new Date();
@@ -83,6 +90,9 @@ public class Interval
 		this.elapsedSeconds = elapsedSeconds;
 	}
 	
+	/**
+	 * Calculates and stores elapsed seconds based on the current time, if time registration is started.
+	 */
 	public void stop() 
 	{
 		if(!isRunning())
@@ -94,22 +104,35 @@ public class Interval
 		stop(elapsed);
 	}
 
+	/**
+	 * @param elapsedSeconds The number of seconds for this registration
+	 * Stores elapsed seconds, if time registration is started.
+	 */ 
 	public void stop(long elapsedSeconds) 
 	{
 		if(isRunning()) 
 			this.elapsedSeconds = elapsedSeconds;
 	}
 	
+	/**
+	 * @return True if registration is started but not completed.
+	 */
 	public boolean isRunning() 
 	{
 		return wasStarted() && !wasStopped();
 	}
 	
+	/**
+	 * @return True if registration is complete
+	 */
 	public boolean isCompleted()
 	{
 		return wasStarted() && wasStopped();
 	}
 	
+	/**
+	 * @return True if the registration is not started
+	 */
 	public boolean isIdle()
 	{
 		return (!wasStarted());
@@ -125,6 +148,10 @@ public class Interval
 		return this.elapsedSeconds > 0;
 	}
 	
+	/**
+	 * @return a TimeSlot showing the elapsed time in hours, minutes and seconds.
+	 * Will return a TimeSlot even if registration is not started or not complete.
+	 */
 	public TimeSlot getElapsedTime()
 	{
 		if(isIdle())

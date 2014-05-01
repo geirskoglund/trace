@@ -8,6 +8,10 @@ import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 
+/**
+ * @author Trace Inc.
+ * Class representing the Plan entity from the data model.
+ */
 public class Plan implements Comparable<Plan> 
 {
 	private long id;
@@ -21,7 +25,6 @@ public class Plan implements Comparable<Plan>
 	private String status="";
 	private Date lastActivated;
 	private long primaryTaskId;
-	//private Task primaryTask;
 	private ArrayList<Task> tasks;
 	private String autoTrigger = "";
 	
@@ -30,41 +33,6 @@ public class Plan implements Comparable<Plan>
 		String status = TraceApp.getAppContext().getString(R.string.status_open);
 		this.status = status;
 	}
-	
-	public Plan(String name, String description, boolean autoRegister)
-	{
-		this.name = name;
-		this.description = description;
-		this.autoRegister = autoRegister;
-		
-		String status = TraceApp.getAppContext().getString(R.string.status_open);
-		this.status = status;
-		
-	}
-	
-	public Plan(String name, String description, boolean autoRegister, ArrayList<Task> tasks)
-	{
-		this.name = name;
-		this.description = description;
-		this.autoRegister = autoRegister;
-		this.tasks = tasks;
-	}
-	
-//	public Plan(long id, String name, String description, String ssid,
-//			String nfc, double lat, double lon, boolean autoRegister,
-//			String status, Task primaryTask, ArrayList<Task> tasks){
-//		this.id = id;
-//		this.name = name;
-//		this.description = description;
-//		this.ssid = ssid;
-//		this.nfc = nfc;
-//		this.lat = lat;
-//		this.lon = lon;
-//		this.autoRegister = autoRegister;
-//		this.status = status;
-//		this.primaryTask = primaryTask;
-//		this.tasks = tasks;
-//	}
 
 	public long getId()
 	{
@@ -193,6 +161,10 @@ public class Plan implements Comparable<Plan>
 		return primaryTaskId > 0;
 	}
 	
+	/**
+	 * @return the primary Task for this Plan. If no primary task is set, the first task found
+	 * is set as primary. If no task can be found, a blank Task is created and returned.
+	 */
 	public Task getPrimaryTask() 
 	{
 		if (this.hasPrimaryTask())
@@ -210,6 +182,9 @@ public class Plan implements Comparable<Plan>
 		return new Task();
 	}
 
+	/**
+	 * @param task Sets a new primary task and writes it to the database
+	 */
 	public void setPrimaryTask(Task task) 
 	{
 		if(task == null)
@@ -228,44 +203,49 @@ public class Plan implements Comparable<Plan>
 		this.primaryTaskId = 0;
 	}
 
+	/**
+	 * @return a List containing all Tasks for this Plan
+	 */
 	public List<Task> getTasks() 
 	{
 		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
 		return database.getTasks(this.id);
 	}
 	
-	public void addTask(Task task)
-	{
-		tasks.add(task);
-	}
-	
-	public void addTasks(ArrayList<Task> tasks)
-	{
-		this.tasks.addAll(tasks);
-	}
-	
+	/**
+	 * @return True if Task status is "Open"
+	 */
 	public boolean isOpen()
 	{
 		return status.equals("Open");
 	}
 	
-	//Should only be used for debugging
+	@Override
 	public String toString()
 	{
 		return String.format("%s: %s", name, description);
 	}
 
+	/* 
+	 * Allows sorting a list of plans, based on activation date
+	 */
 	@Override
 	public int compareTo(Plan other) 
 	{
 		return this.getLastActivatedTimestamp().compareTo(other.getLastActivatedTimestamp());
 	}
 	
+	/**
+	 * @return True if the Plan exists in the database
+	 */
 	public boolean existsInDatabase()
 	{
 		return this.id > 0;
 	}
 	
+	/**
+	 * Sets the plan as the current plan and updates database
+	 */
 	public void setAsCurrent()
 	{
 		if (this.existsInDatabase())

@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Straight forward implementation of a BaseAdapter, used to display a list of Plans.
+ */
 public class PlanListAdapter extends BaseAdapter
 {
 	List<Plan> plans = Collections.emptyList();
@@ -41,6 +46,11 @@ public class PlanListAdapter extends BaseAdapter
 		return plans.get(index).getId();
 	}
 
+	/* 
+	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+	 * 
+	 * Populates the views based on the list. Additionally gives Closed plans a different color.
+	 */
 	@Override
 	public View getView(int index, View view, ViewGroup viewGroup) 
 	{

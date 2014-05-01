@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Straight forward implementation of a BaseAdapter, used to display a list of Intervals
+ */
 public class IntervalListAdapter extends BaseAdapter
 {
 	List<Interval> intervals = Collections.emptyList();
