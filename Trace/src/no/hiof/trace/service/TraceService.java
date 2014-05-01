@@ -1,8 +1,11 @@
 package no.hiof.trace.service;
 
+import no.hiof.trace.activity.MainActivity;
+import no.hiof.trace.activity.R;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.sensor.WifiReciever;
+import no.hiof.trace.utils.Feedback;
 import no.hiof.trace.utils.PlanAutomationHelper;
 import no.hiof.trace.utils.TaskPlayerState;
 import no.hiof.trace.utils.TaskPlayerState.State;
@@ -20,6 +23,9 @@ public class TraceService extends Service
 	public final TaskPlayerState playerState = new TaskPlayerState();
 	private final IBinder binder = new TraceBinder();
 	private SensorUpdatesReceiver sensorUpdatesReceiver;
+	
+	private boolean sendSelectionNotificationt = false;
+	private boolean sendRegistrationNotification = false;
 	
 	public TraceService() 
 	{
@@ -113,15 +119,17 @@ public class TraceService extends Service
 						return;
 					
 					String ssid = intent.getStringExtra("ssid");
+					Plan plan = null;
 
 					if(helper.autoLoadingSetForSSID(ssid))
 					{
-						Plan plan = helper.getPlanForSSID(ssid);
+						plan = helper.getPlanForSSID(ssid);
 						
 						if(plan.getId() == helper.getCurrentPlan().getId())
 							return;
 						
 						plan.setAsCurrent();
+						sendSelectionNotificationt = true;
 						
 						Task task = plan.getPrimaryTask();
 						
@@ -131,8 +139,13 @@ public class TraceService extends Service
 						playerState.setActiveTask(task);
 						
 						if(plan.getAutoRegister())
+						{
 							playerState.startInterval(true);
+							sendRegistrationNotification = true;
+						}
 					}
+					
+					displayNotification(plan);
 				}
 				else
 				{
@@ -147,5 +160,32 @@ public class TraceService extends Service
 		}
     	
     }
+	
+	private void displayNotification(Plan plan)
+	{
+		if(plan==null)
+			return;
+		
+		String title = "";
+		String content ="";
+		
+		if(sendRegistrationNotification)
+		{
+			title = getString(R.string.app_name) + " - " + getString(R.string.auto_registration);
+			content = String.format("%s %s",getString(R.string.started_to_register_time_for), plan.getName());
+		}
+		else if(sendSelectionNotificationt)
+		{
+			title = getString(R.string.app_name) + " - " + getString(R.string.auto_selection);
+			content = String.format("%s %s %s", getString(R.string.plan),plan.getName(),getString(R.string.is_selected));
+		}
+		
+		Intent notificationIntent = Feedback.buildNotificationIntent(MainActivity.class, "planId", plan.getId());
+		Feedback.showSmallNotification(R.drawable.ic_launcher, title, content, notificationIntent, MainActivity.class);
+		Feedback.vibrateDevice(Feedback.LONG_VIBRATION);
+		
+		sendRegistrationNotification = false;
+		sendSelectionNotificationt = false;
+	}
 
 }

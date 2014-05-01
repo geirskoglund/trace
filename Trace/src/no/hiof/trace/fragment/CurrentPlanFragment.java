@@ -122,12 +122,20 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	
 	private void updatePlanData()
 	{
+		currentPlan = database.getActivePlan();
+		
+		setFieldValues();
+	}
+	
+	private void setFieldValues() 
+	{
 		mainLayout.setVisibility(View.VISIBLE);
 		tasksListView.setVisibility(View.VISIBLE);
 		overlayLayout.setVisibility(View.INVISIBLE);
 		taskListOverlay.setVisibility(View.INVISIBLE);
 		
-		currentPlan = database.getActivePlan();
+		planName.setText(currentPlan.getName());
+		planDescription.setText(currentPlan.getDescription());
 		
 		if(!currentPlan.existsInDatabase())
 		{
@@ -138,14 +146,6 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		{
 			taskListOverlay.setVisibility(View.VISIBLE);
 		}
-		
-		setFieldValues();
-	}
-	
-	private void setFieldValues() 
-	{
-		planName.setText(currentPlan.getName());
-		planDescription.setText(currentPlan.getDescription());
 	}
 
 	private void updateTaskData()

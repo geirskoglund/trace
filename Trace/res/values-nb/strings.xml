@@ -54,5 +54,11 @@
     <string name="overlay_description">Planer er startpunkter for timeregistrering.</string>
     <string name="task_list_overlay_header">Vis plandetaljer for å legge til en oppgave</string>
 	<string name="task_list_overlay_description">Oppgaver brukes for å organisere timeføringer</string>
+	
+	<string name="auto_registration">autoregistrering</string>
+	<string name="auto_selection">autovalg</string>
+	<string name="plan">Plan</string>
+	<string name="is_selected">er valgt</string>
+	<string name="started_to_register_time_for">Starter å registrere tid for</string>
 
 </resources>
