@@ -110,7 +110,7 @@ public class TaskEditorActivity extends Activity
 			task.setId(taskId);
 			showTaskDetails();
 		}
-		else if(fieldsAreOk() && isDefault())
+		else if(fieldsAreOk() && isDefault()) //this kicks in if the task is the default task
 		{
 			if(task.isOpen())
 			{
@@ -120,6 +120,8 @@ public class TaskEditorActivity extends Activity
 				return;
 			}
 			
+			//When the default task closes, we need to set a new default. We do this by picking the first 
+			//open task we can find.
 			Task newDefaultTask = null;
 			Plan taskPlan = task.getPlan();
 			
@@ -132,7 +134,7 @@ public class TaskEditorActivity extends Activity
 				}
 			}
 			
-			if(newDefaultTask!=null)
+			if(newDefaultTask!=null) //...found a new default task. 
 			{
 				taskPlan.setPrimaryTask(newDefaultTask);
 				long taskPlanId = database.writeToDatabase(taskPlan);
@@ -142,18 +144,20 @@ public class TaskEditorActivity extends Activity
 				task.setId(taskId);
 				showTaskDetails();
 			}
-			else
+			else //...no open tasks for this Plan. Ask the user if the Plan should be closed. 
 			{
 				//HANDLE CLOSING OF PLAN
 				buildAlertDialog();
 				alertDialog.show();
 			}
-			
-//			long taskId = database.writeToDatabase(task);
-//			task.setId(taskId);
 		}
 	}
 	
+	/**
+	 * An alert dialog, asking the user if the Plan status should be set to Closed.
+	 * If Yes, the plan is closed. In either case the Plan is left with no primary
+	 * task.
+	 */
 	private void buildAlertDialog()
 	{
 		alertDialog = new AlertDialog.Builder(this);
