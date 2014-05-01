@@ -17,7 +17,7 @@
     <string name="label_status">Status</string>
     <string name="label_auto_register">Autoregistrer</string>
     <string name="label_accumulated_time">Samlet tid</string>
-    <string name="label_time_slots">Timerføring</string>
+    <string name="label_time_slots">Timeføring</string>
     <string name="DUMMY_TEXT"></string>
     
     <string name="add">Ny</string>
