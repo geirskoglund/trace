@@ -1,13 +1,15 @@
 package no.hiof.trace.db.model;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.utils.TimeSlot;
 
+/**
+ * @author Trace Inc.
+ * Class representing the Task entity from the data model.
+ */
 public class Task
 {
 	private long id=0;
@@ -15,7 +17,6 @@ public class Task
 	private String name="";
 	private String description="";
 	private String status;
-	private List<Interval> intervals = new ArrayList<Interval>();
 	
 	public Task()
 	{
@@ -33,21 +34,6 @@ public class Task
 		String status = TraceApp.getAppContext().getString(R.string.status_open);
 		this.status = status;
 	}
-	
-//	public Task(String name, String description, String status)
-//	{
-//		this.name = name;
-//		this.description = description;
-//		this.status = status;
-//	}
-//	
-//	public Task(String name, String description, String status, ArrayList<Interval> intervals)
-//	{
-//		this.name = name;
-//		this.description = description;
-//		this.status = status;
-//		this.intervals = intervals;
-//	}
 
 	public long getId() 
 	{
@@ -94,46 +80,48 @@ public class Task
 		this.status = status;
 	}
 
+	/**
+	 * @return a List containing all Intervals for this Task
+	 */
 	public List<Interval> getIntervals() 
 	{
 		return TraceApp.database().getIntervals(this.id);
 	}
-
-	public void setIntervals(ArrayList<Interval> intervals) {
-		this.intervals = intervals;
-	}
-
-	public void addInterval(Interval interval)
-	{
-		intervals.add(interval);
-	}
 	
-	public void addIntervals(ArrayList<Interval> intervals)
-	{
-		this.intervals.addAll(intervals);
-	}
-	
+	/**
+	 * @return A TimeSlot aggregating the elapsed seconds of all Intervals
+	 */
 	public TimeSlot getAggregatedTimeSlots()
 	{
 		return new TimeSlot(TraceApp.database().getAggregatedTimeSlots(this.id));
 	}
 	
+	/**
+	 * @return True if the Status is "Open"
+	 */
 	public boolean isOpen()
 	{
 		return status.equals("Open");
 	}
 	
+	@Override
 	public String toString()
 	{
-		return String.format("Id:%s Name:%s Intervals:%s", id, name, intervals.size());
+		return String.format("%s: %s", name, description);
 	}
 	
+	/**
+	 * @return The Plan this task belongs to
+	 */
 	public Plan getPlan()
 	{
 		DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
 		return database.getPlan(this.planId);
 	}
 	
+	/**
+	 * @return True if the Task exists in the database
+	 */
 	public boolean existsInDatabase()
 	{
 		return this.id > 0;

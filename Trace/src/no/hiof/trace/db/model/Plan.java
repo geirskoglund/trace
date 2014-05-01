@@ -1,9 +1,7 @@
 package no.hiof.trace.db.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.DatabaseManager;
@@ -25,7 +23,6 @@ public class Plan implements Comparable<Plan>
 	private String status="";
 	private Date lastActivated;
 	private long primaryTaskId;
-	private ArrayList<Task> tasks;
 	private String autoTrigger = "";
 	
 	public Plan()
