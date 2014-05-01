@@ -51,13 +51,10 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 		database = new DatabaseManager(this);
 		
 		setFieldVariables();
-		
 		hideLabelsAndEditBoxes();
-		
 		setupSpinner();
 		setupAutoSelectionSpinner();
-		setupSsidSpinner();
-		
+		setupSsidSpinner();		
 		createPlan();
 		populatePlanDataFields();
 	}
@@ -82,8 +79,7 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	{
 		ssidLabel.setVisibility(View.INVISIBLE);
 		locationLabel.setVisibility(View.INVISIBLE);
-		nfcLabel.setVisibility(View.INVISIBLE);
-		
+		nfcLabel.setVisibility(View.INVISIBLE);	
 		planSSId.setVisibility(View.INVISIBLE);
 		planNFC.setVisibility(View.INVISIBLE);
 		planLocation.setVisibility(View.INVISIBLE);
@@ -123,7 +119,6 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	{
 		planName.setText(plan.getName());
 		planDescription.setText(plan.getDescription());
-		//planSSId.setText(plan.getSsid());
 		planNFC.setText(plan.getNfc());
 		planAuto.setChecked(plan.getAutoRegister());
 		
@@ -132,8 +127,8 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 		
 		int autoSelectionSpinnerPosition = autoSelectionAdapter.getPosition(plan.getAutoTrigger());
 		autoSelectionSpinner.setSelection(autoSelectionSpinnerPosition);
-		System.out.println("AUTOTRIGGER: "+plan.getAutoTrigger());
 		
+		//If the plans ssid is not stored on the device, it will not be in the list, and must be added
 		if(!ssidExistsInAdapter())
 		{
 			ssidAdapter.add(plan.getSsid());
@@ -179,7 +174,10 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	    }
 		return true;
 	}
-
+	
+	/**
+	 * Write the plan data to the views
+	 */
 	private void updatePlanData() 
 	{
 		plan.setName(planName.getText().toString());
@@ -196,17 +194,19 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	{
 		if(fieldsAreOk())
 		{
-			//plan.setId(database.addPlan(plan));
-			long planId = database.writeToDatabase(plan); // .addPlan(plan);
+			long planId = database.writeToDatabase(plan);;
 			plan.setId(planId);
 		}
 	}
 
 	private boolean fieldsAreOk() 
 	{
-		return plan.getName().length()>0; //&& plan.getDescription().length()>0;
+		return plan.getName().length()>0; 
 	}
 
+	/**
+	 * Create an intent and navigate to plan details
+	 */
 	private void showPlanDetails() 
 	{
 		Intent showPlanDetails = new Intent(this,PlanDetailActivity.class);
@@ -218,6 +218,7 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	@Override
 	public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
 	{
+		//Only display auto select fields for the preferred auto select method.
 		if(autoSelectionAdapter.getItem(position).equals("(NONE)"))
 		{
 			hideLabelsAndEditBoxes();
@@ -247,6 +248,4 @@ public class PlanEditorActivity extends Activity implements OnItemSelectedListen
 	public void onNothingSelected(AdapterView<?> arg0)
 	{
 	}
-	
-
 }
