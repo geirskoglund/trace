@@ -22,18 +22,33 @@ public class TimerTextView extends TextView
 	
 	boolean timerRunning = false;
 
+	/**
+	 * TimerTextView constructor
+	 * @param context
+	 */
 	public TimerTextView(Context context) 
 	{
 		super(context);
 		setTimerText();
 	}
 
+	/**
+	 * TimerTextView constructor
+	 * @param context
+	 * @param attrs
+	 */
 	public TimerTextView(Context context, AttributeSet attrs) 
 	{
 		super(context, attrs);
 		setTimerText();
 	}
 
+	/**
+	 * TimerTextView constructor
+	 * @param context
+	 * @param attrs
+	 * @param defStyle
+	 */
 	public TimerTextView(Context context, AttributeSet attrs, int defStyle) 
 	{
 		super(context, attrs, defStyle);
@@ -46,11 +61,18 @@ public class TimerTextView extends TextView
 		super.onDraw(canvas);  
 	}
 	
+	/**
+	 * Reset the elapsed time to 0
+	 */
 	public void reset()
 	{
 		seconds = 0;
 	}
 	
+	
+	/**
+	 * Starts the timing by starting a timing thread
+	 */
 	public void start()
 	{
 		if(timerRunning) 
@@ -78,6 +100,10 @@ public class TimerTextView extends TextView
 		timerThread.start();
 	}
 	
+	
+	/**
+	 * Stops timing by interrupting the timer thread.
+	 */
 	public void stop()
 	{
 		if(!timerRunning)
@@ -87,11 +113,17 @@ public class TimerTextView extends TextView
 		timerThread.interrupt();
 	}
 	
+	/**
+	 * @return A boolean telling if the timing is currently running
+	 */
 	public boolean isRunning()
 	{
 		return timerRunning;
 	}
 	
+	/**
+	 * @param startTime the time to start timing from
+	 */
 	public void setTime(Date startTime)
 	{
 		if(startTime==null)
@@ -105,21 +137,33 @@ public class TimerTextView extends TextView
 		}
 	}
 	
+	/**
+	 * @param the time to start timing from set as seconds
+	 */
 	public void setTime(long seconds)
 	{
 		this.seconds = seconds;
 	}
 	
+	/**
+	 * @return the time in seconds
+	 */
 	public long getTimeInSeconds()
 	{
 		return this.seconds;
 	}
 	
+	/**
+	 * Sets the visible text as dictated by getTimerString()
+	 */
 	public void setTimerText()
 	{
 		this.setText(getTimerString());
 	}
 	
+	/**
+	 * @return the current elapsed time. Format: 01:/15:37
+	 */
 	public String getTimerString()
 	{
 		long currentValue = seconds;
@@ -137,6 +181,12 @@ public class TimerTextView extends TextView
 			return String.format("%s:%s", leadingZero(mins),leadingZero(secs));
 	}
 	
+	/**
+	 * Adds a leading zero to a number if it is lower than 10
+	 * 
+	 * @param number the number to add a leading zero to
+	 * @return the input number with a leading zero added
+	 */
 	public String leadingZero(int number)
 	{
 		if(number<10)
@@ -150,11 +200,17 @@ public class TimerTextView extends TextView
 	{
 		WeakReference<TimerTextView> view;
 		
+		/**Constructor for TimerHandler
+		 * @param view the view to create a WeakReference to
+		 */
 		TimerHandler(TimerTextView view)
 		{
 			this.view= new WeakReference<TimerTextView>((TimerTextView)view);
 		}
 		
+		/* (non-Javadoc)
+		 * @see android.os.Handler#handleMessage(android.os.Message)
+		 */
 		@Override
     	public void handleMessage(Message msg) 
     	{
@@ -162,7 +218,5 @@ public class TimerTextView extends TextView
     		view.setTimerText();
     		view.seconds++;
     	}
-		
-		
 	}
 }
