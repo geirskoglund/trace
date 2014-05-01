@@ -231,7 +231,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		if(interval.getId()==0)
 			return addInterval(interval);
 		else if(intervalExists(interval))
-			return 0;
+			return updateInterval(interval);
 		else
 			return addInterval(interval);
 	}
@@ -248,7 +248,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return task.getId();
 	}
 	
-	
+	//Helper method: Updates an existing Plan in the database
 	private long updatePlan(Plan plan) 
 	{
 		ContentValues values = PlanParser.getContentValues(plan);
@@ -260,7 +260,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plan.getId();
 	}
 	
-	public long updateInterval(Interval interval)
+	//Helper method: Updates an existing Interval in the database
+	private long updateInterval(Interval interval)
 	{
 		ContentValues values = IntervalParser.getContentValues(interval);
 		String whereClause = ColumnName.ID + " = ?";
@@ -271,6 +272,9 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return interval.getId();
 	}
 	
+	//Helper method: Updates rows in a given table with the given content values. 
+	//The whereClause and whereArgs controls which rows to update.
+	//Returns the number of affected rows
 	private int updateRow(String table, ContentValues values, String whereClause, String[] whereArgs)
 	{
 		SQLiteDatabase theDatabase = getWritableDatabase();
@@ -279,11 +283,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 		theDatabase.beginTransaction();
 		try
 		{
-			log("Før update");
 			updatedRecords = theDatabase.update(table, values, whereClause, whereArgs);
-			log("Etter");
 			theDatabase.setTransactionSuccessful();
-			log("Etter transaction");
 		}
 		catch(Exception e)
 		{
@@ -298,6 +299,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return updatedRecords;
 	}
 	
+	//Helper method: Inserts a new row in a given table, using the given ContentValues. Returns row id.
 	private long insertRow(String tableName, ContentValues values)
 	{
 		SQLiteDatabase theDatabase = getWritableDatabase();
@@ -325,21 +327,25 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return rowId;
 	}
 	
+	//Returns true if the Task exists in the database
 	private boolean taskExists(Task task)
 	{
 		return rowExists(TableName.TASK, ColumnName.ID, task.getId());
 	}
 	
+	//Returns true if the Plan exists in the database
 	private boolean planExists(Plan plan)
 	{	
 		return rowExists(TableName.PLAN, ColumnName.ID, plan.getId());
 	}
 	
+	//Returns true if the Interval exists in the database
 	private boolean intervalExists(Interval interval)
 	{
 		return rowExists(TableName.INTERVAL, ColumnName.ID, interval.getId());
 	}
 	
+	//Checks a given table for a given row id, returning true if the row is found
 	@SuppressLint("DefaultLocale")
 	private boolean rowExists(String tableName, String idColumnName, long rowId)
 	{
@@ -355,22 +361,34 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return rowCheck;
 	}
 
+	//Helper method: Adds a new Task record
 	private long addTask(Task task)
 	{
 		ContentValues values = TaskParser.getContentValues(task);
 		return insertRow(TableName.TASK, values);
 	}
 	
+	//Helper method: Adds a new Plan record
 	private long addPlan(Plan plan)
 	{
 		ContentValues values = PlanParser.getContentValues(plan);	
 		return insertRow(TableName.PLAN, values);
 	}
+	
+	//Helper method: Adds a new Interval record
 	public long addInterval(Interval interval)
 	{
 		ContentValues values = IntervalParser.getContentValues(interval);
 		return insertRow(TableName.INTERVAL, values);
 	}
+	
+	
+	/**
+	 * @param taskId A task row id
+	 * @return Inserts and returns an Interval connected to the given task. 
+	 * 
+	 * The interval start time is set to the current time.
+	 */
 	public Interval createIntervalWithStartTime(long taskId)
 	{
 		Interval interval = new Interval(taskId);
@@ -380,6 +398,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return interval;
 	}
 	
+	/**
+	 * @param taskId The row id of a task
+	 * @return The task as a Task instance
+	 */
 	@SuppressLint("DefaultLocale")
 	public Task getTask(long taskId)
 	{
@@ -399,6 +421,9 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return task;
 	}
 	
+	/**
+	 * @return The newest interval created, or null if no interval is found
+	 */
 	public Interval getNewestInterval()
 	{
 		SQLiteDatabase theDatabase = getReadableDatabase();
@@ -412,6 +437,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return null;
 	}
 	
+	/**
+	 * @param planId The row id of a plan
+	 * @return The plan as a Plan instance
+	 */
 	@SuppressLint("DefaultLocale")
 	public Plan getPlan(long planId)
 	{
@@ -431,11 +460,17 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plan;
 	}
 	
+	/**
+	 * @return A list containing all plans in the database
+	 */
 	public List<Plan> getAllPlans()
 	{	
 		return getAllPlans(ColumnName.ID, true);
 	}
 	
+	/**
+	 * @return A list containing the given number of newly activated plans
+	 */
 	public List<Plan> getLatestPlans(int quantity)
 	{
 		List<Plan> plans = getAllPlans(ColumnName.LAST_ACTIVATED, false);
@@ -446,6 +481,9 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans.subList(0, quantity);
 	}
 	
+	/**
+	 * @return The current active plan, or a dummy plan if no plans exist
+	 */
 	public Plan getActivePlan()
 	{
 		List<Plan> plans = getLatestPlans(1);
@@ -456,6 +494,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return plans.get(0);
 	}
 	
+	//Helper method: This is the base method used by the various public getPlans-methods. 
 	private List<Plan> getAllPlans(String orderByField, boolean ascending)
 	{
 		String direction = (ascending ? "" : " DESC"); 
@@ -479,6 +518,12 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
+	/**
+	 * @param column The column containing the value to look for. 
+	 * @param criteria The value to look for
+	 * @param autoTrigger The auto trigger type
+	 * @return A list of open plans matching the criteria, or an empty list
+	 */
 	public List<Plan> getOpenAutoLoadingPlans(String column, String criteria, String autoTrigger)
 	{
 		List<Plan> plans = new ArrayList<Plan>();
@@ -502,6 +547,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return plans;
 	}
 	
+	/**
+	 * @param planId The row id of the parent plan
+	 * @return A list containing all tasks connected to the given plan id
+	 */
 	public List<Task> getTasks(long planId)
 	{
 		List<Task> tasks = new ArrayList<Task>();
@@ -520,6 +569,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return tasks;
 	}
 	
+	/**
+	 * @param taskId The row id of the parent task
+	 * @return A list containing all intervals connected to the given task id
+	 */
 	public List<Interval> getIntervals(long taskId)
 	{
 		List<Interval> intervals = new ArrayList<Interval>();
@@ -541,6 +594,11 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return intervals;
 	}
 	
+	
+	/**
+	 * @param taskId The row id of the task to aggregate time slots for
+	 * @return The sum of all elapsed seconds on all intervals for the given task
+	 */
 	public long getAggregatedTimeSlots(long taskId)
 	{
 		SQLiteDatabase theDatabase = this.getReadableDatabase();
@@ -556,17 +614,25 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return 0;
 	}
 
-
+	/**
+	 * @param planId The row id of the plan
+	 * Deletes a given plan from the database 
+	 */
 	public void deletePlan(long planId)
 	{
 		deleteRowBasedOnId(TableName.PLAN, ColumnName.PLAN_ID, planId);
 	}
 	
+	/**
+	 * @param taskId The row id of the task
+	 * Deletes a given task from the database 
+	 */
 	public void deleteTask(long taskId)
 	{
 		deleteRowBasedOnId(TableName.TASK, ColumnName.TASK_ID, taskId);
 	}
 	
+	//Helper method: This is the helper method for the various public delete-methods.
 	private void deleteRowBasedOnId(String tableName, String idColumnName, long rowId)
 	{
 		SQLiteDatabase theDatabase = getWritableDatabase();
@@ -577,46 +643,10 @@ public class DatabaseManager extends SQLiteOpenHelper
 		theDatabase.close();
 	}
 	
-//	private void deleteRow(String table, String column, Object... whereArgs)
-//	{
-//		// TODO: Tror denne utgår, til fordel for deletePlan, deleteTask etc...
-//		if(table == null || table.isEmpty())
-//			throw new IllegalArgumentException();
-//		if(column==null || column.isEmpty())
-//			throw new IllegalArgumentException();
-//		if(whereArgs==null || whereArgs.length==0)
-//			throw new IllegalArgumentException();
-//		
-//		SQLiteDatabase theDatabase = getWritableDatabase();
-//		
-//		for(Object obj: whereArgs)
-//		{
-//			if(obj instanceof Boolean)
-//			{
-//				Boolean bool = (Boolean)obj;
-//				if(bool.booleanValue()==true)
-//					obj = new String("1");
-//				else
-//					obj = new String("0");
-//			}
-//			else
-//			{
-//				obj = obj.toString();
-//			}
-//		}
-//		
-//		theDatabase.beginTransaction();
-//		try
-//		{
-//			theDatabase.delete(table, column+" = ?", (String[]) whereArgs);
-//			theDatabase.setTransactionSuccessful();
-//		}
-//		finally
-//		{
-//			theDatabase.endTransaction();
-//		}
-//	}
 	
+	/**
+	 * Closes the database connection
+	 */
 	public void closeDatabase()
 	{
 		SQLiteDatabase theDatabase = this.getReadableDatabase();
@@ -624,6 +654,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 			theDatabase.close();
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "DatabaseManager";
