@@ -5,7 +5,6 @@ import java.util.List;
 
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.service.TraceService;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +12,26 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
+/**
+ * @author Trace Inc.
+ * 
+ * A broadcast receiver, monitoring changes in SSID for the device. Broadcasts the ssid when it is set or lost.
+ * 
+ * The class also provides a static method for listing registered SSIDs on the device.
+ */
 public class WifiReciever extends BroadcastReceiver 
 {
+	/**
+	 * The broadcast string used for all broadcasts from this class
+	 */
 	public final static String SSID_CHANGED = "no.hiof.trace.SSID_CHANGED";
 
+	/**
+	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+	 * 
+	 * Transmits the status of the ssid when it changes
+	 */
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
@@ -44,7 +57,6 @@ public class WifiReciever extends BroadcastReceiver
 				newSSID.putExtra("connected", true);
 				newSSID.putExtra("ssid", ssid);
 				TraceApp.getAppContext().sendBroadcast(newSSID);
-				//Log.d("TRACE-WR","Connected to: " + ssid );
 			}
 			else if(state == NetworkInfo.State.DISCONNECTED)
 			{
@@ -52,13 +64,13 @@ public class WifiReciever extends BroadcastReceiver
 				newSSID.putExtra("connected", false);
 				TraceApp.getAppContext().sendBroadcast(newSSID);
 			}
-			else
-			{
-				Log.d("TRACE-WR","No connection"  + " | state: " + manager.getWifiState());
-			}
 		}
 	}
 	
+	
+	/**
+	 * @return A List containing string representations of all the SSIDs stored on the device.
+	 */
 	public static List<String> getAllStoredSsid()
 	{
 		WifiManager manager = (WifiManager)TraceApp.getAppContext().getSystemService(Context.WIFI_SERVICE);
