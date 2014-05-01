@@ -8,9 +8,18 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+/**
+ * @author Trace Inc.
+ *A class for parsing a Plan from a Cursor and from a Plan to ContentValues
+ */
 public class PlanParser 
 {
 
+	/**
+	 * Parses a Cursor-object to a Plan-object
+	 * @param cursor the Cursor to parse
+	 * @return the parsed Plan
+	 */
 	public static Plan parse(Cursor cursor)
 	{
 		int id = cursor.getColumnIndex(ColumnName.ID);
@@ -47,6 +56,11 @@ public class PlanParser
 		return plan;
 	}
 	
+	/**
+	 * parses a Plan-object to a ContentValues-object.
+	 * @param plan the plan to parse
+	 * @return a ContentValues-object parsed from input Plan
+	 */
 	public static ContentValues getContentValues(Plan plan)
 	{
 		ContentValues values = new ContentValues();
