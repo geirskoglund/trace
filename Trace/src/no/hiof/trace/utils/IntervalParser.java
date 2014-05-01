@@ -7,8 +7,18 @@ import android.database.Cursor;
 import no.hiof.trace.db.model.Interval;
 import no.hiof.trace.db.values.ColumnName;
 
+/**
+ * A class for parsing a Cursor to an interval and from an Interval to ContentValues
+ * @author Trace Inc.
+ *
+ */
 public class IntervalParser 
 {
+	/**
+	 * Parses a Cursor-object to an Interval-object
+	 * @param cursor the cursor to parse from
+	 * @return an Interval-object containing data parsed from the input Cursor
+	 */
 	public static Interval parse(Cursor cursor)
 	{
 		int id = cursor.getColumnIndex(ColumnName.ID);
@@ -32,6 +42,10 @@ public class IntervalParser
 		return interval;
 	}
 	
+	/**Parses an Interval-object to a ContentValues-object
+	 * @param interval the Interval-object to parse
+	 * @return a ContentValues-object parsed from the input Interval-object
+	 */
 	public static ContentValues getContentValues(Interval interval)
 	{
 		ContentValues values = new ContentValues();
