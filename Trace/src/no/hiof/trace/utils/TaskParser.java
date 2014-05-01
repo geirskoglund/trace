@@ -5,8 +5,17 @@ import android.database.Cursor;
 import no.hiof.trace.db.model.Task;
 import no.hiof.trace.db.values.ColumnName;
 
+/**
+ * @author Trace Inc.
+ *A class used to parse Tasks to ContentValue and from a Cursor
+ */
 public class TaskParser 
 {
+	/**
+	 * Parses Tasks from a Cursor object
+	 * @param cursor the cursor containing the data to be parsed
+	 * @return the parsed Task
+	 */
 	public static Task parse(Cursor cursor)
 	{
 		int id = cursor.getColumnIndex(ColumnName.ID);
@@ -25,6 +34,11 @@ public class TaskParser
 		return task;
 	}
 	
+	/**
+	 * Gets the ContentValues of a Task
+	 * @param task the Task to get ContentValues from.
+	 * @return ContentValues parsed from a Task
+	 */
 	public static ContentValues getContentValues(Task task)
 	{
 		ContentValues values = new ContentValues();
