@@ -33,6 +33,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Fragment class, displaying information on the Current Plan
+ */
 public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 {
 	OnTaskLoadedListener taskLoaderListener;
@@ -50,8 +55,12 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	private RelativeLayout overlayLayout;
 	private RelativeLayout taskListOverlay;
 	
-	public CurrentPlanFragment(){}
 
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * 
+	 * Preparing to fill the fragment with data. The actual loading of data is done in onResume() 
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -63,11 +72,11 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		setHasOptionsMenu(true);
 		
 		setFieldVariables(view);
-		updatePlanData();
 
 		return view;
 	}
 	
+	//Connecting the adapter to the ListView
 	private void setupListViewAdapter(View view)
 	{
 		taskListAdapter = new TaskListAdapter(this.getActivity());
@@ -75,6 +84,7 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		tasksListView.setAdapter(taskListAdapter);
 	}
 	
+	// Instantiating all View variables
 	private void setFieldVariables(View view)
 	{
 		planName = (TextView) view.findViewById(R.id.current_plan_name);
@@ -85,6 +95,7 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		taskListOverlay = (RelativeLayout) view.findViewById(R.id.taskListOverlay);
 	}
 	
+	// Setting listeners on the ListView
 	private void setListViewListeners()
 	{
 		tasksListView.setOnItemClickListener(new OnItemClickListener()
@@ -120,6 +131,11 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		});
 	}
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onResume()
+	 * 
+	 * The update methods are executed on onResume, giving the screen fresh data
+	 */
 	@Override
 	public void onResume()
     {  
@@ -128,13 +144,14 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	    updateTaskData();
      }
 	
+	// Retrieve Plan data from database and display it on screen
 	private void updatePlanData()
 	{
 		currentPlan = database.getActivePlan();
-		
 		setFieldValues();
 	}
 	
+	// Display Plan data on screen. If no Plan exists, an instruction overlay is inserted.
 	private void setFieldValues() 
 	{
 		mainLayout.setVisibility(View.VISIBLE);
@@ -156,12 +173,18 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		}
 	}
 
+	// Updating the data set used by the list view. Notifying the callback in the adapter.
 	private void updateTaskData()
 	{
 		taskListAdapter.updateTasks(currentPlan.getTasks());
 		taskListAdapter.notifyDataSetChanged();
 	}
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)
+	 * 
+	 * Inflating the menu
+	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
 	{
@@ -169,6 +192,11 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	    super.onCreateOptionsMenu(menu, inflater);
 	}
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem)
+	 * 
+	 * Callback for the menu
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
@@ -195,6 +223,11 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	    return super.onOptionsItemSelected(item);
 	} 
 	
+	/**
+	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
+	 * 
+	 * Adding the activity as a listener, throwing an exception if the OnTaskLoadedListener is not implemented
+	 */
 	@Override
     public void onAttach(Activity activity) 
 	{
@@ -210,16 +243,23 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
         }
 	}
 
+	/**
+	 * @see no.hiof.trace.contract.DatasetRefresh#refreshData()
+	 * 
+	 * Callback from the DatasetRefresh interface, allowing outside triggering of updates.
+	 */
 	@Override
 	public void refreshData() 
 	{
-		//Feedback.showToast("oppdatert");
 		if(currentPlan!=null)
 		{
 			new RefreshPlanDataTask().execute();
 		}
 	}
 	
+	/*
+	 * Async task used for retrieving updated plan data
+	 * */
 	private class RefreshPlanDataTask extends AsyncTask<Void, Void, Plan>
 	{
 
@@ -238,6 +278,9 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 		}
 	}
 	
+	/*
+	 * Async task used for retrieving updated task list data
+	 * */
 	private class RefreshTasklistDataTask extends AsyncTask<Plan, Void, List<Task>>
 	{
 
@@ -253,8 +296,5 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 			taskListAdapter.updateTasks(result);
 			taskListAdapter.notifyDataSetChanged();
 		}
-
-
-	
 	}
 }
