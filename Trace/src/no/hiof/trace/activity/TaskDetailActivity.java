@@ -48,7 +48,6 @@ public class TaskDetailActivity extends Activity
 	
 	private void setupAdapter() 
 	{
-		//View view = findViewById(android.R.id.content);
 		intervalListAdapter = new IntervalListAdapter(this);
 		intervalListView = (ListView)this.findViewById(R.id.intervalList);
 		intervalListView.setAdapter(intervalListAdapter);
@@ -118,6 +117,9 @@ public class TaskDetailActivity extends Activity
 	    return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Sets a task as the primary task, but only if it is open.
+	 */
 	private void setTaskAsPrimary()
 	{
 		if(!task.isOpen())
