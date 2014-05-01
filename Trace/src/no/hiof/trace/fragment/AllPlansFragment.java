@@ -28,6 +28,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
+/**
+ * @author Trace Inc.
+ * Fragment class listing All Plans
+ */
 public class AllPlansFragment extends Fragment implements DatasetRefresh
 {
 	OnTaskLoadedListener taskLoaderListener;
@@ -37,8 +41,15 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	List<Plan> allPlans;
 	DatabaseManager database = TraceApp.database();
 	
+	/**
+	 * Constructor
+	 */
 	public AllPlansFragment(){}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_all_plans, container, false);
@@ -50,14 +61,16 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 		return view;
 	}
 	
+	//Connecting the adapter to the ListView
 	private void setupAdapter(View view) 
 	{
 		planListAdapter = new PlanListAdapter(this.getActivity());
 		allPlansListView = (ListView)view.findViewById(R.id.allPlansList);
 		allPlansListView.setAdapter(planListAdapter);
 	}
-
-	public void setListViewListener()
+	
+	// Setting listeners on the ListView
+	private void setListViewListener()
 	{
 		allPlansListView.setOnItemClickListener(new OnItemClickListener() 
 		{
@@ -99,6 +112,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 		});
 	}
 	
+	// Navigating to the Plan Details screen
 	private void navigateToPlanDetails(long planId) 
 	{
 		Intent showPlanDetails = new Intent(this.getActivity(),PlanDetailActivity.class);
@@ -106,6 +120,11 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 		startActivity(showPlanDetails);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onResume()
+	 * 
+	 * The update methods are executed on onResume, giving the screen fresh data
+	 */
 	@Override
 	public void onResume()
     {  
@@ -116,7 +135,11 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    planListAdapter.notifyDataSetChanged();
      }
 	
-	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)
+	 * 
+	 * Inflating the menu
+	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
 	{
@@ -124,6 +147,11 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    super.onCreateOptionsMenu(menu, inflater);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem)
+	 * 
+	 * Callback from the menu
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
@@ -137,6 +165,11 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    return super.onOptionsItemSelected(item);
 	} 
 	
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
+	 * 
+	 * Adding the activity as a listener, throwing an exception if the OnTaskLoadedListener is not implemented
+	 */
 	@Override
     public void onAttach(Activity activity) 
 	{
@@ -152,9 +185,14 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
         }
 	}
 
+	/* (non-Javadoc)
+	 * @see no.hiof.trace.contract.DatasetRefresh#refreshData()
+	 * 
+	 * Callback from the DatasetRefresh interface, allowing outside triggering of updates.
+	 */
 	@Override
-	public void refreshData() {
-		// TODO Auto-generated method stub
+	public void refreshData() 
+	{
 		
 	}
 }
