@@ -14,7 +14,6 @@ public class MainActivity extends FragmentActivity implements OnTaskLoadedListen
 {
 	SectionPagerAdapter pageInteractionAdapter;
 	ViewPager viewPager;
-	//DatabaseManager databaseManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -22,8 +21,8 @@ public class MainActivity extends FragmentActivity implements OnTaskLoadedListen
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//Preparing the adapter connecting the pager
 		pageInteractionAdapter = new SectionPagerAdapter(getSupportFragmentManager(), this);
-
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setAdapter(pageInteractionAdapter);
 	}
@@ -42,6 +41,11 @@ public class MainActivity extends FragmentActivity implements OnTaskLoadedListen
 		setViewPagerListener();
 	}
 	
+	/**
+	 * Setting a listener to get notifications when a new page is set active
+	 * in the pager. When a new page is active, the adapter should call the
+	 * underlying fragments refresh data method.
+	 */
 	private void setViewPagerListener() 
 	{
 		viewPager.setOnPageChangeListener(new OnPageChangeListener() 
@@ -61,6 +65,10 @@ public class MainActivity extends FragmentActivity implements OnTaskLoadedListen
 		});
 	}
 
+	/* 
+	 * This method is a callback for fragments in the pager. It receives a task, and loads this task into
+	 * the task player.
+	 */
 	@Override
 	public void onTaskLoadedListener(Task task) 
 	{
