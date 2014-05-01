@@ -17,6 +17,10 @@ import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 
+/**
+ * @author Trace Inc.
+ *
+ */
 public class TraceService extends Service 
 {
 	public static final String PREFS_NAME = "TracePrefs";
@@ -29,27 +33,30 @@ public class TraceService extends Service
 	
 	public TraceService() 
 	{
-		//super("TraceService");
 		super();
 	}
 
+	/**
+	 * @see android.app.Service#onBind(android.content.Intent)
+	 */
 	@Override
 	public IBinder onBind(Intent intent) 
 	{	
 		return binder;
 	}
 	
-//	public void sendStuff(String text)
-//	{
-//		sendBroadcast(new Intent(text));
-//	}
-	
-	/**
+    /**
      * Class used for the client Binder.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with IPC.
+     * @author Trace Inc.
+     *
      */
     public class TraceBinder extends Binder 
     {
+        /**
+         * Gets the instance of the service
+         * @return the service-object
+         */
         public TraceService getService() 
         {
             // Return this instance of TraceService so clients can call public methods
@@ -57,25 +64,34 @@ public class TraceService extends Service
         }
     }
 	
-	// This is the old onStart method that will be called on the pre-2.0
-	// platform.  On 2.0 or later we override onStartCommand() so this
-	// method will not be called.
+    /**
+     * This is the old onStart method that will be called on the pre-2.0
+     * platform.  On 2.0 or later we override onStartCommand() so this
+     * method will not be called.
+     * @see android.app.Service#onStart(android.content.Intent, int)
+     */
     @SuppressWarnings("deprecation")
 	@Override
 	public void onStart(Intent intent, int startId) 
 	{
-	    handleCommand(intent);
+	    handleCommand();
 	    super.onStart(intent, startId);
 	}
 	
+	/**
+	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
+	 */
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) 
 	{
-	    handleCommand(intent); 
+	    handleCommand(); 
 	    return super.onStartCommand(intent, flags, startId);
 	}
 	
-	private void handleCommand(Intent intent)
+	/*
+	 * Handles the intent sent from 
+	 */
+	private void handleCommand()
 	{
 	    if(sensorUpdatesReceiver==null)
 	    	sensorUpdatesReceiver = new SensorUpdatesReceiver();
@@ -84,27 +100,43 @@ public class TraceService extends Service
 	    this.registerReceiver(sensorUpdatesReceiver, wifiFilter);
 	}
 	
+	/*
+	 * Runs when the service gets created/instantiated
+	 * @see android.app.Service#onCreate()
+	 */
 	@Override
 	public void onCreate()
 	{
-		//Log.d("TRACE-MA","Service onCreate");
 		super.onCreate();
-		
 	}
 	
+	/* 
+	 * Runs when the service gets destroyed
+	 * @see android.app.Service#onDestroy()
+	 */
 	@Override
 	public void onDestroy ()
 	{
 		if(sensorUpdatesReceiver != null)
 			this.unregisterReceiver(sensorUpdatesReceiver);
 		
-		//Log.d("TRACE-MA","Service is destroyed...");
 		super.onDestroy();
 	}
 	
+	/**
+	 * A reciever for handling WiFi-connection changes
+	 * @author Trace Inc.
+	 *
+	 */
 	private class SensorUpdatesReceiver extends BroadcastReceiver
     {
 
+		/**
+		 * A method for recieving WiFi-connection changes
+		 * Checks the SSID and compares it to SSIDS registered with Plans
+		 * If a Plan has registered the SSID it auto selects the Plan. If it has a registered SSID and is set to auto register, it starts to register a time slot for the Plan.
+		 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+		 */
 		@Override
 		public void onReceive(Context context, Intent intent) 
 		{
@@ -161,6 +193,9 @@ public class TraceService extends Service
     	
     }
 	
+	/*A helper function for displaying notifications when a plan gets auto selected or starts auto registering.
+	 * @param plan the Plan-object to notify the user about
+	 */
 	private void displayNotification(Plan plan)
 	{
 		if(plan==null)
