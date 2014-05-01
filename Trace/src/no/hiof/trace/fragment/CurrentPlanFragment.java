@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CurrentPlanFragment extends Fragment implements DatasetRefresh
@@ -43,6 +44,10 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	
 	private TextView planName;
 	private TextView planDescription;
+	
+	private RelativeLayout mainLayout;
+	private RelativeLayout overlayLayout;
+	private RelativeLayout taskListOverlay;
 	
 	public CurrentPlanFragment(){}
 
@@ -73,6 +78,10 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	{
 		planName = (TextView) view.findViewById(R.id.current_plan_name);
 		planDescription = (TextView) view.findViewById(R.id.current_plan_description);
+		
+		mainLayout = (RelativeLayout) view.findViewById(R.id.main);
+		overlayLayout = (RelativeLayout) view.findViewById(R.id.overlay);
+		taskListOverlay = (RelativeLayout) view.findViewById(R.id.taskListOverlay);
 	}
 	
 	private void setListViewListeners()
@@ -113,7 +122,23 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 	
 	private void updatePlanData()
 	{
+		mainLayout.setVisibility(View.VISIBLE);
+		tasksListView.setVisibility(View.VISIBLE);
+		overlayLayout.setVisibility(View.INVISIBLE);
+		taskListOverlay.setVisibility(View.INVISIBLE);
+		
 		currentPlan = database.getActivePlan();
+		
+		if(!currentPlan.existsInDatabase())
+		{
+			mainLayout.setVisibility(View.GONE);
+			overlayLayout.setVisibility(View.VISIBLE);
+		}
+		else if(currentPlan.getTasks().size()==0)
+		{
+			taskListOverlay.setVisibility(View.VISIBLE);
+		}
+		
 		setFieldValues();
 	}
 	

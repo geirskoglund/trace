@@ -15,7 +15,7 @@
     <string name="label_ssid">WiFi</string>
     <string name="label_nfc">NFC-tag</string>
     <string name="label_status">Status</string>
-    <string name="label_auto_register">Automatisk valg ved</string>
+    <string name="label_auto_register">Autoregistrer</string>
     <string name="label_accumulated_time">Samlet tid</string>
     <string name="label_time_slots">Timerføring</string>
     <string name="DUMMY_TEXT"></string>
@@ -29,7 +29,7 @@
     <string name="Lengdegrader">Longitude</string>
     <string name="Breddegrader">Latitude</string>
     <string name="plan_was_activated">" er aktivert."</string>
-    <string name="interval_saved">Tidsinterval er lagret</string>
+    <string name="interval_saved">Timeføring er lagret</string>
     <string name="select_status">Select Status</string>
     <string name="trace_wifi_reciever">Trace Wifi Receiver</string>
     <string name="label_default_task">Standardoppgave</string>
@@ -50,5 +50,9 @@
     <string name="task_is_refreshed">Oppgave er oppdatert</string>
     <string name="task_is_set_as_default">Oppgaven er satt som standardoppgave</string>
     <string name="cannot_set_a_closed_task_as_default">En lukket oppgave kan ikke settes som standardoppgave!</string>
+    <string name="click_to_add_a_plan">Klikk + for ny plan</string>
+    <string name="overlay_description">Planer er startpunkter for timeregistrering.</string>
+    <string name="task_list_overlay_header">Vis plandetaljer for å legge til en oppgave</string>
+	<string name="task_list_overlay_description">Oppgaver brukes for å organisere timeføringer</string>
 
 </resources>

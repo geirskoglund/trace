@@ -117,7 +117,8 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		
 		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
 
-		Feedback.showToast(getActivity().getString(R.string.capital_task)+"\"" + task.getName() + "\"" +getActivity().getString(R.string.loaded));
+		if(!task.getName().equals(""))
+			Feedback.showToast(getActivity().getString(R.string.capital_task)+"\"" + task.getName() + "\"" +getActivity().getString(R.string.loaded));
 	}
 	
 	private boolean noLoadingIsNeeded(Task task) 
