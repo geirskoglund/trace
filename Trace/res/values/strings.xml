@@ -80,4 +80,6 @@
 	<string name="plan">Plan</string>
 	<string name="is_selected">is selected</string>
 	<string name="started_to_register_time_for">Started to register time for</string>
+	<string name="cannot_load_a_closed_task">Cannot load a closed task</string>
+	<string name="cannot_set_a_closed_plan_as_active">Cannot set a closed plan as active</string>
 </resources>

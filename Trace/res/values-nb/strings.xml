@@ -60,5 +60,8 @@
 	<string name="plan">Plan</string>
 	<string name="is_selected">er valgt</string>
 	<string name="started_to_register_time_for">Starter å registrere tid for</string>
+	
+	<string name="cannot_load_a_closed_task">Kan ikke laste en lukket oppgave</string>
+	<string name="cannot_set_a_closed_plan_as_active">Kan ikke aktivere en lukket plan</string>
 
 </resources>

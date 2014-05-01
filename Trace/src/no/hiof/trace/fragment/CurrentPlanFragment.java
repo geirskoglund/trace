@@ -13,6 +13,7 @@ import no.hiof.trace.contract.OnTaskLoadedListener;
 import no.hiof.trace.db.DatabaseManager;
 import no.hiof.trace.db.model.Plan;
 import no.hiof.trace.db.model.Task;
+import no.hiof.trace.utils.Feedback;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -106,7 +107,14 @@ public class CurrentPlanFragment extends Fragment implements DatasetRefresh
 			public boolean onItemLongClick(AdapterView<?> arg0, View view, int index, long arg3) 
 			{
 				Task selectedTask = taskListAdapter.getTask(index);
-				taskLoaderListener.onTaskLoadedListener(selectedTask);
+				if(selectedTask.isOpen())
+				{
+					taskLoaderListener.onTaskLoadedListener(selectedTask);
+					return true;
+				}
+				
+				Feedback.showToast(getActivity().getString(R.string.cannot_load_a_closed_task));
+				Feedback.vibrateDevice(Feedback.SHORT_VIBRATION);
 				return true;
 			}
 		});
