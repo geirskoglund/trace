@@ -208,7 +208,7 @@ public class TimerTextView extends TextView
 			this.view= new WeakReference<TimerTextView>((TimerTextView)view);
 		}
 		
-		/* (non-Javadoc)
+		/**
 		 * @see android.os.Handler#handleMessage(android.os.Message)
 		 */
 		@Override

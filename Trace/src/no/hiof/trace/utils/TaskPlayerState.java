@@ -7,6 +7,10 @@ import no.hiof.trace.db.model.Task;
 import android.content.Context;
 import android.content.Intent;
 
+/**
+ * @author Trace Inc.
+ *A class to help keep track of states when registering time
+ */
 public class TaskPlayerState
 {
 	public static enum State {PLAYING, PAUSED, IDLE};
@@ -18,6 +22,9 @@ public class TaskPlayerState
 	private Interval activeInterval = new Interval(); 
 	private Context context;
 	
+	/**
+	 * Constructor
+	 */
 	public TaskPlayerState() 
 	{
 		context = TraceApp.getAppContext();
@@ -36,6 +43,9 @@ public class TaskPlayerState
 		notifyUpdate();
 	}
 	
+	/**
+	 * @return the state of the player
+	 */
 	public State getPlayerState()
 	{
 		return state;
@@ -46,17 +56,26 @@ public class TaskPlayerState
 		TraceApp.getAppContext().sendBroadcast(new Intent(REFRESH_DATA_INTENT));
 	}
 	
+	/**
+	 * @param state the state to set the player to
+	 */
 	public void setPlayerState(State state)
 	{
 		this.state=state;
 		notifyUpdate();
 	}
 	
+	/**
+	 * @return the currently active Task
+	 */
 	public Task getActiveTask()
 	{
 		return activeTask;
 	}
 	
+	/**
+	 * @param task the Task to set as active
+	 */
 	public void setActiveTask(Task task)
 	{
 		stopInterval();
@@ -65,18 +84,18 @@ public class TaskPlayerState
 		notifyUpdate();
 	}
 	
+	/**
+	 * Starts a time slot interval
+	 */
 	public void startInterval()
 	{
-//		if(!activeInterval.isRunning())
-//		{
-//			activeInterval = TraceApp.database().createIntervalWithStartTime(this.activeTask.getId());
-//			this.state = State.PLAYING;
-//			
-//			notifyUpdate();
-//		}
 		startInterval(false);
 	}
 	
+	/**
+	 * Starts a new interval
+	 * @param autoRegister the value of the intervals auto registered field
+	 */
 	public void startInterval(boolean autoRegister)
 	{
 		if(!activeInterval.isRunning())
@@ -89,6 +108,9 @@ public class TaskPlayerState
 		}
 	}
 	
+	/**
+	 * Stop the active interval
+	 */
 	public void stopInterval()
 	{
 		if(activeInterval.isRunning())
@@ -98,6 +120,10 @@ public class TaskPlayerState
 		}
 	}
 	
+	/**
+	 * Stops the active interval at set amount of seconds
+	 * @param elapsedSeconds the number of seconds to stop the active interval at
+	 */
 	public void stopInterval(long elapsedSeconds)
 	{
 		if(activeInterval.isRunning())
@@ -107,6 +133,9 @@ public class TaskPlayerState
 		}
 	}
 	
+	/**
+	 * Completes the active interval by saving it to the database
+	 */
 	private void completeStoppingTasks()
 	{
 		this.state = State.PAUSED;
@@ -116,6 +145,10 @@ public class TaskPlayerState
 		notifyUpdate();
 	}
 	
+	/**
+	 * Gets the instance of the active interval
+	 * @return the active Interval
+	 */
 	public Interval getCurrentInterval()
 	{
 		return activeInterval;

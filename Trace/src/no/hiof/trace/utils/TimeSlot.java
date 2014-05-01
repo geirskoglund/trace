@@ -56,7 +56,7 @@ public class TimeSlot
 		return seconds;
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
