@@ -110,7 +110,7 @@ public class TaskPlayerState
 	private void completeStoppingTasks()
 	{
 		this.state = State.PAUSED;
-		TraceApp.database().updateInterval(activeInterval);
+		TraceApp.database().writeToDatabase(activeInterval);
 		Feedback.showToast(context.getString(R.string.interval_saved));
 		
 		notifyUpdate();
