@@ -41,12 +41,8 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	List<Plan> allPlans;
 	DatabaseManager database = TraceApp.database();
 	
-	/**
-	 * Constructor
-	 */
-	public AllPlansFragment(){}
-
-	/* (non-Javadoc)
+	
+	/** 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
@@ -120,7 +116,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 		startActivity(showPlanDetails);
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see android.support.v4.app.Fragment#onResume()
 	 * 
 	 * The update methods are executed on onResume, giving the screen fresh data
@@ -135,7 +131,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    planListAdapter.notifyDataSetChanged();
      }
 	
-	/* (non-Javadoc)
+	/**
 	 * @see android.support.v4.app.Fragment#onCreateOptionsMenu(android.view.Menu, android.view.MenuInflater)
 	 * 
 	 * Inflating the menu
@@ -147,7 +143,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    super.onCreateOptionsMenu(menu, inflater);
 	}
 	
-	/* (non-Javadoc)
+	/**
 	 * @see android.support.v4.app.Fragment#onOptionsItemSelected(android.view.MenuItem)
 	 * 
 	 * Callback from the menu
@@ -165,7 +161,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
 	    return super.onOptionsItemSelected(item);
 	} 
 	
-	/* (non-Javadoc)
+	/**
 	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
 	 * 
 	 * Adding the activity as a listener, throwing an exception if the OnTaskLoadedListener is not implemented
@@ -185,7 +181,7 @@ public class AllPlansFragment extends Fragment implements DatasetRefresh
         }
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see no.hiof.trace.contract.DatasetRefresh#refreshData()
 	 * 
 	 * Callback from the DatasetRefresh interface, allowing outside triggering of updates.
