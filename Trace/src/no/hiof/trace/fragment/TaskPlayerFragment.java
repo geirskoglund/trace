@@ -115,7 +115,9 @@ public class TaskPlayerFragment extends Fragment implements OnClickListener
 		service.playerState.stopInterval();
 		service.playerState.setActiveTask(task);
 		
-		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
+//		timer.setTime(service.playerState.getCurrentInterval().getStartTime());
+		timer.setTime(0);
+		timer.setTimerText();
 
 		if(!task.getName().equals(""))
 			Feedback.showToast(getActivity().getString(R.string.capital_task)+"\"" + task.getName() + "\"" +getActivity().getString(R.string.loaded));

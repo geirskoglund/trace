@@ -115,7 +115,7 @@ public class TimerTextView extends TextView
 		return this.seconds;
 	}
 	
-	protected void setTimerText()
+	public void setTimerText()
 	{
 		this.setText(getTimerString());
 	}
