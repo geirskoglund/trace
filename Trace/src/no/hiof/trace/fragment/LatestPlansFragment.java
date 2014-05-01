@@ -88,7 +88,7 @@ public class LatestPlansFragment extends Fragment implements DatasetRefresh
 					
 					selectedPlan.setLastActivatedTimestamp(new Date());
 					
-					database.updatePlan(selectedPlan);
+					database.writeToDatabase(selectedPlan);
 					taskLoaderListener.onTaskLoadedListener(selectedPlan.getPrimaryTask());
 					
 					return true;

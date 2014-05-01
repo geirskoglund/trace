@@ -3,6 +3,7 @@ package no.hiof.trace.db;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import no.hiof.trace.activity.R;
 import no.hiof.trace.application.TraceApp;
 import no.hiof.trace.db.model.Interval;
@@ -15,7 +16,6 @@ import no.hiof.trace.db.values.TableName;
 import no.hiof.trace.utils.IntervalParser;
 import no.hiof.trace.utils.PlanParser;
 import no.hiof.trace.utils.TaskParser;
-import no.hiof.trace.utils.TimeSlot;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,17 +24,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * @author Trace Inc.
+ * 
+ * Providing access to the database and methods for writing and reading.
+ *
+ */
 @SuppressLint("DefaultLocale")
 public class DatabaseManager extends SQLiteOpenHelper
-{	
-	//private SQLiteDatabase theDatabase;
-		
+{		
 	public DatabaseManager(Context context)
 	{
 		super(context,DatabaseInfo.DATABASE_NAME, null, DatabaseInfo.DATABASE_VERSION);
-		//writeTableNamesToLog();
 	}
-	
 	
 	@Override
 	public void onCreate(SQLiteDatabase theDatabaseInStartupMode)
@@ -55,7 +57,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 		
 		createInitialStatuses(theDatabaseInStartupMode);
 	}
-		
+	
+	//Creates tables in the database, based on the supplied create statements
 	private void createTables(SQLiteDatabase database, String... createTableQuery)
 	{		
 		if(createTableQuery == null || createTableQuery.length <= 0 || database == null)
@@ -81,6 +84,7 @@ public class DatabaseManager extends SQLiteOpenHelper
 		}
 	}
 
+	//Populates the status tables with initial data. 
 	private void createInitialStatuses(SQLiteDatabase theDatabaseInStartupMode) 
 	{
 		Context context = TraceApp.getAppContext();
@@ -104,12 +108,12 @@ public class DatabaseManager extends SQLiteOpenHelper
 		@Override
 	public void onUpgrade(SQLiteDatabase theDatabaseInStartupMode, int oldVersion, int newVersion)
 	{
-		//log("onUpdate kjøres");
 		//Drops all tables at this point. Should fetch all data, parse and write to new database.
 		dropTables(theDatabaseInStartupMode, TableName.PLAN, TableName.TASK, TableName.INTERVAL, TableName.PLAN_STATUS, TableName.TASK_STATUS);
 		onCreate(theDatabaseInStartupMode);
 	}
 	
+	//Drops supplied tables from database
 	private void dropTables(SQLiteDatabase database, String... tableNames)
 	{	
 		if(tableNames==null || tableNames.length<=0)
@@ -135,16 +139,24 @@ public class DatabaseManager extends SQLiteOpenHelper
 		Log.d("TRACE-DM", message);
 	}
 	
+	
+	/**
+	 * @return a list containing the status values in the plan_status table 
+	 */
 	public List<String> getPlanStatusValues()
 	{
 		return getStatusValues(TableName.PLAN_STATUS);
 	}
 	
+	/**
+	 * @return a list containing the status values in the task_status table 
+	 */
 	public List<String> getTaskStatusValues()
 	{
 		return getStatusValues(TableName.TASK_STATUS);
 	}
 	
+	//helper method, returning a list of statuses from the given status table
 	private List<String> getStatusValues(String tableName)
 	{
 		List<String> statuses = new ArrayList<String>();
@@ -166,6 +178,13 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return statuses;
 	}
 	
+	
+	/**
+	 * @param plan A Plan object
+	 * @return The row id of the plan
+	 * 
+	 * Creates a new Plan or updates an existing Plan in the database.
+	 */
 	public long writeToDatabase(Plan plan)
 	{
 		if(plan == null)
@@ -179,6 +198,12 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return addPlan(plan);
 	}
 	
+	/**
+	 * @param task A Task object
+	 * @return The row id of the task
+	 * 
+	 * Creates a new Task or updates an existing Task in the database.
+	 */
 	public long writeToDatabase(Task task)
 	{
 		if(task == null)
@@ -192,6 +217,12 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return addTask(task);
 	}
 	
+	/**
+	 * @param interval An Interval object
+	 * @return The row id of the interval
+	 * 
+	 * Creates a new Interval or updates an existing Interval in the database.
+	 */
 	public long writeToDatabase(Interval interval)
 	{
 		if(interval==null)
@@ -205,7 +236,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 			return addInterval(interval);
 	}
 	
-	public long updateTask(Task task)
+	//Helper method: Updates an existing task in the database
+	private long updateTask(Task task)
 	{
 		ContentValues values = TaskParser.getContentValues(task);
 		String whereClause = ColumnName.ID + " = ?";
@@ -216,7 +248,8 @@ public class DatabaseManager extends SQLiteOpenHelper
 		return task.getId();
 	}
 	
-	public long updatePlan(Plan plan) 
+	
+	private long updatePlan(Plan plan) 
 	{
 		ContentValues values = PlanParser.getContentValues(plan);
 		String whereClause = ColumnName.ID + " = ?";

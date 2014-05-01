@@ -189,10 +189,10 @@ public class Plan implements Comparable<Plan>
 		
 		if(task.getId()==0)
 			return;
-		//	throw new IllegalArgumentException("The provided task does not exist");
 		
 		this.primaryTaskId = task.getId();
-		TraceApp.database().updatePlan(this);
+
+		TraceApp.database().writeToDatabase(this);
 	}
 	
 	public void removePrimaryTask()
@@ -249,7 +249,7 @@ public class Plan implements Comparable<Plan>
 		{
 			DatabaseManager database = new DatabaseManager(TraceApp.getAppContext());
 			this.setLastActivatedTimestamp(new Date());
-			database.updatePlan(this);
+			database.writeToDatabase(this);
 		}
 	}
 }
