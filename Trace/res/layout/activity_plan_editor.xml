@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_plan_description"
             android:padding="5dip"
-            android:text="@string/label_auto_register" />
+            android:text="@string/auto_select_label" />
 
         <Spinner
             android:id="@+id/edit_plan_auto_selection_spinner"
