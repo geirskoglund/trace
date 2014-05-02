@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Trace</string>
     <string name="action_settings">Instillinger</string>
     <string name="title_current_section">Valgt plan</string>
     <string name="title_latest_section">Siste planer</string>
@@ -26,8 +27,8 @@
     <string name="edit_plan">Endre</string>
     <string name="save">Lagre</string>
     <string name="details">Detaljer</string>
-    <string name="Lengdegrader">Longitude</string>
-    <string name="Breddegrader">Latitude</string>
+    <string name="longitude">Lengdegrader</string>
+    <string name="latitude">Breddegrader</string>
     <string name="plan_was_activated">" er aktivert."</string>
     <string name="interval_saved">Timeføring er lagret</string>
     <string name="select_status">Select Status</string>
@@ -63,5 +64,20 @@
 	
 	<string name="cannot_load_a_closed_task">Kan ikke laste en lukket oppgave</string>
 	<string name="cannot_set_a_closed_plan_as_active">Kan ikke aktivere en lukket plan</string>
+	
+	<string name="status_open">Open</string>
+    <string name="status_closed">Closed</string>
+    
+    <string-array name="status_array">
+        <item>Open</item>
+        <item>Closed</item>
+    </string-array>
+    
+    <string-array name="auto_select_array">
+        <item>(NONE)</item>
+        <item>WiFi</item>
+        <item>GPS</item>
+        <item>NFC</item>
+    </string-array>
 
 </resources>

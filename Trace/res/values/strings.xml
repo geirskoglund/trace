@@ -7,7 +7,6 @@
     <string name="title_latest_section">Latest plans</string>
     <string name="title_all_section">All plans</string>
     <string name="title_activity_plan_detail">Plan Details</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_task_detail">Task Details</string>
 
     <!-- LABELS -->
@@ -23,9 +22,6 @@
     <string name="label_accumulated_time">Accumulated time</string>
     <string name="label_time_slots">Time slots</string>
     <string name="DUMMY_TEXT"></string>
-    <string name="DUMMY_TASK_BUTTON">To task</string>
-    <string name="DUMMY_PLAN_BUTTON">To plan</string>
-    <string name="DUMMY_TIME_SLOT">To plan</string>
     <string name="add">Add</string>
     <string name="title_activity_task_editor">Edit Task</string>
     <string name="title_activity_plan_editor">PlanEditorActivity</string>
